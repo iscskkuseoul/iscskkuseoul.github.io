@@ -2,12 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <!-- ═══════════════════════════════════════════════════════════════
-     ISC-SKKU Seoul 교회 홈페이지
-     ▶ 网站基本信息（搜索引擎优化 SEO）都在这个 <head> 区域里
-     ▶ 需要修改的地方都用中文注释标出，其余部分不要随意改动
+     ISC-SKKU Seoul 교회 홈페이지 (v2)
+     ▶ 需要修改的地方都用中文注释标出（以 ▶ 开头），其余部分不要随意改动
      ═══════════════════════════════════════════════════════════════ -->
 
 <title>ISC-SKKU Seoul | 성균관대 유학생교회 (国际学生教会)</title>
@@ -16,24 +15,21 @@
 <meta name="author" content="ISC-SKKU Seoul">
 <meta name="robots" content="index, follow">
 
-<!-- ▶ 网站正式网址：部署到 GitHub Pages 后，如果最终网址不是下面这个，
-     请把下面 canonical、og:url 以及 sitemap.xml 里的网址一起改成你的真实网址 -->
 <link rel="canonical" href="https://iscskkuseoul.github.io/">
 
-<!-- ═══ 搜索引擎所有权验证（第一次注册时使用）═══
-     ① Google Search Console 会给你一段 meta 标签，粘贴到下面一行的位置
-     ② <meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
-     示例格式：
-     <meta name="google-site-verification" content="谷歌给的代码">
-     <meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
---> <meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
+<!-- ═══ 搜索引擎所有权验证 ═══
+     ▶ Naver 验证已完成（下面第一行，不要删除）
+     ▶ 以后做 Google Search Console 验证时，把 Google 给的那行
+       <meta name="google-site-verification" content="..."> 粘贴到 Naver 那行的下面
+-->
+<meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
 
-<!-- 소셜 미디어 공유 미리보기 (카카오톡/微信분享时显示的卡片) -->
+<!-- 소셜 미디어 공유 미리보기 (카카오톡/微信分享时显示的卡片) -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="ISC-SKKU Seoul | 성균관대 유학생교회">
 <meta property="og:description" content="성균관대 유학생을 섬기는 교회. 주일예배 매주 일요일 오후 3시, 서울 종로구 명륜길 22, 2층.">
-<meta property="og:url" content="https://iscskku.github.io/">
-<meta property="og:image" content="https://iscskku.github.io/assets/logo3.png">
+<meta property="og:url" content="https://iscskkuseoul.github.io/">
+<meta property="og:image" content="https://iscskkuseoul.github.io/assets/logo3.png">
 <meta property="og:locale" content="ko_KR">
 
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -51,11 +47,13 @@
   "@type": "Church",
   "name": "ISC-SKKU Seoul (성균관대 유학생교회)",
   "alternateName": ["ISC-SKKU", "International Student Church SKKU Seoul", "성균관대 유학생교회"],
-  "url": "https://iscskku.github.io/",
-  "logo": "https://iscskku.github.io/assets/logo3.png",
+  "url": "https://iscskkuseoul.github.io/",
+  "logo": "https://iscskkuseoul.github.io/assets/logo3.png",
+  "image": "https://iscskkuseoul.github.io/photos/photo1.jpg",
   "foundingDate": "2020-03-22",
   "email": "iscskku.seoul@gmail.com",
   "telephone": "+82-31-297-0313",
+  "hasMap": "https://map.naver.com/p/entry/place/1585778785",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "명륜길 22, 2층",
@@ -81,136 +79,215 @@ html{scroll-behavior:smooth}
 body{
   font-family:'Pretendard Variable',Pretendard,'Noto Sans SC',-apple-system,sans-serif;
   color:var(--ink);background:var(--paper);line-height:1.7;
-  font-size:16px;word-break:keep-all;
+  font-size:16px;word-break:keep-all;-webkit-text-size-adjust:100%;
 }
 img{max-width:100%;display:block}
 a{color:var(--pine)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
 
-.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
 
 /* ── 상단 메뉴 ── */
 header{
-  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
 }
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
-.brand img{height:40px;width:auto}
-.brand b{font-family:'Gowun Batang',serif;font-size:1.05rem;letter-spacing:.02em}
-.menu{display:flex;gap:26px;list-style:none}
-.menu a{text-decoration:none;color:var(--ink);font-size:.95rem;font-weight:500}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);min-width:0}
+.brand img{height:34px;width:auto}
+.brand b{font-family:'Gowun Batang',serif;font-size:1rem;letter-spacing:.02em;white-space:nowrap}
+.menu{display:flex;gap:24px;list-style:none;align-items:center}
+.menu a{text-decoration:none;color:var(--ink);font-size:.94rem;font-weight:500}
 .menu a:hover{color:var(--pine)}
 .yt-btn{
-  background:var(--pine);color:#fff !important;padding:8px 16px;border-radius:999px;
-  font-size:.88rem;text-decoration:none;font-weight:600;white-space:nowrap;
+  background:var(--pine);color:#fff !important;padding:7px 15px;border-radius:999px;
+  font-size:.85rem;text-decoration:none;font-weight:600;white-space:nowrap;
 }
 .yt-btn:hover{background:#0c4630}
+.hamburger{
+  display:none;background:none;border:none;cursor:pointer;padding:8px;
+  flex-direction:column;gap:5px;
+}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);transition:.2s}
+.mobile-menu{
+  display:none;list-style:none;border-top:1px solid var(--line);
+  background:#fff;padding:8px 20px 14px;
+}
+.mobile-menu li a{
+  display:block;padding:11px 2px;text-decoration:none;color:var(--ink);
+  font-weight:500;border-bottom:1px solid #F0F2F3;
+}
+.mobile-menu.open{display:block}
 
 /* ── 히어로 ── */
-.hero{padding:84px 0 72px;border-bottom:1px solid var(--line)}
-.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.hero{padding:72px 0 60px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1fr 220px;gap:44px;align-items:center}
 .eyebrow{
   font-family:'Noto Sans SC',sans-serif;color:var(--pine);
-  font-size:.9rem;letter-spacing:.28em;margin-bottom:14px;font-weight:500;
+  font-size:.88rem;letter-spacing:.26em;margin-bottom:14px;font-weight:500;
 }
 h1{
   font-family:'Gowun Batang',serif;font-weight:700;
-  font-size:clamp(2rem,4.6vw,3.1rem);line-height:1.32;margin-bottom:20px;
+  font-size:clamp(1.8rem,4.4vw,2.9rem);line-height:1.34;margin-bottom:18px;
 }
 h1 .green{color:var(--pine)}
-.hero p.lead{color:var(--gray);font-size:1.06rem;max-width:34em;margin-bottom:14px}
+.hero p.lead{color:var(--gray);font-size:1.04rem;max-width:34em;margin-bottom:12px}
 .verse{
   font-family:'Gowun Batang',serif;border-left:3px solid var(--pine);
-  padding:6px 0 6px 18px;margin:26px 0 30px;color:var(--ink);font-size:1rem;
+  padding:6px 0 6px 16px;margin:24px 0 28px;color:var(--ink);font-size:.98rem;
 }
 .verse small{display:block;color:var(--gray);margin-top:6px;font-family:'Pretendard Variable',sans-serif}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
 .btn{
-  display:inline-block;padding:13px 26px;border-radius:999px;text-decoration:none;
-  font-weight:600;font-size:.95rem;
+  display:inline-block;padding:12px 24px;border-radius:999px;text-decoration:none;
+  font-weight:600;font-size:.94rem;text-align:center;
 }
 .btn-solid{background:var(--ink);color:#fff}
 .btn-solid:hover{background:#000}
 .btn-line{border:1.5px solid var(--ink);color:var(--ink)}
 .btn-line:hover{background:var(--pine-soft)}
-.hero-logo{justify-self:center}
-.hero-logo img{width:min(280px,70vw)}
+.btn-pine{background:var(--pine);color:#fff}
+.btn-pine:hover{background:#0c4630}
+.hero-logo{
+  justify-self:center;background:var(--pine-soft);border-radius:50%;
+  width:210px;height:210px;display:flex;align-items:center;justify-content:center;
+}
+.hero-logo img{width:128px}
 
 /* ── 핵심 정보 스트립 ── */
-.strip{background:var(--pine);color:#fff;padding:22px 0}
-.strip .wrap{display:flex;gap:36px;flex-wrap:wrap;justify-content:center;text-align:center}
-.strip div b{display:block;font-size:.8rem;letter-spacing:.16em;opacity:.75;margin-bottom:2px}
-.strip div span{font-weight:600}
+.strip{background:var(--pine);color:#fff;padding:20px 0}
+.strip .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center}
+.strip div b{display:block;font-size:.76rem;letter-spacing:.14em;opacity:.75;margin-bottom:2px;font-weight:600}
+.strip div span{font-weight:600;font-size:.95rem}
 
 /* ── 공통 섹션 ── */
-section{padding:80px 0}
-.sec-head{margin-bottom:42px}
+section{padding:72px 0}
+.sec-head{margin-bottom:38px}
 .sec-head .eyebrow{margin-bottom:8px}
-h2{font-family:'Gowun Batang',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:700}
+h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-weight:700}
 .sub{color:var(--gray);margin-top:10px;max-width:44em}
 
 /* ── 소개 ── */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
 .about-grid p{color:var(--ink);margin-bottom:16px}
 .vision-list{list-style:none;border-top:1px solid var(--line)}
 .vision-list li{
-  padding:18px 4px;border-bottom:1px solid var(--line);
-  font-family:'Gowun Batang',serif;font-size:1.06rem;
+  padding:17px 4px;border-bottom:1px solid var(--line);
+  font-family:'Gowun Batang',serif;font-size:1.04rem;
 }
-.vision-list li span{color:var(--pine);margin-right:12px;font-family:'Pretendard Variable',sans-serif;font-size:.85rem}
+.vision-list li span{color:var(--pine);margin-right:12px;font-family:'Pretendard Variable',sans-serif;font-size:.84rem}
 
 /* ── 예배 안내 ── */
 .alt{background:var(--pine-soft)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 24px}
-.card h3{font-family:'Gowun Batang',serif;font-size:1.12rem;margin-bottom:4px}
-.card .zh{font-family:'Noto Sans SC',sans-serif;color:var(--pine);font-size:.85rem;margin-bottom:12px}
-.card .time{font-weight:700;margin-bottom:8px}
-.card p{color:var(--gray);font-size:.92rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 22px}
+.card h3{font-family:'Gowun Batang',serif;font-size:1.1rem;margin-bottom:3px}
+.card .zh{font-family:'Noto Sans SC',sans-serif;color:var(--pine);font-size:.84rem;margin-bottom:11px}
+.card .time{font-weight:700;margin-bottom:7px;font-size:.96rem}
+.card p{color:var(--gray);font-size:.9rem}
 
-/* ── 사역/숫자 ── */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:38px 0 46px}
-.stat{border:1px solid var(--line);border-radius:14px;padding:26px;text-align:center}
-.stat b{font-family:'Gowun Batang',serif;font-size:2.2rem;color:var(--pine);display:block}
-.stat span{color:var(--gray);font-size:.9rem}
-.mlist{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
-.mlist div{padding:20px 4px;border-bottom:1px solid var(--line)}
-.mlist h3{font-family:'Gowun Batang',serif;font-size:1.05rem;margin-bottom:6px}
-.mlist p{color:var(--gray);font-size:.93rem}
+/* ── 사역 (아이콘 카드) ── */
+.ministry-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.m-card{
+  display:flex;gap:18px;align-items:flex-start;
+  border:1px solid var(--line);border-radius:14px;padding:24px 22px;
+}
+.m-icon{
+  flex:0 0 46px;width:46px;height:46px;border-radius:50%;
+  background:var(--pine-soft);display:flex;align-items:center;justify-content:center;
+}
+.m-icon svg{width:22px;height:22px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.m-card h3{font-family:'Gowun Batang',serif;font-size:1.05rem;margin-bottom:5px}
+.m-card p{color:var(--gray);font-size:.9rem}
 
-/* ── 소식 ── */
-.news{background:#fff;border:1px solid var(--line);border-radius:14px;padding:34px 34px 22px}
-.news .date{color:var(--pine);font-weight:700;font-size:.9rem;letter-spacing:.06em;margin-bottom:16px}
-.news ol{margin-left:20px}
-.news li{margin-bottom:14px;color:var(--ink)}
-.news li small{color:var(--gray);display:block}
+/* ── 사진 캐러셀 ── */
+.carousel{
+  position:relative;max-width:860px;margin:0 auto;border-radius:14px;
+  overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;background:#000;
+}
+.carousel .slide{
+  position:absolute;inset:0;opacity:0;transition:opacity .8s ease;
+}
+.carousel .slide.active{opacity:1}
+.carousel .slide img{width:100%;height:100%;object-fit:cover}
+.c-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.85);color:var(--ink);font-size:1.05rem;line-height:1;
+}
+.c-btn:hover{background:#fff}
+.c-prev{left:12px}.c-next{right:12px}
+.c-dots{
+  position:absolute;bottom:12px;left:0;right:0;z-index:5;
+  display:flex;gap:8px;justify-content:center;
+}
+.c-dots button{
+  width:9px;height:9px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.55);padding:0;
+}
+.c-dots button.on{background:#fff}
+
+/* ── 소식 (콤팩트) ── */
+.news{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:24px 26px 16px;max-width:760px;
+}
+.news .date{color:var(--pine);font-weight:700;font-size:.86rem;letter-spacing:.05em;margin-bottom:10px}
+.news ul{list-style:none}
+.news li{
+  padding:9px 0;border-bottom:1px solid #F0F2F3;
+  color:var(--ink);font-size:.93rem;display:flex;gap:10px;
+}
+.news li:last-child{border-bottom:none}
+.news li::before{content:"·";color:var(--pine);font-weight:800}
 
 /* ── 유튜브 ── */
 .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
 /* ── 오시는 길 ── */
-.visit{display:grid;grid-template-columns:1fr 1fr;gap:44px}
-.visit dl div{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
-.visit dt{min-width:96px;color:var(--gray);font-size:.9rem;padding-top:2px}
-.visit dd{font-weight:500}
-.maplinks{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
-.offering{background:var(--pine-soft);border-radius:14px;padding:26px}
-.offering h3{font-family:'Gowun Batang',serif;margin-bottom:10px}
-.offering p{font-size:.95rem}
+.visit{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:stretch}
+.visit-info{display:flex;flex-direction:column;gap:14px}
+.v-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start}
+.v-icon{
+  flex:0 0 42px;width:42px;height:42px;border-radius:50%;
+  background:var(--pine-soft);display:flex;align-items:center;justify-content:center;
+}
+.v-icon svg{width:20px;height:20px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.v-card b{display:block;font-size:.8rem;color:var(--gray);letter-spacing:.08em;margin-bottom:2px;font-weight:600}
+.v-card span{font-weight:600;font-size:.97rem}
+.v-card small{display:block;color:var(--gray);font-weight:400;margin-top:3px;font-size:.86rem}
+.map-box{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.map-box iframe{border:0;width:100%;flex:1;min-height:320px}
+.map-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px}
+.map-actions .btn{padding:11px 10px;font-size:.9rem}
 
-footer{border-top:1px solid var(--line);padding:38px 0;color:var(--gray);font-size:.87rem}
-footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--gray);font-size:.86rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
-@media (max-width:820px){
+/* ═══════════ 모바일 (手机版) ═══════════ */
+@media (max-width:840px){
+  section{padding:52px 0}
   .menu{display:none}
-  .hero{padding:56px 0 48px}
-  .hero-grid,.about-grid,.visit,.mlist{grid-template-columns:1fr}
-  .hero-logo{order:-1}
-  .hero-logo img{width:170px}
-  .stats{grid-template-columns:1fr 1fr}
-  section{padding:56px 0}
+  .hamburger{display:flex}
+  .hero{padding:44px 0 40px}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .hero-logo{order:-1;width:130px;height:130px;justify-self:start}
+  .hero-logo img{width:80px}
+  .hero p.lead{font-size:.98rem}
+  .strip .wrap{grid-template-columns:1fr;gap:10px;text-align:left}
+  .strip div{display:flex;gap:10px;align-items:baseline}
+  .strip div b{margin:0;min-width:104px}
+  .about-grid,.ministry-grid,.visit{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+  .cta .btn{flex:1}
+  .map-box iframe{min-height:260px}
+  .c-btn{width:32px;height:32px}
+}
+@media (max-width:520px){
+  .cards{grid-template-columns:1fr}
+  .brand b{font-size:.92rem}
+  .yt-btn{display:none}
 }
 @media (prefers-reduced-motion:no-preference){
   .hero-grid{animation:rise .7s ease both}
@@ -234,7 +311,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <li><a href="#visit">오시는 길</a></li>
     </ul>
     <a class="yt-btn" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a>
+    <button class="hamburger" aria-label="메뉴 열기" onclick="document.getElementById('mMenu').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+  <ul class="mobile-menu" id="mMenu">
+    <li><a href="#about" onclick="mMenu.classList.remove('open')">교회 소개</a></li>
+    <li><a href="#worship" onclick="mMenu.classList.remove('open')">예배 안내</a></li>
+    <li><a href="#ministry" onclick="mMenu.classList.remove('open')">사역</a></li>
+    <li><a href="#news" onclick="mMenu.classList.remove('open')">교회 소식</a></li>
+    <li><a href="#visit" onclick="mMenu.classList.remove('open')">오시는 길</a></li>
+    <li><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube 채널 ▶</a></li>
+  </ul>
 </header>
 
 <!-- ═══ 히어로(첫 화면) ═══ -->
@@ -335,88 +423,94 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="sec-head">
       <p class="eyebrow">事工介绍</p>
       <h2>주요 사역</h2>
+      <p class="sub">유학생 한 사람이 예수님을 만나고, 제자로 자라며, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.</p>
     </div>
-
-    <!-- ▶ 数字有变动时（例如洗礼人数增加），直接修改下面三个数字 -->
-    <div class="stats">
-      <div class="stat"><b>65</b><span>등록 유학생 (대부분 중국인 유학생)</span></div>
-      <div class="stat"><b>31</b><span>누적 세례자 (2021년 부활절 이후)</span></div>
-      <div class="stat"><b>27</b><span>중국 본국 파송 졸업생</span></div>
+    <div class="ministry-grid">
+      <div class="m-card">
+        <div class="m-icon"><svg viewBox="0 0 24 24"><path d="M12 3c3.5 4.5 6 7.6 6 10.5A6 6 0 0 1 6 13.5C6 10.6 8.5 7.5 12 3z"/></svg></div>
+        <div>
+          <h3>세례 교육과 세례식</h3>
+          <p>정기적인 세례 교육과 세례식을 통해 새 생명들이 그리스도 안에서 거듭나고 있습니다.</p>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-icon"><svg viewBox="0 0 24 24"><path d="M12 5.5C10 4 7.5 3.8 4 4.2v14c3.5-.4 6 0 8 1.3 2-1.3 4.5-1.7 8-1.3v-14c-3.5-.4-6-.2-8 1.3z"/><path d="M12 5.5v14"/></svg></div>
+        <div>
+          <h3>제자양육 프로그램</h3>
+          <p>유학생의 제한된 체류 기간을 고려한 집중적이고 체계적인 양육: 심화 성경공부, 리더십 훈련, 신앙 기초 확립.</p>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.5 14.6c2.6.2 4.4 1.7 5 4.4"/></svg></div>
+        <div>
+          <h3>유학생 리더 훈련</h3>
+          <p>차세대 유학생 사역 리더를 세우기 위한 리더십 개발, 섬김 훈련, 사역 실습.</p>
+        </div>
+      </div>
+      <div class="m-card">
+        <div class="m-icon"><svg viewBox="0 0 24 24"><path d="M12 20V9"/><path d="M12 9C12 5.5 9.5 3.5 5.5 3.5 5.5 7.5 8 9.5 12 9z"/><path d="M12 13c0-3 2.2-4.8 5.8-4.8 0 3.6-2.2 5.3-5.8 4.8z"/></svg></div>
+        <div>
+          <h3>소그룹 성경공부</h3>
+          <p>교재 「복음의 기초」로 유학생 리더와 교수진이 함께하는 소그룹 성경공부를 진행합니다.</p>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="mlist">
-      <div>
-        <h3>세례 교육과 세례식</h3>
-        <p>정기적인 세례 교육과 세례식을 통해 새 생명들이 그리스도 안에서 거듭나고 있습니다.</p>
-      </div>
-      <div>
-        <h3>제자양육 프로그램</h3>
-        <p>유학생들의 제한된 체류 기간을 고려한 집중적이고 체계적인 양육: 심화 성경공부, 리더십 훈련, 신앙 기초 확립.</p>
-      </div>
-      <div>
-        <h3>유학생 리더 훈련</h3>
-        <p>차세대 유학생 사역 리더를 세우기 위한 리더십 개발, 섬김 훈련, 사역 실습.</p>
-      </div>
-      <div>
-        <h3>소그룹 성경공부</h3>
-        <p>교재 「복음의 기초」로 유학생 리더와 교수진이 함께하는 소그룹 성경공부를 진행합니다.</p>
-      </div>
+<!-- ═══════════════════════════════════════════════════════════════
+     사진 캐러셀 (教会照片轮播区，自动循环播放)
+     ▶ 换照片方法：把新照片改名为 photo1.jpg ~ photo5.jpg 上传到 photos
+       文件夹，覆盖旧照片即可，代码不用改
+     ▶ 想增加第6张：上传 photo6.jpg 后，复制下面一行
+       <div class="slide"><img ...photo5.jpg...></div>
+       粘贴在它下面，并把文件名改成 photo6.jpg
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="photos" class="alt" style="padding-top:60px;padding-bottom:60px">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:26px">
+      <p class="eyebrow">教会掠影</p>
+      <h2>함께한 순간들</h2>
+    </div>
+    <div class="carousel" id="carousel" aria-label="교회 사진">
+      <div class="slide active"><img src="photos/photo1.jpg" alt="교회 공동체 단체 사진" loading="lazy"></div>
+      <div class="slide"><img src="photos/photo2.jpg" alt="교회 예배 후 단체 사진" loading="lazy"></div>
+      <div class="slide"><img src="photos/photo3.jpg" alt="성탄절 축하 예배" loading="lazy"></div>
+      <div class="slide"><img src="photos/photo4.jpg" alt="찬양대 특송" loading="lazy"></div>
+      <div class="slide"><img src="photos/photo5.jpg" alt="야외 수련회" loading="lazy"></div>
+      <button class="c-btn c-prev" aria-label="이전 사진" onclick="move(-1)">‹</button>
+      <button class="c-btn c-next" aria-label="다음 사진" onclick="move(1)">›</button>
+      <div class="c-dots" id="dots"></div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
      교회 소식 (每周更新区)
-     ▶ 每周只需要改这一块：
-       ① 修改日期
-       ② 把 <li> 里的内容换成本周主报公告
-       ③ 需要增加一条就复制一整行 <li>...</li>，删除一条就删掉一整行
+     ▶ 每周只需要改这一块：① 改日期 ② 换 <li> 里的公告内容
+       增加一条就复制一行 <li>...</li>，删除一条就删掉一整行
+       建议保持 3~5 条，页面更清爽
      ═══════════════════════════════════════════════════════════════ -->
-<section id="news" class="alt">
+<section id="news">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head" style="margin-bottom:26px">
       <p class="eyebrow">本周消息</p>
       <h2>교회 소식</h2>
     </div>
     <div class="news">
       <p class="date">2026년 7월 12일 주일</p>
-      <ol>
+      <ul>
         <li>새로 나오신 분을 주님의 이름으로 환영합니다.</li>
-        <li>2026년 교회 비전을 위해 기도해 주세요. <small>“그리스도와의 연합: 예수님 안에, 말씀 안에 거하는 삶”</small></li>
-        <li>교두보(BPM) 기도회는 방학 기간 동안 잠시 쉬어갑니다. 재개 일정은 추후 공지해 드리겠습니다.</li>
-        <li>성경통독 프로그램: 누가복음 통독이 종강되었으며, 8월 18일(화) 12:00–13:30에 다시 개강합니다. <small>장소: ISC-SKKU 서울교회</small></li>
-        <li>2026 GSM 글로벌 학생 선교 컨퍼런스: 8월 21일(금)–23일(일), 평택대학교. <small>주제: “DESIRE GOD” (시 143:6)</small></li>
-        <li>방학 특별 성경공부(모세오경 개관): 7월 20일, 27일 / 8월 3일, 24일, 31일 (매주 월요일, 총 5회) 14:45–16:00. <small>장소: ISC-SKKU 서울교회</small></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     사진 갤러리 (教会活动照片区)
-     ▶ 现在这个板块是隐藏的（下面 section 标签里写着 hidden）
-     ▶ 启用方法：
-       ① 把活动照片改名为 photo1.jpg, photo2.jpg, photo3.jpg
-       ② 上传到网站的 photos 文件夹里
-       ③ 把下面一行 <section id="photos" hidden> 里的 hidden 一词删掉
-       ④ 想放更多照片，就复制一行 <img ...> 并把文件名改成 photo4.jpg 等
-     ═══════════════════════════════════════════════════════════════ -->
-<section id="photos" hidden>
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">教会相册</p>
-      <h2>교회 사진</h2>
-    </div>
-    <div class="cards">
-      <img src="photos/photo1.jpg" alt="교회 활동 사진" style="border-radius:14px" loading="lazy">
-      <img src="photos/photo2.jpg" alt="교회 활동 사진" style="border-radius:14px" loading="lazy">
-      <img src="photos/photo3.jpg" alt="교회 활동 사진" style="border-radius:14px" loading="lazy">
+        <li>성경통독: 8월 18일(화) 12:00–13:30 다시 개강합니다.</li>
+        <li>2026 GSM 글로벌 학생 선교 컨퍼런스: 8월 21일(금)–23일(일), 평택대학교. 주제 “DESIRE GOD”</li>
+        <li>방학 특별 성경공부(모세오경 개관): 7월 20일부터 매주 월요일 14:45–16:00, 총 5회.</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- ═══ 유튜브 ═══ -->
-<section id="youtube">
+<section id="youtube" class="alt">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">在线崇拜</p>
@@ -429,35 +523,67 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen></iframe>
     </div>
-    <p style="margin-top:18px"><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ 유튜브 채널 바로가기 (@iscskku2020)</a></p>
+    <p style="margin-top:16px"><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ 유튜브 채널 바로가기 (@iscskku2020)</a></p>
   </div>
 </section>
 
 <!-- ═══ 오시는 길 ═══ -->
-<section id="visit" class="alt">
+<section id="visit">
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">联系我们</p>
       <h2>오시는 길 · 연락처</h2>
     </div>
     <div class="visit">
-      <div>
-        <dl>
-          <div><dt>주소 地址</dt><dd>서울특별시 종로구 명륜길 22, 2층<br><span style="color:var(--gray);font-size:.9rem">성균관대학교 서울(인문사회)캠퍼스 인근</span></dd></div>
-          <div><dt>주일예배</dt><dd>매주 일요일 오후 3:00 (현장 + Zoom)</dd></div>
-          <div><dt>전화 电话</dt><dd>031-297-0313</dd></div>
-          <div><dt>이메일</dt><dd><a href="mailto:iscskku.seoul@gmail.com">iscskku.seoul@gmail.com</a></dd></div>
-          <div><dt>섬기는 분</dt><dd>정종현 목사 · Ethan W. Kim 선교사 · John Choi 선교사</dd></div>
-        </dl>
-        <div class="maplinks">
-          <a class="btn btn-line" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EB%AA%85%EB%A5%9C%EA%B8%B8%2022" target="_blank" rel="noopener">네이버 지도</a>
-          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EB%AA%85%EB%A5%9C%EA%B8%B8%2022" target="_blank" rel="noopener">구글 지도</a>
+      <div class="visit-info">
+        <div class="v-card">
+          <div class="v-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+          <div>
+            <b>주소 地址</b>
+            <span>서울특별시 종로구 명륜길 22, 2층</span>
+            <small>성균관대학교 서울(인문사회)캠퍼스 인근</small>
+          </div>
+        </div>
+        <div class="v-card">
+          <div class="v-icon"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 12h14M9 18l-1.5 3M15 18l1.5 3"/><circle cx="8.6" cy="15" r=".5"/><circle cx="15.4" cy="15" r=".5"/></svg></div>
+          <div>
+            <b>대중교통 交通</b>
+            <span>지하철 4호선 혜화역 4번 출구</span>
+            <small>성균관대학교 방면 도보 약 10분 · 마을버스 종로07 이용 가능</small>
+          </div>
+        </div>
+        <div class="v-card">
+          <div class="v-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div>
+          <div>
+            <b>주일예배 主日崇拜</b>
+            <span>매주 일요일 오후 3:00</span>
+            <small>현장 예배 + Zoom 온라인 동시 진행</small>
+          </div>
+        </div>
+        <div class="v-card">
+          <div class="v-icon"><svg viewBox="0 0 24 24"><path d="M4 6.5C4 5.1 5.1 4 6.5 4h2L10 8l-1.8 1.8a13 13 0 0 0 6 6L16 14l4 1.5v2c0 1.4-1.1 2.5-2.5 2.5C9.6 20 4 14.4 4 6.5z"/></svg></div>
+          <div>
+            <b>연락처 联系方式</b>
+            <span>031-297-0313</span>
+            <small><a href="mailto:iscskku.seoul@gmail.com">iscskku.seoul@gmail.com</a> · 정종현 목사 · Ethan W. Kim 선교사 · John Choi 선교사</small>
+          </div>
+        </div>
+        <div class="v-card">
+          <div class="v-icon"><svg viewBox="0 0 24 24"><path d="M12 4v13M12 4l-3.5 3M12 4l3.5 3"/><path d="M5 13v5.5h14V13"/></svg></div>
+          <div>
+            <b>온라인 헌금 奉献账户</b>
+            <span>우리은행 1005-303-895466</span>
+            <small>예금주: ISCSKKU 교회</small>
+          </div>
         </div>
       </div>
-      <div class="offering">
-        <h3>온라인 헌금 안내 奉献账户</h3>
-        <p>우리은행 1005-303-895466<br>예금주: ISCSKKU 교회</p>
-        <p style="margin-top:16px;color:var(--gray);font-size:.88rem">처음 방문을 원하시면 이메일이나 전화로 먼저 연락 주셔도 좋습니다. 欢迎提前联系我们，主日见！</p>
+      <div class="map-box">
+        <iframe src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EB%AA%85%EB%A5%9C%EA%B8%B8%2022&hl=ko&z=16&output=embed"
+                title="ISC-SKKU Seoul 위치 지도" loading="lazy" allowfullscreen></iframe>
+        <div class="map-actions">
+          <a class="btn btn-pine" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener">네이버 지도로 길찾기</a>
+          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EB%AA%85%EB%A5%9C%EA%B8%B8%2022" target="_blank" rel="noopener">구글 지도로 보기</a>
+        </div>
       </div>
     </div>
   </div>
@@ -469,6 +595,41 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div>서울 종로구 명륜길 22, 2층 · iscskku.seoul@gmail.com</div>
   </div>
 </footer>
+
+<script>
+/* 사진 캐러셀 (照片自动轮播，无需修改) */
+(function(){
+  var slides = document.querySelectorAll('#carousel .slide');
+  var dotsBox = document.getElementById('dots');
+  var idx = 0, timer = null;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  slides.forEach(function(_, i){
+    var b = document.createElement('button');
+    b.setAttribute('aria-label','사진 ' + (i+1));
+    if(i===0) b.className = 'on';
+    b.onclick = function(){ go(i); restart(); };
+    dotsBox.appendChild(b);
+  });
+  var dots = dotsBox.querySelectorAll('button');
+
+  function go(i){
+    slides[idx].classList.remove('active'); dots[idx].classList.remove('on');
+    idx = (i + slides.length) % slides.length;
+    slides[idx].classList.add('active'); dots[idx].classList.add('on');
+  }
+  window.move = function(d){ go(idx + d); restart(); };
+  function restart(){
+    if(reduced) return;
+    clearInterval(timer);
+    timer = setInterval(function(){ go(idx + 1); }, 4000);
+  }
+  var box = document.getElementById('carousel');
+  box.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  box.addEventListener('mouseleave', restart);
+  restart();
+})();
+</script>
 
 </body>
 </html>
