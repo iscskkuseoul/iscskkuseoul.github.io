@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iscskku.github.io/sitemap.xml
