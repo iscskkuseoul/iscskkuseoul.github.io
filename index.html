@@ -240,11 +240,26 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 .news-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
 .jubo-card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .jubo-card .jubo-thumb{display:block}
-.jubo-card .jubo-thumb img{width:100%;border-bottom:1px solid var(--line)}
-.jubo-body{padding:18px 20px}
+.jubo-card .jubo-thumb img{width:100%;border-top:1px solid var(--line)}
+.jubo-body{padding:24px 20px 18px}
 .jubo-body b{font-family:'Gowun Batang',serif;font-size:1.02rem;display:block;margin-bottom:5px}
 .jubo-body p{color:var(--gray);font-size:.87rem;margin-bottom:14px}
 .jubo-body .btn{display:block;padding:11px 10px;font-size:.9rem}
+.last-link{
+  display:block;text-align:center;margin-top:10px;font-size:.85rem;
+  color:var(--gray);text-decoration:none;
+}
+.last-link:hover{color:var(--pine);text-decoration:underline}
+.last-week{margin-top:6px;border-top:1px solid #F0F2F3;padding-top:10px}
+.last-week summary{
+  cursor:pointer;font-size:.85rem;color:var(--gray);font-weight:500;
+  list-style:none;padding:2px 0;
+}
+.last-week summary::-webkit-details-marker{display:none}
+.last-week summary::after{content:" ›";color:var(--pine)}
+.last-week summary:hover{color:var(--pine)}
+.last-week[open] summary{margin-bottom:6px}
+.last-week .date{margin-top:4px}
 
 /* ── 소식 (콤팩트) ── */
 .news{
@@ -525,7 +540,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2>교회 소식</h2>
     </div>
     <div class="news-grid">
+    <!-- ═══════════════════════════════════════════════════════
+         每周更新消息的方法（两步）：
+         ① 先把下面"本周消息区"的日期和全部 <li> 整体复制，
+            粘贴到更下面的"上周消息区"里，替换掉那里的旧内容
+         ② 再把"本周消息区"的日期改成新的主日日期，
+            <li> 内容换成新一周的公告
+         ═══════════════════════════════════════════════════════ -->
     <div class="news">
+      <!-- ▼▼▼ 本周消息区（每周修改这里）▼▼▼ -->
       <p class="date">2026년 7월 12일 주일</p>
       <ul>
         <li>새로 나오신 분을 주님의 이름으로 환영합니다.</li>
@@ -533,6 +556,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <li>2026 GSM 글로벌 학생 선교 컨퍼런스: 8월 21일(금)–23일(일), 평택대학교. 주제 “DESIRE GOD”</li>
         <li>방학 특별 성경공부(모세오경 개관): 7월 20일부터 매주 월요일 14:45–16:00, 총 5회.</li>
       </ul>
+      <!-- ▲▲▲ 本周消息区结束 ▲▲▲ -->
+
+      <details class="last-week">
+        <summary>지난주 소식 보기</summary>
+        <!-- ▼▼▼ 上周消息区（每周把本周的旧内容粘贴到这里）▼▼▼ -->
+        <p class="date">지난 소식</p>
+        <ul>
+          <li>이전 소식은 다음 주부터 이곳에서 보실 수 있습니다.</li>
+        </ul>
+        <!-- ▲▲▲ 上周消息区结束 ▲▲▲ -->
+      </details>
     </div>
 
     <!-- ═══ 이번 주 주보 (本周周报在线查看) ═══
@@ -542,14 +576,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
          ▶ 封面缩略图 cover.jpg 一般不用换（周报封面设计基本固定），
            想换的话把周报第一页截图改名 cover.jpg 上传到 jubo 文件夹即可 -->
     <div class="jubo-card">
-      <a class="jubo-thumb" href="jubo/jubo.pdf" target="_blank" rel="noopener" aria-label="이번 주 주보 온라인으로 보기">
-        <img src="jubo/cover.jpg" alt="이번 주 주보 표지" loading="lazy">
-      </a>
       <div class="jubo-body">
         <b>이번 주 주보 本周周报</b>
         <p>매주 주보를 온라인으로 바로 보실 수 있습니다. 点击即可在线查看，无需下载。</p>
         <a class="btn btn-pine" href="jubo/jubo.pdf" target="_blank" rel="noopener">주보 온라인으로 보기 ›</a>
+        <a class="last-link" href="jubo/jubo-last.pdf" target="_blank" rel="noopener">지난주 주보 보기 ›</a>
       </div>
+      <a class="jubo-thumb" href="jubo/jubo.pdf" target="_blank" rel="noopener" aria-label="이번 주 주보 온라인으로 보기">
+        <img src="jubo/cover.jpg" alt="이번 주 주보 표지" loading="lazy">
+      </a>
     </div>
     </div>
   </div>
