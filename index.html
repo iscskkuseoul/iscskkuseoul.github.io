@@ -240,16 +240,18 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 .news-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
 .jubo-card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .jubo-card .jubo-thumb{display:block}
-.jubo-card .jubo-thumb img{width:100%;border-top:1px solid var(--line)}
-.jubo-body{padding:24px 20px 18px}
+.jubo-card .jubo-thumb img{width:100%;border-top:1px solid var(--line);border-bottom:1px solid #F0F2F3}
+.jubo-body{padding:24px 26px 18px}
+.jubo-desc{color:var(--gray);font-size:.87rem;margin-bottom:14px}
 .jubo-body b{font-family:'Gowun Batang',serif;font-size:1.02rem;display:block;margin-bottom:5px}
-.jubo-body p{color:var(--gray);font-size:.87rem;margin-bottom:14px}
 .jubo-body .btn{display:block;padding:11px 10px;font-size:.9rem}
+.jubo-foot{padding:10px 26px 12px;border-top:1px solid #F0F2F3}
 .last-link{
-  display:block;text-align:center;margin-top:10px;font-size:.85rem;
-  color:var(--gray);text-decoration:none;
+  display:block;font-size:.85rem;color:var(--gray);font-weight:500;
+  text-decoration:none;padding:2px 0;
 }
-.last-link:hover{color:var(--pine);text-decoration:underline}
+.last-link::after{content:" ›";color:var(--pine)}
+.last-link:hover{color:var(--pine)}
 .last-week{margin-top:6px;border-top:1px solid #F0F2F3;padding-top:10px}
 .last-week summary{
   cursor:pointer;font-size:.85rem;color:var(--gray);font-weight:500;
@@ -266,7 +268,7 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
   background:#fff;border:1px solid var(--line);border-radius:14px;
   padding:24px 26px 16px;max-width:760px;
 }
-.news .date{color:var(--pine);font-weight:700;font-size:.86rem;letter-spacing:.05em;margin-bottom:10px}
+.news .date,.jubo-body .date{color:var(--pine);font-weight:700;font-size:.86rem;letter-spacing:.05em;margin-bottom:10px}
 .news ul{list-style:none}
 .news li{
   padding:9px 0;border-bottom:1px solid #F0F2F3;
@@ -577,14 +579,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
            想换的话把周报第一页截图改名 cover.jpg 上传到 jubo 文件夹即可 -->
     <div class="jubo-card">
       <div class="jubo-body">
-        <b>이번 주 주보 本周周报</b>
-        <p>매주 주보를 온라인으로 바로 보실 수 있습니다. 点击即可在线查看，无需下载。</p>
+        <p class="date">이번 주 주보 本周周报</p>
+        <p class="jubo-desc">매주 주보를 온라인으로 바로 보실 수 있습니다. 点击即可在线查看，无需下载。</p>
         <a class="btn btn-pine" href="jubo/jubo.pdf" target="_blank" rel="noopener">주보 온라인으로 보기 ›</a>
-        <a class="last-link" href="jubo/jubo-last.pdf" target="_blank" rel="noopener">지난주 주보 보기 ›</a>
       </div>
       <a class="jubo-thumb" href="jubo/jubo.pdf" target="_blank" rel="noopener" aria-label="이번 주 주보 온라인으로 보기">
         <img src="jubo/cover.jpg" alt="이번 주 주보 표지" loading="lazy">
       </a>
+      <div class="jubo-foot">
+        <a class="last-link" href="jubo/jubo-last.pdf" target="_blank" rel="noopener">지난주 주보 보기</a>
+      </div>
     </div>
     </div>
   </div>
