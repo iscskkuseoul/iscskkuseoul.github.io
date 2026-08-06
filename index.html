@@ -195,16 +195,22 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 .photo-slot .ph-icon{width:44%;height:44%;stroke:#A9C0B3;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
 .photo-slot img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2}
 
-.team-lead{display:flex;gap:30px;align-items:flex-start;background:#fff;border-radius:14px;padding:28px;margin-bottom:14px}
-.team-lead .photo-slot{width:152px;height:186px;border-radius:12px}
+.team-lead{display:flex;gap:32px;align-items:stretch;background:#fff;border-radius:14px;padding:30px 32px;margin-bottom:14px}
+.team-lead .photo-slot{width:174px;height:212px;border-radius:12px;align-self:flex-start}
 .team-role{display:inline-block;color:var(--pine);font-size:.78rem;font-weight:700;background:var(--pine-soft);padding:3px 12px;border-radius:999px;margin-bottom:9px}
-.team-lead-info h4{font-family:'Gowun Batang',serif;font-size:1.24rem;margin-bottom:12px}
-.cv{list-style:none;border-top:1px solid #F0F2F3}
+.team-lead-info{flex:1;min-width:0}
+.team-lead-info h4{font-family:'Gowun Batang',serif;font-size:1.3rem;margin-bottom:8px}
+.team-greet{color:var(--gray);font-size:.93rem;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid #F0F2F3}
+.cv{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:11px 26px}
 .cv li{
-  padding:9px 0 9px 16px;border-bottom:1px solid #F0F2F3;color:var(--gray);
-  font-size:.92rem;position:relative;
+  padding-left:24px;color:var(--ink);font-size:.9rem;position:relative;line-height:1.5;
 }
-.cv li::before{content:"";position:absolute;left:2px;top:17px;width:5px;height:5px;border-radius:50%;background:var(--pine);opacity:.55}
+.cv li b{display:block;font-weight:600}
+.cv li span{color:var(--gray);font-size:.86rem}
+.cv li svg{
+  position:absolute;left:0;top:2px;width:15px;height:15px;
+  stroke:var(--pine);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.8;
+}
 
 .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .team-card{background:#fff;border-radius:14px;padding:22px 18px;text-align:center}
@@ -262,12 +268,40 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 .c-dots button.on{background:#fff}
 
 /* ── 소식 + 주보 ── */
-.news-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
-.jubo-card{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column}
-.jubo-body{padding:24px 26px 20px;flex:1}
+.news-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start}
+.news{display:flex;flex-direction:column}
+.news-body{position:relative;overflow:hidden;flex:1 1 auto}
+.news.clipped .news-body::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:56px;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 88%);
+}
+.more-btn{
+  display:none;width:100%;margin-top:8px;padding:9px 0;background:none;border:none;
+  border-top:1px solid #F0F2F3;cursor:pointer;color:var(--gray);
+  font-family:inherit;font-size:.85rem;font-weight:500;text-align:left;
+}
+.more-btn::after{content:" ›";color:var(--pine);font-weight:700}
+.more-btn:hover{color:var(--pine)}
+
+.jubo-card{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+.jubo-body{padding:24px 26px 20px}
 .jubo-desc{color:var(--gray);font-size:.87rem;margin-bottom:16px}
 .jubo-body .btn{display:block;padding:12px 10px;font-size:.92rem}
-.jubo-foot{padding:4px 26px 14px}
+.jubo-thumb{
+  display:block;position:relative;background:#F4F7F5;
+  border-top:1px solid var(--line);border-bottom:1px solid #F0F2F3;
+  line-height:0;aspect-ratio:841/595;
+}
+.jubo-thumb.done{aspect-ratio:auto}
+.jubo-thumb canvas,.jubo-thumb img{width:100%;height:auto;display:block}
+.jubo-thumb .zoom{
+  position:absolute;right:10px;bottom:10px;background:rgba(35,40,45,.72);color:#fff;
+  font-size:.72rem;padding:4px 10px;border-radius:999px;line-height:1.5;
+}
+.thumb-wait{
+  padding:40px 0;text-align:center;color:#9BB0A4;font-size:.82rem;line-height:1.6;
+}
+.jubo-foot{padding:6px 26px 14px}
 
 /* 지난 목록 (소식·주보 공통) */
 .last-week{margin-top:8px;border-top:1px solid #F0F2F3;padding-top:10px}
@@ -348,7 +382,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .about-grid,.ministry-grid,.visit,.news-grid{grid-template-columns:1fr}
   .team-wrap{padding:24px 20px;border-radius:16px}
   .team-lead{flex-direction:column;align-items:center;text-align:center;padding:24px 18px;gap:20px}
-  .team-lead .cv{text-align:left;width:100%}
+  .team-lead .photo-slot{align-self:center}
+  .team-lead-info{width:100%;text-align:left}
+  .cv{grid-template-columns:1fr;gap:10px}
   .cards{grid-template-columns:1fr 1fr}
   .cta .btn{flex:1}
   .map-box iframe{min-height:260px}
@@ -473,11 +509,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="team-lead-info">
           <span class="team-role">담임목사 主任牧师</span>
           <h4>정종현 목사</h4>
+          <p class="team-greet">ISC-SKKU Seoul을 담임하며 캠퍼스에서 만난 유학생 한 사람 한 사람을 말씀과 기도로 섬기고 있습니다.</p>
           <ul class="cv">
-            <li>한세대학교 신학대학원 졸업 (M.Div.)</li>
-            <li>퍼듀대학교 사회학 박사 (Ph.D.)</li>
-            <li>성균관대학교 사회학과 부교수</li>
-            <li>창동성결교회 협동목사</li>
+            <li><svg viewBox="0 0 24 24"><path d="M3 7.5 12 4l9 3.5-9 3.5z"/><path d="M7 10v5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-5"/><path d="M21 7.5V13"/></svg><b>한세대학교 신학대학원</b><span>졸업 (M.Div.)</span></li>
+            <li><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.5 7 21l5-2.4L17 21l-1.5-7.5"/></svg><b>퍼듀대학교</b><span>사회학 박사 (Ph.D.)</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M4 5.5c3-.6 5.5-.4 8 1v13c-2.5-1.4-5-1.6-8-1z"/><path d="M20 5.5c-3-.6-5.5-.4-8 1v13c2.5-1.4 5-1.6 8-1z"/></svg><b>성균관대학교</b><span>사회학과 부교수</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M12 4v16M7.5 9h9"/></svg><b>창동성결교회</b><span>협동목사</span></li>
           </ul>
         </div>
       </div>
@@ -637,11 +674,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="news-grid">
 
       <!-- 왼쪽: 교회 소식 -->
-      <div class="news">
+      <div class="news" id="newsCard">
         <p class="date" id="newsDate">이번 주 소식</p>
-        <ul id="newsList">
-          <li>소식을 불러오는 중입니다.</li>
-        </ul>
+        <div class="news-body" id="newsBody">
+          <ul id="newsList">
+            <li>소식을 불러오는 중입니다.</li>
+          </ul>
+        </div>
+        <button class="more-btn" id="newsMore" type="button">소식 전체 보기</button>
         <details class="last-week" id="newsArchiveBox" hidden>
           <summary>지난 소식 모두 보기</summary>
           <div id="newsArchive"></div>
@@ -649,12 +689,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
 
       <!-- 오른쪽: 주보 -->
-      <div class="jubo-card">
+      <div class="jubo-card" id="juboCard">
         <div class="jubo-body">
           <p class="date" id="juboDate">이번 주 주보 本周周报</p>
           <p class="jubo-desc">매주 주보를 온라인으로 바로 보실 수 있습니다. 点击即可在线查看，无需下载。</p>
           <a class="btn btn-pine" id="juboLink" href="jubo/2026-08-02.pdf" target="_blank" rel="noopener">주보 온라인으로 보기 ›</a>
         </div>
+        <!-- 주보 미리보기: PDF 첫 장을 자동으로 그려 보여줍니다(따로 이미지 올릴 필요 없음) -->
+        <a class="jubo-thumb" id="juboThumb" href="jubo/2026-08-02.pdf" target="_blank" rel="noopener" aria-label="주보 크게 보기">
+          <div class="thumb-wait" id="thumbWait">주보 미리보기를<br>준비하고 있습니다</div>
+          <span class="zoom" hidden>클릭하면 크게 보기 ⤢</span>
+        </a>
         <div class="jubo-foot">
           <details class="last-week" id="juboArchiveBox" hidden>
             <summary>지난 주보 모두 보기</summary>
@@ -836,6 +881,115 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     }).join('');
   }
 
+
+  /* ── 주보 첫 장을 그림으로 그려 미리보기 만들기 ──
+     PDF만 올리면 되도록 pdf.js 로 자동 생성합니다.
+     실패하면 미리보기만 조용히 감추고 나머지는 정상 작동합니다. */
+  function drawThumb(url){
+    var wrap = document.getElementById('juboThumb');
+    /* 화면 근처에 왔을 때 불러오기 (지원하지 않는 브라우저는 바로 불러옴) */
+    if(window.IntersectionObserver){
+      var io = new IntersectionObserver(function(en){
+        if(en[0].isIntersecting){ io.disconnect(); loadThumb(url); }
+      }, {rootMargin:'400px'});
+      io.observe(wrap);
+    }else{
+      loadThumb(url);
+    }
+  }
+
+  function loadThumb(url){
+    var wrap = document.getElementById('juboThumb');
+    var wait = document.getElementById('thumbWait');
+    var zoom = wrap.querySelector('.zoom');
+
+    function giveUp(){ wrap.hidden = true; syncHeight(); }
+
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.min.js';
+    s.onerror = giveUp;
+    s.onload = function(){
+      try{
+        var lib = window['pdfjs-dist/build/pdf'] || window.pdfjsLib;
+        if(!lib) return giveUp();
+        lib.GlobalWorkerOptions.workerSrc =
+          'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js';
+        lib.getDocument(url).promise.then(function(pdf){
+          return pdf.getPage(1);
+        }).then(function(page){
+          var base = page.getViewport({scale:1});
+          var target = Math.min(820, Math.max(560, wrap.clientWidth * 2 || 760));
+          var vp = page.getViewport({scale: target / base.width});
+          var cv = document.createElement('canvas');
+          cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+          return page.render({canvasContext: cv.getContext('2d'), viewport: vp})
+                     .promise.then(function(){ return cv; });
+        }).then(function(cv){
+          if(wait) wait.remove();
+          wrap.insertBefore(cv, zoom);
+          wrap.classList.add('done');
+          zoom.hidden = false;
+          syncHeight();
+        }).catch(giveUp);
+      }catch(e){ giveUp(); }
+    };
+    document.head.appendChild(s);
+  }
+
+  /* ── 소식 칸 높이를 주보 칸에 맞추기 ──
+     소식이 길면 접어두고 "소식 전체 보기" 버튼을 보여 줍니다. */
+  var newsCard = document.getElementById('newsCard');
+  var newsBody = document.getElementById('newsBody');
+  var juboCard = document.getElementById('juboCard');
+  var moreBtn  = document.getElementById('newsMore');
+  var opened = false;
+
+  function syncHeight(){
+    if(!newsCard || !newsBody || !juboCard) return;
+
+    /* 1) 접힘 상태를 모두 풀고 원래 높이를 잰다 (버튼은 보이게 둔 채로 재야
+          버튼 높이까지 계산에 들어가 주보 칸과 정확히 맞는다) */
+    newsBody.style.maxHeight = '';
+    newsCard.classList.remove('clipped');
+    moreBtn.style.display = 'block';
+
+    var full = newsBody.scrollHeight;
+    var others = newsCard.offsetHeight - newsBody.offsetHeight;
+    var limit = (window.innerWidth <= 840)
+      ? 400                                    /* 모바일: 세로 배치라 고정값 */
+      : juboCard.offsetHeight - others;        /* PC: 주보 칸 높이에 맞춤 */
+    if(limit < 220) limit = 220;
+
+    /* 2) 다 펼친 상태이거나 원래 짧으면 접지 않는다 */
+    if(opened){
+      moreBtn.textContent = '소식 접기';
+      return;
+    }
+    if(full <= limit + 24){
+      moreBtn.style.display = 'none';
+      return;
+    }
+
+    /* 3) 길면 주보 칸 높이에 맞춰 접는다 */
+    newsBody.style.maxHeight = limit + 'px';
+    newsCard.classList.add('clipped');
+    moreBtn.textContent = '소식 전체 보기';
+  }
+
+  if(moreBtn){
+    moreBtn.addEventListener('click', function(){
+      opened = !opened;
+      syncHeight();
+      if(!opened && newsCard.scrollIntoView){
+        try{ newsCard.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){}
+      }
+    });
+  }
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt); rt = setTimeout(syncHeight, 200);
+  });
+
   fetch('news.txt', {cache:'no-cache'})
     .then(function(r){ if(!r.ok) throw new Error('no news.txt'); return r.text(); })
     .then(function(text){
@@ -858,6 +1012,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         }).join('');
         document.getElementById('newsArchiveBox').hidden = false;
       }
+      syncHeight();
 
       /* ── 이번 주 주보: 파일이 실제로 있는 가장 최근 날짜를 찾음 ── */
       var link = document.getElementById('juboLink');
@@ -872,9 +1027,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       }
 
       tryJubo(0).then(function(idx){
-        if(idx < 0) return;
-        link.href = 'jubo/' + weeks[idx].date.ymd + '.pdf';
+        if(idx < 0){ document.getElementById('juboThumb').hidden = true; syncHeight(); return; }
+        var pdfUrl = 'jubo/' + weeks[idx].date.ymd + '.pdf';
+        link.href = pdfUrl;
+        document.getElementById('juboThumb').href = pdfUrl;
         dateEl.textContent = weeks[idx].date.label.replace(' 주일','') + ' 주보 本周周报';
+        drawThumb(pdfUrl);
 
         /* 지난 주보: 실제로 파일이 있는 날짜만 목록에 넣습니다
            (PDF가 없는 주는 링크를 만들지 않아 404가 나지 않습니다) */
