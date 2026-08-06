@@ -185,25 +185,30 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 }
 .vision-list li span{color:var(--pine);margin-right:12px;font-family:'Pretendard Variable',sans-serif;font-size:.84rem}
 
-/* ── 섬기는 사람들 (교역자 소개) ── */
-.team-wrap{margin-top:52px;background:var(--pine-soft);border-radius:18px;padding:32px}
-.team-head{margin-bottom:22px}
+/* ── 섬기는 사람들 ── */
+.team-wrap{margin-top:52px;background:var(--pine-soft);border-radius:18px;padding:34px}
+.team-head{margin-bottom:24px}
 .team-eyebrow{font-family:'Noto Sans SC',sans-serif;color:var(--pine);font-size:.82rem;letter-spacing:.24em;margin-bottom:6px;font-weight:500}
 .team-title{font-family:'Gowun Batang',serif;font-size:1.26rem;font-weight:700}
 
 .photo-slot{position:relative;background:#E2EAE5;overflow:hidden;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
 .photo-slot .ph-icon{width:44%;height:44%;stroke:#A9C0B3;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
-.photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;z-index:2}
+.photo-slot img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2}
 
-.team-lead{display:flex;gap:26px;align-items:center;background:#fff;border-radius:14px;padding:24px;margin-bottom:14px}
-.team-lead .photo-slot{width:136px;height:136px;border-radius:14px}
-.team-role{display:inline-block;color:var(--pine);font-size:.79rem;font-weight:700;background:var(--pine-soft);padding:3px 12px;border-radius:999px;margin-bottom:9px}
-.team-lead-info h4{font-family:'Gowun Batang',serif;font-size:1.18rem;margin-bottom:8px}
-.team-lead-info p{color:var(--gray);font-size:.92rem;max-width:36em}
+.team-lead{display:flex;gap:30px;align-items:flex-start;background:#fff;border-radius:14px;padding:28px;margin-bottom:14px}
+.team-lead .photo-slot{width:152px;height:186px;border-radius:12px}
+.team-role{display:inline-block;color:var(--pine);font-size:.78rem;font-weight:700;background:var(--pine-soft);padding:3px 12px;border-radius:999px;margin-bottom:9px}
+.team-lead-info h4{font-family:'Gowun Batang',serif;font-size:1.24rem;margin-bottom:12px}
+.cv{list-style:none;border-top:1px solid #F0F2F3}
+.cv li{
+  padding:9px 0 9px 16px;border-bottom:1px solid #F0F2F3;color:var(--gray);
+  font-size:.92rem;position:relative;
+}
+.cv li::before{content:"";position:absolute;left:2px;top:17px;width:5px;height:5px;border-radius:50%;background:var(--pine);opacity:.55}
 
 .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .team-card{background:#fff;border-radius:14px;padding:22px 18px;text-align:center}
-.team-card .photo-slot{width:80px;height:80px;border-radius:50%;margin:0 auto 13px}
+.team-card .photo-slot{width:82px;height:82px;border-radius:50%;margin:0 auto 13px}
 .team-card h4{font-family:'Gowun Batang',serif;font-size:1.02rem;margin-top:1px}
 
 /* ── 예배 안내 ── */
@@ -235,7 +240,7 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
   overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9;background:#000;
 }
 .carousel .slide{
-  position:absolute;inset:0;opacity:0;transition:opacity .8s ease;
+  position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;transition:opacity .8s ease;
 }
 .carousel .slide.active{opacity:1}
 .carousel .slide img{width:100%;height:100%;object-fit:cover}
@@ -258,30 +263,34 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 
 /* ── 소식 + 주보 ── */
 .news-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start}
-.jubo-card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.jubo-card .jubo-thumb{display:block}
-.jubo-card .jubo-thumb img{width:100%;border-top:1px solid var(--line);border-bottom:1px solid #F0F2F3}
-.jubo-body{padding:24px 26px 18px}
-.jubo-desc{color:var(--gray);font-size:.87rem;margin-bottom:14px}
-.jubo-body b{font-family:'Gowun Batang',serif;font-size:1.02rem;display:block;margin-bottom:5px}
-.jubo-body .btn{display:block;padding:11px 10px;font-size:.9rem}
-.jubo-foot{padding:10px 26px 12px;border-top:1px solid #F0F2F3}
-.last-link{
-  display:block;font-size:.85rem;color:var(--gray);font-weight:500;
-  text-decoration:none;padding:2px 0;
-}
-.last-link::after{content:" ›";color:var(--pine)}
-.last-link:hover{color:var(--pine)}
-.last-week{margin-top:6px;border-top:1px solid #F0F2F3;padding-top:10px}
+.jubo-card{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column}
+.jubo-body{padding:24px 26px 20px;flex:1}
+.jubo-desc{color:var(--gray);font-size:.87rem;margin-bottom:16px}
+.jubo-body .btn{display:block;padding:12px 10px;font-size:.92rem}
+.jubo-foot{padding:4px 26px 14px}
+
+/* 지난 목록 (소식·주보 공통) */
+.last-week{margin-top:8px;border-top:1px solid #F0F2F3;padding-top:10px}
 .last-week summary{
   cursor:pointer;font-size:.85rem;color:var(--gray);font-weight:500;
-  list-style:none;padding:2px 0;
+  list-style:none;padding:3px 0;
 }
 .last-week summary::-webkit-details-marker{display:none}
-.last-week summary::after{content:" ›";color:var(--pine)}
+.last-week summary::after{content:" ›";color:var(--pine);font-weight:700}
 .last-week summary:hover{color:var(--pine)}
-.last-week[open] summary{margin-bottom:6px}
-.last-week .date{margin-top:4px}
+.last-week[open] summary::after{content:" ⌄"}
+.arch-week{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.arch-week:first-child{border-top:none;padding-top:4px}
+.arch-week .date{color:var(--pine);font-weight:700;font-size:.83rem;margin-bottom:6px}
+.jubo-arch{list-style:none;margin-top:8px}
+.jubo-arch li{border-bottom:1px solid #F0F2F3}
+.jubo-arch li:last-child{border-bottom:none}
+.jubo-arch a{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  padding:10px 2px;text-decoration:none;color:var(--ink);font-size:.9rem;
+}
+.jubo-arch a:hover{color:var(--pine)}
+.jubo-arch a span{color:var(--gray);font-size:.8rem}
 
 /* ── 소식 (콤팩트) ── */
 .news{
@@ -290,16 +299,17 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 }
 .news .date,.jubo-body .date{color:var(--pine);font-weight:700;font-size:.86rem;letter-spacing:.05em;margin-bottom:10px}
 .news ul{list-style:none}
-.news li{
-  padding:9px 0;border-bottom:1px solid #F0F2F3;
-  color:var(--ink);font-size:.93rem;display:flex;gap:10px;
+.news ul li{
+  padding:10px 0 10px 15px;border-bottom:1px solid #F0F2F3;
+  color:var(--ink);font-size:.93rem;position:relative;
 }
-.news li:last-child{border-bottom:none}
-.news li::before{content:"·";color:var(--pine);font-weight:800}
+.news ul li:last-child{border-bottom:none}
+.news ul li::before{content:"";position:absolute;left:2px;top:18px;width:5px;height:5px;border-radius:50%;background:var(--pine);opacity:.6}
+.news ul li em{display:block;font-style:normal;color:var(--gray);font-size:.88rem;margin-top:2px;padding-left:2px}
 
 /* ── 유튜브 ── */
 .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video iframe{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;border:0}
 
 /* ── 오시는 길 ── */
 .visit{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:stretch}
@@ -336,20 +346,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .strip div{display:flex;gap:10px;align-items:baseline}
   .strip div b{margin:0;min-width:104px}
   .about-grid,.ministry-grid,.visit,.news-grid{grid-template-columns:1fr}
+  .team-wrap{padding:24px 20px;border-radius:16px}
+  .team-lead{flex-direction:column;align-items:center;text-align:center;padding:24px 18px;gap:20px}
+  .team-lead .cv{text-align:left;width:100%}
   .cards{grid-template-columns:1fr 1fr}
   .cta .btn{flex:1}
   .map-box iframe{min-height:260px}
   .c-btn{width:32px;height:32px}
-  .team-wrap{padding:24px 20px;border-radius:16px}
-  .team-lead{flex-direction:column;text-align:center;padding:22px 18px}
-  .team-lead-info p{margin:0 auto}
 }
 @media (max-width:520px){
   .cards{grid-template-columns:1fr}
   .brand b{font-size:.92rem}
   .yt-btn{display:none}
-  .team-grid{gap:10px}
-  .team-card{padding:18px 12px}
 }
 @media (prefers-reduced-motion:no-preference){
   .hero-grid{animation:rise .7s ease both}
@@ -447,40 +455,33 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </ul>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         섬기는 사람들 (事奉同工 · 교역자 소개)
-         ▶ 사진 넣는 방법 (매우 간단합니다):
-           ① 담임목사님 사진을 정사각형에 가깝게 잘라 team1.jpg로,
-              Ethan 선교사님 사진은 team2.jpg로,
-              John 전도사님 사진은 team3.jpg로 이름을 바꿉니다.
-              (권장 크기: 가로세로 800×800px 정도, 용량 1MB 이하)
-           ② GitHub의 assets 폴더에 업로드만 하면 끝입니다.
-              코드는 전혀 건드릴 필요가 없습니다 — 사진 파일이
-              해당 이름으로 올라오는 순간, 지금 보이는 회색 아이콘
-              자리에 자동으로 사진이 나타납니다.
-         ▶ 소개 문구도 아래 <p> 안의 문장을 원하는 인사말이나
-           목회 철학, 좋아하는 말씀 구절 등으로 자유롭게 바꾸셔도 됩니다.
-         ═══════════════════════════════════════════════════════════ -->
+    <!-- ═══ 섬기는 사람들 ═══
+         ▶ 사진 교체: 사진 파일 이름을 pastor.jpg / team2.jpg / team3.jpg 로 바꿔
+           assets 폴더에 올리기만 하면 자동으로 표시됩니다(코드 수정 불필요).
+         ▶ 약력 수정: 아래 <li> 안의 글자만 바꾸면 됩니다. -->
     <div class="team-wrap">
       <div class="team-head">
         <p class="team-eyebrow">事奉同工</p>
         <h3 class="team-title">섬기는 사람들</h3>
       </div>
 
-      <!-- 담임목사 -->
       <div class="team-lead">
         <div class="photo-slot">
           <svg class="ph-icon" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.3 20c1.2-4.3 4.2-6.4 7.7-6.4s6.5 2.1 7.7 6.4"/></svg>
-          <img src="assets/team1.jpg" alt="정종현 목사" loading="lazy" onerror="this.style.display='none'">
+          <img src="assets/pastor.jpg" alt="정종현 목사" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="team-lead-info">
           <span class="team-role">담임목사 主任牧师</span>
           <h4>정종현 목사</h4>
-          <p>ISC-SKKU Seoul을 담임하며 유학생들을 말씀과 기도로 섬기고 있습니다.</p>
+          <ul class="cv">
+            <li>한세대학교 신학대학원 졸업 (M.Div.)</li>
+            <li>퍼듀대학교 사회학 박사 (Ph.D.)</li>
+            <li>성균관대학교 사회학과 부교수</li>
+            <li>창동성결교회 협동목사</li>
+          </ul>
         </div>
       </div>
 
-      <!-- 선교사 · 전도사 -->
       <div class="team-grid">
         <div class="team-card">
           <div class="photo-slot">
@@ -614,61 +615,54 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
        增加一条就复制一行 <li>...</li>，删除一条就删掉一整行
        建议保持 3~5 条，页面更清爽
      ═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     교회 소식 · 주보 (자동 업데이트 영역)
+     ▶ 이 부분은 코드를 고칠 필요가 전혀 없습니다.
+       매주 파일 두 개만 올리면 홈페이지가 스스로 갱신됩니다.
+
+       ① news.txt  ← 목사님이 쓰시는 "교회 소식" 파일 그대로
+                     (맨 아래에 새 주 날짜와 내용을 덧붙여 저장 후 업로드)
+       ② jubo/2026-08-09.pdf  ← 주보 PDF를 "그 주 주일 날짜"로
+                                 이름 붙여 jubo 폴더에 업로드
+
+       news.txt 의 가장 마지막 날짜가 "이번 주"가 되고,
+       그 이전 날짜들은 자동으로 "지난 소식·주보" 목록에 쌓입니다.
+     ═══════════════════════════════════════════════════════════════ -->
 <section id="news">
   <div class="wrap">
     <div class="sec-head" style="margin-bottom:26px">
       <p class="eyebrow">本周消息</p>
-      <h2>교회 소식</h2>
+      <h2>교회 소식 · 주보</h2>
     </div>
     <div class="news-grid">
-    <!-- ═══════════════════════════════════════════════════════
-         每周更新消息的方法（两步）：
-         ① 先把下面"本周消息区"的日期和全部 <li> 整体复制，
-            粘贴到更下面的"上周消息区"里，替换掉那里的旧内容
-         ② 再把"本周消息区"的日期改成新的主日日期，
-            <li> 内容换成新一周的公告
-         ═══════════════════════════════════════════════════════ -->
-    <div class="news">
-      <!-- ▼▼▼ 本周消息区（每周修改这里）▼▼▼ -->
-      <p class="date">2026년 7월 12일 주일</p>
-      <ul>
-        <li>새로 나오신 분을 주님의 이름으로 환영합니다.</li>
-        <li>성경통독: 8월 18일(화) 12:00–13:30 다시 개강합니다.</li>
-        <li>2026 GSM 글로벌 학생 선교 컨퍼런스: 8월 21일(금)–23일(일), 평택대학교. 주제 “DESIRE GOD”</li>
-        <li>방학 특별 성경공부(모세오경 개관): 7월 20일부터 매주 월요일 14:45–16:00, 총 5회.</li>
-      </ul>
-      <!-- ▲▲▲ 本周消息区结束 ▲▲▲ -->
 
-      <details class="last-week">
-        <summary>지난주 소식 보기</summary>
-        <!-- ▼▼▼ 上周消息区（每周把本周的旧内容粘贴到这里）▼▼▼ -->
-        <p class="date">지난 소식</p>
-        <ul>
-          <li>이전 소식은 다음 주부터 이곳에서 보실 수 있습니다.</li>
+      <!-- 왼쪽: 교회 소식 -->
+      <div class="news">
+        <p class="date" id="newsDate">이번 주 소식</p>
+        <ul id="newsList">
+          <li>소식을 불러오는 중입니다.</li>
         </ul>
-        <!-- ▲▲▲ 上周消息区结束 ▲▲▲ -->
-      </details>
-    </div>
+        <details class="last-week" id="newsArchiveBox" hidden>
+          <summary>지난 소식 모두 보기</summary>
+          <div id="newsArchive"></div>
+        </details>
+      </div>
 
-    <!-- ═══ 이번 주 주보 (本周周报在线查看) ═══
-         ▶ 每周更新方法（很简单，共两步）：
-           ① PowerPoint 打开周报 → 文件 → 다른 이름으로 저장(另存为) → 格式选 PDF
-           ② 把 PDF 改名为 jubo.pdf，上传到 GitHub 的 jubo 文件夹覆盖旧文件
-         ▶ 封面缩略图 cover.jpg 一般不用换（周报封面设计基本固定），
-           想换的话把周报第一页截图改名 cover.jpg 上传到 jubo 文件夹即可 -->
-    <div class="jubo-card">
-      <div class="jubo-body">
-        <p class="date">이번 주 주보 本周周报</p>
-        <p class="jubo-desc">매주 주보를 온라인으로 바로 보실 수 있습니다. 点击即可在线查看，无需下载。</p>
-        <a class="btn btn-pine" href="jubo/jubo.pdf" target="_blank" rel="noopener">주보 온라인으로 보기 ›</a>
+      <!-- 오른쪽: 주보 -->
+      <div class="jubo-card">
+        <div class="jubo-body">
+          <p class="date" id="juboDate">이번 주 주보 本周周报</p>
+          <p class="jubo-desc">매주 주보를 온라인으로 바로 보실 수 있습니다. 点击即可在线查看，无需下载。</p>
+          <a class="btn btn-pine" id="juboLink" href="jubo/2026-08-02.pdf" target="_blank" rel="noopener">주보 온라인으로 보기 ›</a>
+        </div>
+        <div class="jubo-foot">
+          <details class="last-week" id="juboArchiveBox" hidden>
+            <summary>지난 주보 모두 보기</summary>
+            <div id="juboArchive"></div>
+          </details>
+        </div>
       </div>
-      <a class="jubo-thumb" href="jubo/jubo.pdf" target="_blank" rel="noopener" aria-label="이번 주 주보 온라인으로 보기">
-        <img src="jubo/cover.jpg" alt="이번 주 주보 표지" loading="lazy">
-      </a>
-      <div class="jubo-foot">
-        <a class="last-link" href="jubo/jubo-last.pdf" target="_blank" rel="noopener">지난주 주보 보기</a>
-      </div>
-    </div>
+
     </div>
   </div>
 </section>
@@ -791,6 +785,129 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   box.addEventListener('mouseenter', function(){ clearInterval(timer); });
   box.addEventListener('mouseleave', restart);
   restart();
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   교회 소식 · 주보 자동 표시 (수정할 필요 없는 부분입니다)
+   news.txt 를 읽어 최신 주는 본문에, 나머지는 "지난 목록"에 넣고,
+   각 날짜에 해당하는 jubo/YYYY-MM-DD.pdf 를 자동으로 연결합니다.
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+  var esc = function(s){
+    return s.replace(/[&<>"]/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  };
+
+  /* 2026.8.2 → {ymd:'2026-08-02', label:'2026년 8월 2일 주일'} */
+  function parseDate(raw){
+    var m = raw.match(/(\d{4})\s*\.\s*(\d{1,2})\s*\.\s*(\d{1,2})/);
+    if(!m) return null;
+    var y = m[1], mo = m[2], d = m[3];
+    return {
+      ymd: y + '-' + ('0'+mo).slice(-2) + '-' + ('0'+d).slice(-2),
+      label: y + '년 ' + parseInt(mo,10) + '월 ' + parseInt(d,10) + '일 주일'
+    };
+  }
+
+  function parseNews(text){
+    var lines = text.replace(/\r\n/g,'\n').split('\n');
+    var weeks = [], cur = null, item = null;
+    for(var i=0;i<lines.length;i++){
+      var line = lines[i].replace(/\s+$/,'');
+      if(/^\s*\d{4}\s*\.\s*\d{1,2}\s*\.\s*\d{1,2}\s*\.?\s*$/.test(line)){
+        var d = parseDate(line);
+        if(d){ cur = {date:d, items:[]}; weeks.push(cur); item = null; }
+        continue;
+      }
+      if(!line.trim() || !cur) continue;
+      var m = line.match(/^\s*(\d+)\s*\.\s*(.*)$/);
+      if(m){ item = {head:m[2].trim(), rest:[]}; cur.items.push(item); }
+      else if(item){ item.rest.push(line.trim()); }
+    }
+    return weeks;
+  }
+
+  function itemsHtml(items){
+    return items.map(function(it){
+      var s = '<li>' + esc(it.head);
+      if(it.rest.length) s += '<em>' + it.rest.map(esc).join('<br>') + '</em>';
+      return s + '</li>';
+    }).join('');
+  }
+
+  fetch('news.txt', {cache:'no-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('no news.txt'); return r.text(); })
+    .then(function(text){
+      var weeks = parseNews(text);
+      if(!weeks.length) throw new Error('empty');
+
+      /* 날짜순 정렬 후 최신 주를 맨 앞으로 */
+      weeks.sort(function(a,b){ return a.date.ymd < b.date.ymd ? 1 : -1; });
+      var latest = weeks[0], past = weeks.slice(1);
+
+      /* ── 이번 주 소식 ── */
+      document.getElementById('newsDate').textContent = latest.date.label;
+      document.getElementById('newsList').innerHTML = itemsHtml(latest.items);
+
+      /* ── 지난 소식 ── */
+      if(past.length){
+        document.getElementById('newsArchive').innerHTML = past.map(function(w){
+          return '<div class="arch-week"><p class="date">' + w.date.label +
+                 '</p><ul>' + itemsHtml(w.items) + '</ul></div>';
+        }).join('');
+        document.getElementById('newsArchiveBox').hidden = false;
+      }
+
+      /* ── 이번 주 주보: 파일이 실제로 있는 가장 최근 날짜를 찾음 ── */
+      var link = document.getElementById('juboLink');
+      var dateEl = document.getElementById('juboDate');
+
+      function tryJubo(i){
+        if(i >= weeks.length) return Promise.resolve(-1);
+        var url = 'jubo/' + weeks[i].date.ymd + '.pdf';
+        return fetch(url, {method:'HEAD'})
+          .then(function(r){ return r.ok ? i : tryJubo(i+1); })
+          .catch(function(){ return tryJubo(i+1); });
+      }
+
+      tryJubo(0).then(function(idx){
+        if(idx < 0) return;
+        link.href = 'jubo/' + weeks[idx].date.ymd + '.pdf';
+        dateEl.textContent = weeks[idx].date.label.replace(' 주일','') + ' 주보 本周周报';
+
+        /* 지난 주보: 실제로 파일이 있는 날짜만 목록에 넣습니다
+           (PDF가 없는 주는 링크를 만들지 않아 404가 나지 않습니다) */
+        var rest = weeks.slice(idx+1);
+        if(!rest.length) return;
+        var archBox = document.getElementById('juboArchiveBox');
+        var archEl  = document.getElementById('juboArchive');
+        archEl.innerHTML = '<p style="color:var(--gray);font-size:.85rem;padding:8px 2px">목록을 불러오는 중입니다.</p>';
+        archBox.hidden = false;
+
+        var loaded = false;
+        function loadArchive(){
+          if(loaded) return; loaded = true;
+          Promise.all(rest.map(function(w){
+            return fetch('jubo/' + w.date.ymd + '.pdf', {method:'HEAD'})
+              .then(function(r){ return r.ok ? w : null; })
+              .catch(function(){ return null; });
+          })).then(function(list){
+            var ok = list.filter(Boolean);
+            if(!ok.length){ archBox.hidden = true; return; }
+            archEl.innerHTML = '<ul class="jubo-arch">' + ok.map(function(w){
+              return '<li><a href="jubo/' + w.date.ymd + '.pdf" target="_blank" rel="noopener">' +
+                     w.date.label.replace(' 주일','') + '<span>PDF ›</span></a></li>';
+            }).join('') + '</ul>';
+          });
+        }
+        archBox.addEventListener('toggle', function(){ if(archBox.open) loadArchive(); });
+      });
+    })
+    .catch(function(){
+      document.getElementById('newsList').innerHTML =
+        '<li>소식을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</li>';
+    });
 })();
 </script>
 
