@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="no-js">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.className="js";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <!-- ═══════════════════════════════════════════════════════════════
@@ -35,8 +36,11 @@
 <meta name="twitter:description" content="성균관대 유학생을 섬기는 교회. 주일예배 매주 일요일 오후 3시.">
 <meta name="twitter:image" content="https://iscskkuseoul.github.io/assets/banner1.jpg">
 
+<meta name="theme-color" content="#10573B">
 <link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
@@ -119,6 +123,8 @@ header{
 .menu{display:flex;gap:22px;list-style:none;align-items:center}
 .menu a{text-decoration:none;color:var(--ink);font-size:.93rem;font-weight:500;white-space:nowrap}
 .menu a:hover{color:var(--pine)}
+.menu a.active{color:var(--pine);font-weight:700}
+.menu a.active::after{content:'';display:block;height:2px;background:var(--pine);border-radius:2px;margin-top:3px}
 .nav-right{display:flex;align-items:center;gap:12px}
 .reg-btn{
   border:1.5px solid var(--pine);color:var(--pine);padding:6px 14px;border-radius:999px;
@@ -149,13 +155,6 @@ header{
 .lang-seg button:hover{color:var(--pine)}
 .lang-seg button[aria-current="true"]{color:#fff}
 .lang-seg button[aria-current="true"]:hover{color:#fff}
-/* 모바일 메뉴 안의 큰 언어 전환 */
-.m-lang{display:flex;gap:8px;padding:12px 0 6px;border-bottom:1px solid #F0F2F3;margin-bottom:4px}
-.m-lang button{
-  flex:1;background:#EDF1EE;border:none;border-radius:10px;cursor:pointer;font-family:inherit;
-  font-size:.9rem;font-weight:700;color:var(--gray);padding:11px 0;
-}
-.m-lang button[aria-current="true"]{background:var(--pine);color:#fff}
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px}
 .hamburger span{display:block;width:22px;height:2px;background:var(--ink);transition:.25s}
 .hamburger.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -234,13 +233,13 @@ section{padding:80px 0}
 .alt{background:var(--pine-soft)}
 .sec-head{margin-bottom:40px}
 .eyebrow{
-  font-family:'Noto Sans SC',sans-serif;color:var(--pine);font-size:.84rem;
-  letter-spacing:.24em;margin-bottom:8px;font-weight:500;word-break:normal;
+  color:var(--pine);font-size:.8rem;font-weight:700;
+  letter-spacing:.2em;margin-bottom:8px;word-break:normal;
 }
 h2{font-family:'Gowun Batang',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:700}
 .sub{color:var(--gray);margin-top:10px;max-width:46em}
-.reveal{opacity:0;transform:translateY(18px)}
-.reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease}
+html.js .reveal{opacity:0;transform:translateY(18px)}
+html.js .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease}
 
 /* ─────────── 소개 ─────────── */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
@@ -374,9 +373,30 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight
 .last-week summary::after{content:" ›";color:var(--pine);font-weight:700}
 .last-week[open] summary::after{content:" ⌄"}
 .last-week summary:hover{color:var(--pine)}
-.arch-week{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
-.arch-week:first-child{border-top:none;padding-top:4px}
-.arch-week .date{color:var(--pine);font-weight:700;font-size:.83rem;margin-bottom:6px}
+/* 지난 소식: 날짜 목록만 먼저 보이고, 누르면 그 주만 펼쳐집니다 */
+.news .news-arch{list-style:none;margin-top:8px}
+.news .news-arch>li{padding:0;position:static;border-bottom:1px solid #F0F2F3}
+.news .news-arch>li:last-child{border-bottom:none}
+.news .news-arch>li::before{display:none}
+.news .news-arch summary{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  padding:11px 2px;cursor:pointer;color:var(--ink);font-size:.9rem;font-weight:600;list-style:none;
+}
+.news .news-arch summary::-webkit-details-marker{display:none}
+.news .news-arch summary::after{
+  content:"소식 보기 ›";color:var(--gray);font-size:.8rem;font-weight:500;white-space:nowrap;
+}
+.news .news-arch summary:hover{color:var(--pine)}
+.news .news-arch details[open]>summary{color:var(--pine)}
+.news .news-arch details[open]>summary::after{content:"닫기 ⌄";color:var(--pine)}
+.news .news-arch details>ul{list-style:none;margin:0 0 8px;padding-top:2px;border-top:1px dashed var(--line)}
+html[lang="zh"] .news .news-arch summary::after{content:"查看 ›"}
+html[lang="zh"] .news .news-arch details[open]>summary::after{content:"收起 ⌄"}
+html[lang="en"] .news .news-arch summary::after{content:"View ›"}
+html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄"}
+/* 주가 많이 쌓이면 목록 안에서만 스크롤되게 합니다 */
+#newsArchive.scroll{max-height:min(60vh,460px);overflow-y:auto;padding-right:6px}
+#juboArchive.scroll{max-height:min(60vh,420px);overflow-y:auto;padding-right:6px}
 .jubo-arch{list-style:none;margin-top:8px}
 .jubo-arch li{border-bottom:1px solid #F0F2F3}
 .jubo-arch li:last-child{border-bottom:none}
@@ -454,7 +474,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .lang-seg button{font-size:.74rem;padding:6px 9px}
 }
 @media (prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none}
+  html.js .reveal{opacity:1;transform:none}
+  .hero-bg .slide.active{animation:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -488,11 +509,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </div>
   <ul class="mobile-menu" id="mMenu">
-    <li class="m-lang" id="mLang">
-      <button type="button" data-lang="ko">한국어</button>
-      <button type="button" data-lang="zh">中文</button>
-      <button type="button" data-lang="en">English</button>
-    </li>
     <li><a href="#about" data-i18n="nav.about">교회 소개</a></li>
     <li><a href="#worship" data-i18n="nav.worship">예배 안내</a></li>
     <li><a href="#ministry" data-i18n="nav.ministry">사역</a></li>
@@ -1020,6 +1036,9 @@ function applyLang(code){
   lang = I18N[saved] ? saved : 'ko';
 })();
 
+</script>
+
+<script>
 /* ═══ 2. 헤더 · 메뉴 · 언어 버튼 ═══ */
 (function(){
   function bind(box){
@@ -1030,7 +1049,6 @@ function applyLang(code){
     });
   }
   bind(document.getElementById('langSeg'));
-  bind(document.getElementById('mLang'));
 
   var hamb = document.getElementById('hamb'), mm = document.getElementById('mMenu');
   hamb.addEventListener('click', function(){ mm.classList.toggle('open'); hamb.classList.toggle('on'); });
@@ -1045,6 +1063,9 @@ function applyLang(code){
   }, {passive:true});
 })();
 
+</script>
+
+<script>
 /* ═══ 3. 히어로 배경 슬라이드 ═══ */
 (function(){
   var slides = document.querySelectorAll('#heroBg .slide');
@@ -1055,7 +1076,7 @@ function applyLang(code){
   for(var i=0;i<slides.length;i++){
     (function(i){
       var b = document.createElement('button');
-      b.setAttribute('aria-label','배경 ' + (i+1));
+      b.setAttribute('aria-label','Slide ' + (i+1));
       if(i===0) b.className='on';
       b.onclick = function(){ go(i); restart(); };
       dotsBox.appendChild(b);
@@ -1075,6 +1096,9 @@ function applyLang(code){
   restart();
 })();
 
+</script>
+
+<script>
 /* ═══ 4. 사진 캐러셀 ═══ */
 (function(){
   var slides = document.querySelectorAll('#carousel .slide');
@@ -1085,7 +1109,7 @@ function applyLang(code){
   for(var i=0;i<slides.length;i++){
     (function(i){
       var b = document.createElement('button');
-      b.setAttribute('aria-label','사진 ' + (i+1));
+      b.setAttribute('aria-label','Photo ' + (i+1));
       if(i===0) b.className='on';
       b.onclick = function(){ go(i); restart(); };
       dotsBox.appendChild(b);
@@ -1109,6 +1133,9 @@ function applyLang(code){
   restart();
 })();
 
+</script>
+
+<script>
 /* ═══ 5. 스크롤 등장 효과 ═══ */
 (function(){
   var els = document.querySelectorAll('.reveal');
@@ -1122,6 +1149,28 @@ function applyLang(code){
   for(var j=0;j<els.length;j++) io.observe(els[j]);
 })();
 
+
+/* ═══ 5-2. 현재 보고 있는 곳을 메뉴에 표시 ═══ */
+(function(){
+  var links = document.querySelectorAll('.menu a[href^="#"]');
+  if(!links.length || !window.IntersectionObserver) return;
+  var map = {}, ids = [];
+  for(var i=0;i<links.length;i++){
+    var id = links[i].getAttribute('href').slice(1);
+    if(document.getElementById(id)){ map[id] = links[i]; ids.push(id); }
+  }
+  var io = new IntersectionObserver(function(en){
+    for(var j=0;j<en.length;j++){
+      if(!en[j].isIntersecting) continue;
+      for(var k=0;k<ids.length;k++) map[ids[k]].classList.remove('active');
+      map[en[j].target.id].classList.add('active');
+    }
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  for(var m=0;m<ids.length;m++) io.observe(document.getElementById(ids[m]));
+})();
+</script>
+
+<script>
 /* ═══════════════════════════════════════════════════════════════
    6. 교회 소식 · 주보 · 달력 (수정하실 필요 없는 부분입니다)
       news.txt 를 읽어 화면을 자동으로 만듭니다.
@@ -1178,11 +1227,17 @@ function applyLang(code){
     nd.removeAttribute('data-i18n');
     document.getElementById('newsList').innerHTML = itemsHtml(latest.items);
     if(past.length){
-      document.getElementById('newsArchive').innerHTML = past.map(function(w){
-        return '<div class="arch-week"><p class="date">' + fmtDate(w.ymd, true) +
-               '</p><ul>' + itemsHtml(w.items) + '</ul></div>';
-      }).join('');
-      document.getElementById('newsArchiveBox').hidden = false;
+      var box = document.getElementById('newsArchiveBox');
+      var el  = document.getElementById('newsArchive');
+      el.innerHTML = '<ul class="news-arch">' + past.map(function(w){
+        return '<li><details><summary><span>' + fmtDate(w.ymd, false) +
+               '</span></summary><ul>' + itemsHtml(w.items) + '</ul></details></li>';
+      }).join('') + '</ul>';
+      el.classList.toggle('scroll', past.length > 8);
+      var sum = box.querySelector('summary');
+      sum.textContent = t('news.archive') + ' (' + past.length + ')';
+      sum.removeAttribute('data-i18n');
+      box.hidden = false;
     }
     syncHeight();
   }
@@ -1196,6 +1251,11 @@ function applyLang(code){
 
   function renderJubo(){
     if(juboIdx < 0) return;
+    if(juboArchList && juboArchList.length){
+      var s = document.getElementById('juboArchiveBox').querySelector('summary');
+      s.textContent = t('jubo.archive') + ' (' + juboArchList.length + ')';
+      s.removeAttribute('data-i18n');
+    }
     var jd = document.getElementById('juboDate');
     jd.textContent = fmtDate(juboWeeks[juboIdx].ymd, false) + ' ' + t('jubo.suffix');
     jd.removeAttribute('data-i18n');
@@ -1209,6 +1269,19 @@ function applyLang(code){
     }
   }
   var juboArchList = null;
+
+  /* 지난 소식은 한 번에 한 주만 열리게 해서 목록이 길어지지 않도록 합니다.
+     (details 의 toggle 은 위로 전달되지 않으므로 캡처 단계에서 받습니다) */
+  (function(){
+    var el = document.getElementById('newsArchive');
+    if(!el) return;
+    el.addEventListener('toggle', function(e){
+      var dt = e.target;
+      if(!dt || dt.tagName !== 'DETAILS' || !dt.open) return;
+      var all = el.getElementsByTagName('details');
+      for(var k=0;k<all.length;k++){ if(all[k] !== dt) all[k].open = false; }
+    }, true);
+  })();
 
   /* ── 소식 칸 높이를 주보 칸에 맞추기 ── */
   var newsCard = document.getElementById('newsCard'),
@@ -1359,6 +1432,10 @@ function applyLang(code){
           })).then(function(list){
             juboArchList = list.filter(Boolean);
             if(!juboArchList.length){ archBox.hidden = true; return; }
+            var s = archBox.querySelector('summary');
+            s.textContent = t('jubo.archive') + ' (' + juboArchList.length + ')';
+            s.removeAttribute('data-i18n');
+            document.getElementById('juboArchive').classList.toggle('scroll', juboArchList.length > 10);
             renderJubo();
           });
         });
@@ -1369,6 +1446,9 @@ function applyLang(code){
     });
 })();
 
+</script>
+
+<script>
 /* 저장된 언어 적용 (모든 준비가 끝난 뒤) */
 applyLang(lang);
 
