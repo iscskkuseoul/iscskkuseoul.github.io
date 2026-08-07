@@ -313,9 +313,30 @@ h2{font-family:'Gowun Batang',serif;font-size:clamp(1.45rem,3vw,1.9rem);font-wei
 .last-week summary::after{content:" ›";color:var(--pine);font-weight:700}
 .last-week summary:hover{color:var(--pine)}
 .last-week[open] summary::after{content:" ⌄"}
-.arch-week{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
-.arch-week:first-child{border-top:none;padding-top:4px}
-.arch-week .date{color:var(--pine);font-weight:700;font-size:.83rem;margin-bottom:6px}
+/* 지난 소식: 날짜만 먼저 보여 주고, 날짜를 누르면 그 주 소식이 열립니다
+   (오른쪽 "지난 주보"와 같은 방식) */
+.news .news-arch{list-style:none;margin-top:8px}
+.news .news-arch>li{padding:0;position:static;border-bottom:1px solid #F0F2F3}
+.news .news-arch>li:last-child{border-bottom:none}
+.news .news-arch>li::before{display:none}
+.news .news-arch summary{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  padding:11px 2px;cursor:pointer;color:var(--ink);font-size:.9rem;font-weight:600;
+  list-style:none;
+}
+.news .news-arch summary::-webkit-details-marker{display:none}
+.news .news-arch summary::after{
+  content:"소식 보기 ›";color:var(--gray);font-size:.8rem;font-weight:500;white-space:nowrap;
+}
+.news .news-arch summary:hover{color:var(--pine)}
+.news .news-arch details[open]>summary{color:var(--pine)}
+.news .news-arch details[open]>summary::after{content:"닫기 ⌄";color:var(--pine)}
+.news .news-arch details>ul{
+  list-style:none;margin:0 0 8px;padding-top:2px;border-top:1px dashed var(--line);
+}
+/* 지난 소식이 많이 쌓이면 목록 안에서만 스크롤되게 합니다 */
+#newsArchive.scroll{max-height:min(60vh,460px);overflow-y:auto;padding-right:6px}
+
 .jubo-arch{list-style:none;margin-top:8px}
 .jubo-arch li{border-bottom:1px solid #F0F2F3}
 .jubo-arch li:last-child{border-bottom:none}
@@ -1004,13 +1025,30 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       document.getElementById('newsDate').textContent = latest.date.label;
       document.getElementById('newsList').innerHTML = itemsHtml(latest.items);
 
-      /* ── 지난 소식 ── */
+      /* ── 지난 소식 ──
+         한 번에 모든 내용을 펼치지 않고, 먼저 날짜 목록만 보여 줍니다.
+         날짜를 누르면 그 주 소식만 열립니다(지난 주보와 같은 방식). */
       if(past.length){
-        document.getElementById('newsArchive').innerHTML = past.map(function(w){
-          return '<div class="arch-week"><p class="date">' + w.date.label +
-                 '</p><ul>' + itemsHtml(w.items) + '</ul></div>';
-        }).join('');
-        document.getElementById('newsArchiveBox').hidden = false;
+        var newsArchBox = document.getElementById('newsArchiveBox');
+        var newsArchEl  = document.getElementById('newsArchive');
+        var newsArchSum = newsArchBox.querySelector('summary');
+        newsArchEl.innerHTML = '<ul class="news-arch">' + past.map(function(w){
+          return '<li><details><summary>' + esc(w.date.label.replace(' 주일','')) +
+                 '</summary><ul>' + itemsHtml(w.items) + '</ul></details></li>';
+        }).join('') + '</ul>';
+        /* 주가 많이 쌓이면 목록 안에서만 스크롤되게 합니다 */
+        if(past.length > 8) newsArchEl.classList.add('scroll');
+        newsArchSum.textContent = '지난 소식 모두 보기 (' + past.length + ')';
+        newsArchBox.hidden = false;
+
+        /* 한 번에 한 주만 열리게 해서 목록이 길어지지 않도록 합니다.
+           (toggle 은 위로 전달되지 않으므로 캡처 단계에서 받습니다) */
+        newsArchEl.addEventListener('toggle', function(e){
+          var d = e.target;
+          if(!d || d.tagName !== 'DETAILS' || !d.open) return;
+          var all = newsArchEl.getElementsByTagName('details');
+          for(var k=0;k<all.length;k++){ if(all[k] !== d) all[k].open = false; }
+        }, true);
       }
       syncHeight();
 
