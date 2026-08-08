@@ -195,6 +195,7 @@ header{
 .mobile-menu.open li:nth-child(5){transition-delay:.24s}
 .mobile-menu.open li:nth-child(6){transition-delay:.28s}
 .mobile-menu.open li:nth-child(7){transition-delay:.32s}
+.mobile-menu.open li:nth-child(8){transition-delay:.36s}
 .mobile-menu li a{
   display:block;padding:14px 2px;text-decoration:none;color:var(--ink);
   font-weight:600;font-size:1rem;border-bottom:1px solid #EFF2F0;
@@ -352,6 +353,113 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transfor
 .team-card .photo-slot{width:82px;height:82px;border-radius:50%;margin:0 auto 13px}
 .team-card h4{font-family:'Gowun Batang',serif;font-size:1.02rem;margin-top:1px}
 
+/* ─────────── 처음 오셨나요 ─────────── */
+.warm{background:#FAF7F2}
+
+/* 처음 오셨나요 단추 */
+.first-btn{
+  background:var(--pine-soft);color:var(--pine);border:none;cursor:pointer;
+  font-family:inherit;font-size:.84rem;font-weight:700;padding:7px 15px;border-radius:999px;
+  white-space:nowrap;transition:.18s;
+}
+.first-btn:hover{background:#E4EFE9}
+
+/* 처음 오셨나요 팝업 */
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px}
+.modal[hidden]{display:none}
+.modal-back{
+  position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(14,22,18,.46);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  opacity:0;transition:opacity .28s ease;
+}
+.modal.on .modal-back{opacity:1}
+.modal-box{
+  position:relative;background:#FAF7F2;border-radius:22px;width:100%;max-width:960px;
+  max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  padding:38px 40px 36px;box-shadow:0 30px 80px rgba(14,22,18,.32);
+  opacity:0;transform:translateY(18px) scale(.985);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.32,.72,0,1);
+}
+.modal.on .modal-box{opacity:1;transform:none}
+.modal-x{
+  position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.9);cursor:pointer;color:var(--ink);
+  font-size:1.05rem;line-height:1;font-family:inherit;
+}
+.modal-x:hover{background:#fff;color:var(--pine)}
+.modal-box .sec-head{margin-bottom:30px;padding-right:44px}
+.modal-box .steps{margin-bottom:32px}
+body.modal-open{overflow:hidden}
+
+@media (max-width:700px){
+  /* 휴대폰에서는 아래에서 올라오는 형태 */
+  .modal{padding:0;align-items:flex-end}
+  .modal-box{
+    max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;
+    padding:30px 20px calc(28px + env(safe-area-inset-bottom,0px));
+    transform:translateY(100%);
+  }
+  .modal.on .modal-box{transform:none}
+  .modal-x{top:12px;right:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .modal-back,.modal-box{transition-duration:.01s}
+}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:38px}
+.vstep{
+  position:relative;background:#fff;border:1px solid #EDE7DD;border-radius:16px;
+  padding:26px 22px 24px;transition:box-shadow .22s ease,transform .22s ease;
+}
+.vstep:hover{box-shadow:0 10px 28px rgba(60,50,35,.08);transform:translateY(-3px)}
+/* 카드 사이를 잇는 가는 선 */
+.vstep:not(:last-child)::after{
+  content:"";position:absolute;top:44px;right:-9px;width:14px;height:1px;
+  background:#DED5C6;z-index:1;
+}
+.vnum{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:50%;background:var(--pine);color:#fff;
+  font-size:.82rem;font-weight:800;margin-bottom:14px;
+}
+.vstep h3{font-family:'Gowun Batang',serif;font-size:1.06rem;margin-bottom:7px}
+.vstep p{color:var(--gray);font-size:.89rem;line-height:1.62}
+.vstep svg{
+  position:absolute;top:26px;right:22px;width:22px;height:22px;stroke:var(--pine);
+  fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.42;
+}
+
+.faq-head{font-family:'Gowun Batang',serif;font-size:1.14rem;font-weight:700;margin-bottom:16px}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;align-items:start}
+.faq details{background:#fff;border:1px solid #EDE7DD;border-radius:13px;overflow:hidden}
+.faq summary{
+  display:flex;align-items:flex-start;gap:11px;cursor:pointer;list-style:none;
+  padding:16px 18px;font-size:.94rem;font-weight:600;color:var(--ink);line-height:1.5;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{
+  content:"Q";flex:0 0 auto;color:var(--pine);font-weight:800;font-size:.86rem;
+  background:var(--pine-soft);width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+}
+.faq summary::after{content:"+";margin-left:auto;color:var(--pine);font-size:1.15rem;line-height:1;font-weight:400}
+.faq details[open] summary::after{content:"–"}
+.faq details[open] summary{color:var(--pine)}
+.faq .ans{
+  padding:0 18px 17px 51px;color:var(--gray);font-size:.9rem;line-height:1.68;
+  margin-top:-4px;
+}
+.first-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+
+/* 헌금 계좌 복사 */
+.acct{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.copy-btn{
+  border:1px solid var(--line);background:#fff;color:var(--gray);cursor:pointer;
+  font-family:inherit;font-size:.76rem;font-weight:700;padding:4px 11px;border-radius:999px;
+  white-space:nowrap;transition:.18s;
+}
+.copy-btn:hover{border-color:var(--pine);color:var(--pine)}
+.copy-btn.ok{background:var(--pine);border-color:var(--pine);color:#fff}
+
 /* ─────────── 예배·사역 카드 ─────────── */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:16px}
 .card{
@@ -505,7 +613,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media (max-width:900px){
   .menu{display:none}
   .hamburger{display:flex}
-  .reg-btn,.yt-btn{display:none}
+  .reg-btn,.yt-btn,.first-btn{display:none}
   .nav-right{gap:8px}
   .lang-seg button{font-size:.76rem;padding:6px 10px}
   section{padding:56px 0}
@@ -518,7 +626,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .strip .wrap{grid-template-columns:1fr;gap:10px;text-align:left}
   .strip .wrap>div{display:flex;gap:12px;align-items:baseline}
   .strip b{margin:0;min-width:96px}
-  .about-grid,.ministry-grid,.visit,.news-grid{grid-template-columns:1fr}
+  .about-grid,.ministry-grid,.visit,.news-grid,.faq{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr;gap:11px}
+  .vstep{padding:20px 16px}
+  .vstep:not(:last-child)::after{display:none}
+  .faq summary{padding:14px 15px;font-size:.92rem}
+  .faq .ans{padding:0 15px 15px 47px}
   .team-wrap{padding:24px 20px;border-radius:16px}
   .team-lead{flex-direction:column;align-items:center;text-align:center;padding:24px 18px;gap:20px}
   .team-lead .photo-slot{align-self:center}
@@ -530,6 +643,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 }
 @media (max-width:540px){
   .cards{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
   .brand b{font-size:.88rem}
   .team-lead{padding:22px 16px}
   .news,.jubo-body{padding-left:18px;padding-right:18px}
@@ -573,6 +687,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <button type="button" data-lang="zh">中文</button>
         <button type="button" data-lang="en">EN</button>
       </div>
+      <button class="first-btn" type="button" data-first data-i18n="nav.first">처음 오셨나요?</button>
       <!-- ▶ 새가족 등록 구글 폼 주소 -->
       <a class="reg-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="nav.register">새가족 등록</a>
       <a class="yt-btn" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a>
@@ -589,6 +704,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <li><a href="#news" data-i18n="nav.news">교회 소식</a></li>
     <li><a href="#visit" data-i18n="nav.visit">오시는 길</a></li>
     <li><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a></li>
+    <li><a href="#" data-first data-i18n="nav.first">처음 오셨나요?</a></li>
     <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="nav.register">새가족 등록</a></li>
 </ul>
 
@@ -888,7 +1004,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <div class="v-icon"><svg viewBox="0 0 24 24"><path d="M12 4v13M12 4l-3.5 3M12 4l3.5 3"/><path d="M5 13v5.5h14V13"/></svg></div>
           <div>
             <b data-i18n="visit.offering">온라인 헌금</b>
-            <div class="val">우리은행 1005-303-895466</div>
+            <div class="val acct">
+              <span id="acctNo">우리은행 1005-303-895466</span>
+              <button class="copy-btn" id="copyBtn" type="button" data-i18n="copy.btn">계좌번호 복사</button>
+            </div>
             <small data-i18n="visit.offeringSub">예금주: ISCSKKU 교회</small>
           </div>
         </div>
@@ -912,6 +1031,54 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     처음 오셨나요 (단추를 누르면 열리는 팝업)
+     ▶ 내용을 고치시려면 아래 "1. 다국어 사전" 안에서
+       first / s1~s4 / q1~q6 / a1~a6 로 시작하는 줄의 글자만 바꾸시면 됩니다.
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="firstModal" hidden>
+  <div class="modal-back" data-close></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="firstTitle">
+    <button class="modal-x" type="button" data-close aria-label="Close">✕</button>
+
+    <div class="sec-head">
+      <p class="eyebrow" data-i18n="first.eyebrow">FIRST VISIT</p>
+      <h2 id="firstTitle" data-i18n="first.title">처음 오셨나요?</h2>
+      <p class="sub" data-i18n="first.sub">교회가 처음이셔도, 한국어가 서툴러도 괜찮습니다. 오시는 순간부터 저희가 함께하겠습니다.</p>
+    </div>
+
+    <div class="steps">
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg><span class="vnum">1</span>
+        <h3 data-i18n="s1.t">도착</h3>
+        <p data-i18n="s1.d">주일 오후 2시 50분까지 오시면 넉넉합니다. 명륜길 22 건물 2층으로 올라오세요.</p></div>
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M12 20.5c4-2.6 7-5.4 7-9a3.6 3.6 0 0 0-7-1.3A3.6 3.6 0 0 0 5 11.5c0 3.6 3 6.4 7 9z"/></svg><span class="vnum">2</span>
+        <h3 data-i18n="s2.t">환영</h3>
+        <p data-i18n="s2.d">입구에서 맞아 드립니다. “처음 왔어요”라고 말씀해 주시면 자리까지 안내해 드립니다.</p></div>
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M12 3.5v17M7 9h10"/></svg><span class="vnum">3</span>
+        <h3 data-i18n="s3.t">예배</h3>
+        <p data-i18n="s3.d">오후 3시에 시작해 약 한 시간입니다. 찬양과 말씀을 한국어와 중국어로 함께 나눕니다.</p></div>
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M4.5 8h13v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z"/><path d="M17.5 9.5h1.6a2.4 2.4 0 0 1 0 4.8h-1.6"/><path d="M7 4.5v1.6M11 4v2M15 4.5v1.6"/></svg><span class="vnum">4</span>
+        <h3 data-i18n="s4.t">교제</h3>
+        <p data-i18n="s4.d">예배 후 셀 모임과 다과가 있습니다. 부담되시면 먼저 돌아가셔도 괜찮습니다.</p></div>
+    </div>
+
+    <p class="faq-head" data-i18n="faq.title">자주 묻는 질문</p>
+    <div class="faq">
+      <details><summary><span data-i18n="q1">교회가 처음인데 괜찮을까요?</span></summary><div class="ans" data-i18n="a1">물론입니다. 저희 교회에 오시는 유학생 대부분이 교회가 처음이었습니다. 아무것도 모르셔도 괜찮으니 편한 마음으로 오세요.</div></details>
+      <details><summary><span data-i18n="q2">무엇을 입고 가야 하나요?</span></summary><div class="ans" data-i18n="a2">평소 편한 옷차림이면 충분합니다. 정장을 갖춰 입으실 필요는 전혀 없습니다.</div></details>
+      <details><summary><span data-i18n="q3">한국어를 잘 못하는데 괜찮을까요?</span></summary><div class="ans" data-i18n="a3">예배는 한국어와 중국어로 함께 드립니다. 중국어로 도와드릴 분들이 늘 함께 있으니 걱정하지 않으셔도 됩니다.</div></details>
+      <details><summary><span data-i18n="q4">헌금을 꼭 해야 하나요?</span></summary><div class="ans" data-i18n="a4">아닙니다. 헌금은 각자의 마음으로 드리는 것이며, 처음 오신 분께는 전혀 부담을 드리지 않습니다.</div></details>
+      <details><summary><span data-i18n="q5">혼자 가도 괜찮을까요?</span></summary><div class="ans" data-i18n="a5">대부분 혼자 오십니다. 오시면 자연스럽게 인사를 나누고 함께 앉으실 수 있도록 도와드립니다.</div></details>
+      <details><summary><span data-i18n="q6">꼭 등록해야 하나요?</span></summary><div class="ans" data-i18n="a6">아닙니다. 여러 번 예배에 참석해 보시고, 마음이 편해지셨을 때 결정하시면 됩니다.</div></details>
+    </div>
+
+    <div class="first-cta">
+      <a class="btn btn-pine" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="first.cta1">새가족 등록하기</a>
+      <a class="btn btn-line" href="#visit" data-i18n="first.cta2">오시는 길 보기</a>
+    </div>
+  </div>
+</div>
+
 <button class="top-btn" id="topBtn" type="button" aria-label="Top">↑</button>
 
 <script>
@@ -923,6 +1090,22 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    ═══════════════════════════════════════════════════════════════ */
 var I18N = {
 ko:{
+ 'nav.first':'처음 오셨나요?',
+ 'first.eyebrow':'FIRST VISIT','first.title':'처음 오셨나요?',
+ 'first.sub':'교회가 처음이셔도, 한국어가 서툴러도 괜찮습니다. 오시는 순간부터 저희가 함께하겠습니다.',
+ 's1.t':'도착','s1.d':'주일 오후 2시 50분까지 오시면 넉넉합니다. 명륜길 22 건물 2층으로 올라오세요.',
+ 's2.t':'환영','s2.d':'입구에서 맞아 드립니다. “처음 왔어요”라고 말씀해 주시면 자리까지 안내해 드립니다.',
+ 's3.t':'예배','s3.d':'오후 3시에 시작해 약 한 시간입니다. 찬양과 말씀을 한국어와 중국어로 함께 나눕니다.',
+ 's4.t':'교제','s4.d':'예배 후 셀 모임과 다과가 있습니다. 부담되시면 먼저 돌아가셔도 괜찮습니다.',
+ 'faq.title':'자주 묻는 질문',
+ 'q1':'교회가 처음인데 괜찮을까요?','a1':'물론입니다. 저희 교회에 오시는 유학생 대부분이 교회가 처음이었습니다. 아무것도 모르셔도 괜찮으니 편한 마음으로 오세요.',
+ 'q2':'무엇을 입고 가야 하나요?','a2':'평소 편한 옷차림이면 충분합니다. 정장을 갖춰 입으실 필요는 전혀 없습니다.',
+ 'q3':'한국어를 잘 못하는데 괜찮을까요?','a3':'예배는 한국어와 중국어로 함께 드립니다. 중국어로 도와드릴 분들이 늘 함께 있으니 걱정하지 않으셔도 됩니다.',
+ 'q4':'헌금을 꼭 해야 하나요?','a4':'아닙니다. 헌금은 각자의 마음으로 드리는 것이며, 처음 오신 분께는 전혀 부담을 드리지 않습니다.',
+ 'q5':'혼자 가도 괜찮을까요?','a5':'대부분 혼자 오십니다. 오시면 자연스럽게 인사를 나누고 함께 앉으실 수 있도록 도와드립니다.',
+ 'q6':'꼭 등록해야 하나요?','a6':'아닙니다. 여러 번 예배에 참석해 보시고, 마음이 편해지셨을 때 결정하시면 됩니다.',
+ 'first.cta1':'새가족 등록하기','first.cta2':'오시는 길 보기',
+ 'copy.btn':'계좌번호 복사','copy.done':'복사되었습니다',
  'meta.title':'ISC-SKKU Seoul | 성균관대 유학생교회','nav.about':'교회 소개','nav.worship':'예배 안내','nav.ministry':'사역','nav.news':'교회 소식','nav.visit':'오시는 길','nav.register':'새가족 등록',
  'hero.eyebrow':'환영합니다 · 성균관대 유학생교회',
  'hero.title':'캠퍼스에서 열방으로,<br>유학생과 함께 걷는 교회',
@@ -969,6 +1152,22 @@ ko:{
  'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기'
 },
 zh:{
+ 'nav.first':'第一次来?',
+ 'first.eyebrow':'FIRST VISIT','first.title':'第一次来教会吗?',
+ 'first.sub':'第一次进教会、韩语还不熟练，都完全没关系。从你踏进门的那一刻起，我们会一直陪着你。',
+ 's1.t':'抵达','s1.d':'主日下午两点五十分前到达即可。请上明伦街 22 号建筑二楼。',
+ 's2.t':'迎接','s2.d':'门口有人迎接你。只要说一句"我是第一次来"，就会有人带你入座。',
+ 's3.t':'崇拜','s3.d':'下午三点开始，约一小时。赞美与讲道用韩语和中文一同进行。',
+ 's4.t':'团契','s4.d':'崇拜后有小组聚会与茶点。如果觉得不方便，先回去也完全没关系。',
+ 'faq.title':'常见问题',
+ 'q1':'我从没去过教会，可以吗?','a1':'当然可以。来我们教会的留学生，大多数都是第一次进教会。什么都不懂也没关系，放轻松来就好。',
+ 'q2':'需要穿什么衣服?','a2':'平时的便装就可以，完全不需要正装。',
+ 'q3':'韩语不太好，可以吗?','a3':'崇拜用韩语和中文一同进行，也一直有能用中文帮助你的同工在，完全不用担心。',
+ 'q4':'一定要奉献吗?','a4':'不需要。奉献是各人心意，我们绝不会让第一次来的朋友有任何负担。',
+ 'q5':'一个人去会不会尴尬?','a5':'大部分人都是一个人来的。到了以后自然会有人打招呼，也会帮你找位子一起坐。',
+ 'q6':'一定要登记吗?','a6':'不需要。可以先来参加几次崇拜，等心里觉得舒服了再决定。',
+ 'first.cta1':'新朋友登记','first.cta2':'查看交通指引',
+ 'copy.btn':'复制账号','copy.done':'已复制',
  'meta.title':'ISC-SKKU Seoul | 成均馆大学留学生教会','nav.about':'教会介绍','nav.worship':'崇拜信息','nav.ministry':'事工','nav.news':'教会消息','nav.visit':'交通指引','nav.register':'新朋友登记',
  'hero.eyebrow':'欢迎来到 · 成均馆大学留学生教会',
  'hero.title':'从校园走向万邦，<br>与留学生同行的教会',
@@ -1015,6 +1214,22 @@ zh:{
  'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看'
 },
 en:{
+ 'nav.first':'First Visit',
+ 'first.eyebrow':'FIRST VISIT','first.title':'Is This Your First Time?',
+ 'first.sub':'It is completely fine if you have never been to a church, or if your Korean is limited. From the moment you arrive, you will not be on your own.',
+ 's1.t':'Arrive','s1.d':'Arriving by 2:50 PM on Sunday gives you plenty of time. Come up to the 2nd floor at 22 Myeongnyun-gil.',
+ 's2.t':'Welcome','s2.d':'Someone will greet you at the door. Just say “It’s my first time” and we will walk you to a seat.',
+ 's3.t':'Worship','s3.d':'The service begins at 3:00 PM and lasts about an hour, with praise and preaching in both Korean and Chinese.',
+ 's4.t':'Fellowship','s4.d':'Cell groups and refreshments follow the service. If you would rather head home first, that is perfectly fine.',
+ 'faq.title':'Frequently Asked Questions',
+ 'q1':'I have never been to a church. Is that okay?','a1':'Absolutely. Most of the students who come to us had never been to a church before either. You do not need to know anything in advance.',
+ 'q2':'What should I wear?','a2':'Whatever you normally wear is fine. There is no need to dress formally.',
+ 'q3':'My Korean is not very good. Will I manage?','a3':'The service runs in both Korean and Chinese, and there are always people who can help you in Chinese. There is nothing to worry about.',
+ 'q4':'Am I expected to give an offering?','a4':'No. Giving is a personal matter of the heart, and we never place any expectation on first-time visitors.',
+ 'q5':'Can I come on my own?','a5':'Most people do come alone. You will be greeted naturally, and someone will help you find a seat.',
+ 'q6':'Do I have to register?','a6':'No. You are welcome to join us several times and decide only when you feel comfortable.',
+ 'first.cta1':'Register as a Newcomer','first.cta2':'How to Find Us',
+ 'copy.btn':'Copy account number','copy.done':'Copied',
  'meta.title':'ISC-SKKU Seoul | SKKU International Student Church','nav.about':'About','nav.worship':'Worship','nav.ministry':'Ministry','nav.news':'News','nav.visit':'Visit','nav.register':'New Here?',
  'hero.eyebrow':'WELCOME · SKKU INTERNATIONAL STUDENT CHURCH',
  'hero.title':'From Campus to the Nations,<br>Walking Together with Students',
@@ -1582,6 +1797,77 @@ function swipe(el, onLeft, onRight){
     });
 })();
 
+</script>
+
+<script>
+/* ═══ 7. 처음 오셨나요 팝업 ═══ */
+(function(){
+  var modal = document.getElementById('firstModal');
+  if(!modal) return;
+  var box = modal.querySelector('.modal-box');
+  var opener = null;
+
+  function open(from){
+    opener = from || null;
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    /* hidden 을 뗀 직후에 클래스를 붙여야 나타나는 동작이 보입니다 */
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ modal.classList.add('on'); });
+    });
+    box.scrollTop = 0;
+    var x = modal.querySelector('.modal-x');
+    if(x) setTimeout(function(){ try{ x.focus(); }catch(e){} }, 60);
+  }
+  function close(){
+    modal.classList.remove('on');
+    document.body.classList.remove('modal-open');
+    setTimeout(function(){ modal.hidden = true; }, 300);
+    if(opener){ try{ opener.focus(); }catch(e){} opener = null; }
+  }
+
+  /* 단추(헤더·서랍) 어디를 눌러도 열림 */
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-first]');
+    if(t){ e.preventDefault(); open(t); return; }
+    if(e.target.closest('[data-close]')){ close(); return; }
+    /* 팝업 안의 "오시는 길 보기" 는 닫고 그 자리로 이동 */
+    if(!modal.hidden){
+      var a = e.target.closest('.modal-box a[href^="#"]');
+      if(a) close();
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && !modal.hidden) close();
+  });
+})();
+
+/* ═══ 8. 헌금 계좌번호 복사 ═══ */
+(function(){
+  var b = document.getElementById('copyBtn');
+  if(!b) return;
+  var NUM = '1005-303-895466';           /* ▶ 계좌번호가 바뀌면 이 줄과 화면의 숫자를 함께 고치세요 */
+  function done(){
+    b.textContent = t('copy.done');
+    b.classList.add('ok');
+    setTimeout(function(){ b.textContent = t('copy.btn'); b.classList.remove('ok'); }, 1800);
+  }
+  function fallback(){
+    /* 옛 브라우저·비보안 연결에서도 복사되도록 */
+    var ta = document.createElement('textarea');
+    ta.value = NUM; ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0, NUM.length);
+    try{ document.execCommand('copy'); done(); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  b.addEventListener('click', function(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(NUM).then(done).catch(fallback);
+    }else{ fallback(); }
+  });
+})();
 </script>
 
 <script>
