@@ -104,6 +104,7 @@ body{
   color:var(--ink);background:var(--paper);line-height:1.7;
   font-size:16px;word-break:keep-all;overflow-wrap:break-word;
   -webkit-text-size-adjust:100%;overflow-x:clip;
+  -webkit-tap-highlight-color:rgba(16,87,59,.12);
 }
 html[lang="zh"] body{word-break:normal}
 img{max-width:100%;display:block}
@@ -160,12 +161,29 @@ header{
 .hamburger.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .hamburger.on span:nth-child(2){opacity:0}
 .hamburger.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{display:none;list-style:none;border-top:1px solid var(--line);background:#fff;padding:8px 20px 14px}
-.mobile-menu li a{
-  display:block;padding:12px 2px;text-decoration:none;color:var(--ink);
-  font-weight:500;border-bottom:1px solid #F0F2F3;
+/* 오른쪽에서 미끄러져 나오는 서랍 메뉴 (화면을 아래로 밀지 않습니다) */
+.mobile-menu{
+  position:fixed;top:0;right:0;bottom:0;z-index:59;
+  width:min(76vw,290px);background:#fff;list-style:none;
+  padding:78px 20px 28px;margin:0;overflow-y:auto;overscroll-behavior:contain;
+  box-shadow:-10px 0 34px rgba(20,28,24,.18);
+  transform:translateX(102%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  visibility:hidden;
 }
-.mobile-menu.open{display:block}
+.mobile-menu.open{transform:translateX(0);visibility:visible}
+.hamburger{position:relative;z-index:61}
+.mobile-menu li a{
+  display:block;padding:13px 2px;text-decoration:none;color:var(--ink);
+  font-weight:600;font-size:.98rem;border-bottom:1px solid #F0F2F3;
+}
+.mobile-menu li:last-child a{border-bottom:none}
+.mobile-menu li a:active{color:var(--pine)}
+.menu-back{
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:58;background:rgba(18,26,22,.38);
+  opacity:0;pointer-events:none;transition:opacity .3s ease;
+}
+.menu-back.open{opacity:1;pointer-events:auto}
+body.menu-open{overflow:hidden}
 
 /* ─────────── 히어로 ─────────── */
 .hero{position:relative;min-height:min(80vh,640px);display:flex;align-items:flex-end;overflow:hidden;background:#0F1815}
@@ -443,7 +461,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .nav-right{gap:8px}
   .lang-seg button{font-size:.76rem;padding:6px 10px}
   section{padding:56px 0}
-  .hero{min-height:min(84vh,540px)}
+  .hero{min-height:520px}
+  @supports (height:100svh){ .hero{min-height:min(86svh,560px)} }
   .hero-inner{padding:72px 0 44px}
   .hero .lead{font-size:.95rem}
   .hero .verse{font-size:.93rem}
@@ -476,6 +495,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){
   html.js .reveal{opacity:1;transform:none}
   .hero-bg .slide.active{animation:none}
+  .hero-bg .slide,.carousel .slide{transition-duration:.2s}
+  .mobile-menu{transition-duration:.01s}
   html{scroll-behavior:auto}
 }
 </style>
@@ -505,9 +526,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <!-- ▶ 새가족 등록 구글 폼 주소 -->
       <a class="reg-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="nav.register">새가족 등록</a>
       <a class="yt-btn" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a>
-      <button class="hamburger" id="hamb" aria-label="메뉴"><span></span><span></span><span></span></button>
+      <button class="hamburger" id="hamb" aria-label="Menu" aria-expanded="false" aria-controls="mMenu"><span></span><span></span><span></span></button>
     </div>
   </div>
+  <div class="menu-back" id="mBack" aria-hidden="true"></div>
   <ul class="mobile-menu" id="mMenu">
     <li><a href="#about" data-i18n="nav.about">교회 소개</a></li>
     <li><a href="#worship" data-i18n="nav.worship">예배 안내</a></li>
@@ -525,8 +547,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <div class="hero" id="top">
   <div class="hero-bg" id="heroBg">
     <div class="slide active" style="background-image:url('assets/banner1.jpg')"></div>
-    <div class="slide" style="background-image:url('assets/banner2.jpg')"></div>
-    <div class="slide" style="background-image:url('assets/banner3.jpg')"></div>
+    <div class="slide" data-bg="assets/banner2.jpg"></div>
+    <div class="slide" data-bg="assets/banner3.jpg"></div>
   </div>
   <div class="hero-veil"></div>
   <div class="hero-inner">
@@ -692,7 +714,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h2 data-i18n="photos.title">함께한 순간들</h2>
     </div>
     <div class="carousel reveal" id="carousel">
-      <div class="slide active"><img src="photos/photo1.jpg" alt="ISC-SKKU Seoul" loading="lazy"></div>
+      <div class="slide active"><img src="photos/photo1.jpg" alt="ISC-SKKU Seoul" loading="eager" fetchpriority="low"></div>
       <div class="slide"><img src="photos/photo2.jpg" alt="ISC-SKKU Seoul" loading="lazy"></div>
       <div class="slide"><img src="photos/photo3.jpg" alt="ISC-SKKU Seoul" loading="lazy"></div>
       <div class="slide"><img src="photos/photo4.jpg" alt="ISC-SKKU Seoul" loading="lazy"></div>
@@ -1050,10 +1072,25 @@ function applyLang(code){
   }
   bind(document.getElementById('langSeg'));
 
-  var hamb = document.getElementById('hamb'), mm = document.getElementById('mMenu');
-  hamb.addEventListener('click', function(){ mm.classList.toggle('open'); hamb.classList.toggle('on'); });
-  mm.addEventListener('click', function(e){
-    if(e.target.tagName === 'A'){ mm.classList.remove('open'); hamb.classList.remove('on'); }
+  var hamb = document.getElementById('hamb'),
+      mm   = document.getElementById('mMenu'),
+      back = document.getElementById('mBack');
+
+  function setMenu(open){
+    mm.classList.toggle('open', open);
+    back.classList.toggle('open', open);
+    hamb.classList.toggle('on', open);
+    hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('menu-open', open);
+  }
+  hamb.addEventListener('click', function(){ setMenu(!mm.classList.contains('open')); });
+  back.addEventListener('click', function(){ setMenu(false); });
+  mm.addEventListener('click', function(e){ if(e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && mm.classList.contains('open')) setMenu(false);
+  });
+  window.addEventListener('resize', function(){
+    if(window.innerWidth > 900 && mm.classList.contains('open')) setMenu(false);
   });
 
   var tb = document.getElementById('topBtn');
@@ -1066,35 +1103,69 @@ function applyLang(code){
 </script>
 
 <script>
-/* ═══ 3. 히어로 배경 슬라이드 ═══ */
+/* ═══ 3. 히어로 배경 슬라이드 ═══
+   휴대폰에서도 자동으로 넘어갑니다. 좌우로 밀어서 넘길 수도 있습니다. */
 (function(){
-  var slides = document.querySelectorAll('#heroBg .slide');
+  var box = document.getElementById('heroBg');
+  var slides = box ? box.querySelectorAll('.slide') : [];
   var dotsBox = document.getElementById('heroDots');
   if(slides.length < 2) return;
-  var idx = 0, timer;
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx = 0, timer = null;
+
+  /* 두 번째·세 번째 사진은 첫 화면이 뜬 뒤에 내려받습니다 */
+  function preload(){
+    for(var i=0;i<slides.length;i++){
+      var src = slides[i].getAttribute('data-bg');
+      if(src){ slides[i].style.backgroundImage = "url('" + src + "')"; slides[i].removeAttribute('data-bg'); }
+    }
+  }
+  if(document.readyState === 'complete') setTimeout(preload, 300);
+  else window.addEventListener('load', function(){ setTimeout(preload, 300); });
+
   for(var i=0;i<slides.length;i++){
     (function(i){
       var b = document.createElement('button');
-      b.setAttribute('aria-label','Slide ' + (i+1));
-      if(i===0) b.className='on';
-      b.onclick = function(){ go(i); restart(); };
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Slide ' + (i+1));
+      if(i === 0) b.className = 'on';
+      b.onclick = function(){ preload(); go(i); restart(); };
       dotsBox.appendChild(b);
     })(i);
   }
   var dots = dotsBox.querySelectorAll('button');
+
   function go(i){
     slides[idx].classList.remove('active'); dots[idx].classList.remove('on');
     idx = (i + slides.length) % slides.length;
     slides[idx].classList.add('active'); dots[idx].classList.add('on');
   }
   function restart(){
-    if(reduced) return;
     clearInterval(timer);
-    timer = setInterval(function(){ go(idx+1); }, 6000);
+    timer = setInterval(function(){ preload(); go(idx + 1); }, 6000);
   }
+  /* 다른 탭을 보고 있을 때는 잠시 멈춥니다 (배터리 절약) */
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) clearInterval(timer); else restart();
+  });
+  /* 손가락으로 밀어서 넘기기 */
+  swipe(box, function(){ go(idx + 1); restart(); }, function(){ go(idx - 1); restart(); });
   restart();
 })();
+
+/* 좌우 밀기 (히어로·사진 공통) */
+function swipe(el, onLeft, onRight){
+  if(!el) return;
+  var x0 = null, y0 = null;
+  el.addEventListener('touchstart', function(e){
+    var t = e.touches[0]; x0 = t.clientX; y0 = t.clientY;
+  }, {passive:true});
+  el.addEventListener('touchend', function(e){
+    if(x0 === null) return;
+    var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4){ dx < 0 ? onLeft() : onRight(); }
+    x0 = null;
+  }, {passive:true});
+}
 
 </script>
 
@@ -1105,10 +1176,10 @@ function applyLang(code){
   var dotsBox = document.getElementById('dots');
   if(!slides.length) return;
   var idx = 0, timer;
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   for(var i=0;i<slides.length;i++){
     (function(i){
       var b = document.createElement('button');
+      b.type = 'button';
       b.setAttribute('aria-label','Photo ' + (i+1));
       if(i===0) b.className='on';
       b.onclick = function(){ go(i); restart(); };
@@ -1123,13 +1194,16 @@ function applyLang(code){
   }
   window.move = function(d){ go(idx+d); restart(); };
   function restart(){
-    if(reduced) return;
     clearInterval(timer);
     timer = setInterval(function(){ go(idx+1); }, 4500);
   }
   var box = document.getElementById('carousel');
   box.addEventListener('mouseenter', function(){ clearInterval(timer); });
   box.addEventListener('mouseleave', restart);
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) clearInterval(timer); else restart();
+  });
+  if(window.swipe) swipe(box, function(){ go(idx+1); restart(); }, function(){ go(idx-1); restart(); });
   restart();
 })();
 
