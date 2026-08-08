@@ -111,6 +111,11 @@ img{max-width:100%;display:block}
 a{color:var(--pine)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;background:var(--pine);color:#fff;
+  padding:12px 20px;border-radius:0 0 10px 0;font-weight:600;text-decoration:none;
+}
+.skip:focus{left:0}
 
 /* ─────────── 헤더 ─────────── */
 header{
@@ -167,7 +172,6 @@ header{
   position:fixed;top:0;right:0;bottom:0;z-index:59;
   width:min(78vw,300px);max-width:100%;
   background:rgba(255,255,255,.97);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   list-style:none;margin:0;
   padding:82px 22px 28px;
   padding-bottom:calc(28px + env(safe-area-inset-bottom,0px));
@@ -202,12 +206,31 @@ header{
 /* 서랍 뒤 배경막 (헤더 아래쪽만 덮어 헤더는 계속 쓸 수 있게 함) */
 .menu-back{
   position:fixed;top:0;left:0;right:0;bottom:0;z-index:58;
-  background:rgba(16,24,20,.34);
-  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  background:rgba(14,22,18,.30);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
   opacity:0;pointer-events:none;transition:opacity .34s ease;
 }
 .menu-back.open{opacity:1;pointer-events:auto}
 body.menu-open{overflow:hidden}
+/* 흐림 효과를 지원하는 브라우저에서만 진짜 유리처럼 (미지원 시 위의 흰색 유지) */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .mobile-menu{
+    background:linear-gradient(180deg,rgba(255,255,255,.80) 0%,rgba(255,255,255,.72) 100%);
+    -webkit-backdrop-filter:blur(26px) saturate(190%);
+    backdrop-filter:blur(26px) saturate(190%);
+    border-left:1px solid rgba(255,255,255,.55);
+    box-shadow:-16px 0 46px rgba(14,22,18,.22);
+  }
+  .mobile-menu li a{
+    border-bottom-color:rgba(35,40,45,.10);
+    text-shadow:0 1px 0 rgba(255,255,255,.6);
+  }
+  header{
+    background:rgba(255,255,255,.82);
+    -webkit-backdrop-filter:blur(18px) saturate(180%);
+    backdrop-filter:blur(18px) saturate(180%);
+  }
+}
 @media (min-width:901px){ .mobile-menu,.menu-back{display:none} }
 
 /* ─────────── 히어로 ─────────── */
@@ -528,6 +551,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </head>
 <body>
 
+<a class="skip" href="#about">본문 바로가기</a>
+
 <header>
   <div class="wrap nav">
     <a class="brand" href="#top">
@@ -557,7 +582,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </header>
 
 <div class="menu-back" id="mBack" aria-hidden="true"></div>
-<ul class="mobile-menu" id="mMenu">
+<ul class="mobile-menu" id="mMenu" aria-hidden="true">
     <li><a href="#about" data-i18n="nav.about">교회 소개</a></li>
     <li><a href="#worship" data-i18n="nav.worship">예배 안내</a></li>
     <li><a href="#ministry" data-i18n="nav.ministry">사역</a></li>
@@ -887,7 +912,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </footer>
 
-<button class="top-btn" id="topBtn" aria-label="위로">↑</button>
+<button class="top-btn" id="topBtn" type="button" aria-label="Top">↑</button>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -898,7 +923,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    ═══════════════════════════════════════════════════════════════ */
 var I18N = {
 ko:{
- 'nav.about':'교회 소개','nav.worship':'예배 안내','nav.ministry':'사역','nav.news':'교회 소식','nav.visit':'오시는 길','nav.register':'새가족 등록',
+ 'meta.title':'ISC-SKKU Seoul | 성균관대 유학생교회','nav.about':'교회 소개','nav.worship':'예배 안내','nav.ministry':'사역','nav.news':'교회 소식','nav.visit':'오시는 길','nav.register':'새가족 등록',
  'hero.eyebrow':'환영합니다 · 성균관대 유학생교회',
  'hero.title':'캠퍼스에서 열방으로,<br>유학생과 함께 걷는 교회',
  'hero.lead':'ISC-SKKU Seoul은 성균관대학교에 재학 중인 외국인 유학생, 특히 중국인 유학생에게 예수 그리스도의 복음을 전하고, 참된 그리스도인으로 살아가도록 돕는 유학생 선교 공동체입니다.',
@@ -944,7 +969,7 @@ ko:{
  'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기'
 },
 zh:{
- 'nav.about':'教会介绍','nav.worship':'崇拜信息','nav.ministry':'事工','nav.news':'教会消息','nav.visit':'交通指引','nav.register':'新朋友登记',
+ 'meta.title':'ISC-SKKU Seoul | 成均馆大学留学生教会','nav.about':'教会介绍','nav.worship':'崇拜信息','nav.ministry':'事工','nav.news':'教会消息','nav.visit':'交通指引','nav.register':'新朋友登记',
  'hero.eyebrow':'欢迎来到 · 成均馆大学留学生教会',
  'hero.title':'从校园走向万邦，<br>与留学生同行的教会',
  'hero.lead':'ISC-SKKU Seoul 是一间向成均馆大学的外国留学生，特别是中国留学生传扬耶稣基督福音、帮助他们成为真正基督徒的留学生宣教群体。',
@@ -990,7 +1015,7 @@ zh:{
  'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看'
 },
 en:{
- 'nav.about':'About','nav.worship':'Worship','nav.ministry':'Ministry','nav.news':'News','nav.visit':'Visit','nav.register':'New Here?',
+ 'meta.title':'ISC-SKKU Seoul | SKKU International Student Church','nav.about':'About','nav.worship':'Worship','nav.ministry':'Ministry','nav.news':'News','nav.visit':'Visit','nav.register':'New Here?',
  'hero.eyebrow':'WELCOME · SKKU INTERNATIONAL STUDENT CHURCH',
  'hero.title':'From Campus to the Nations,<br>Walking Together with Students',
  'hero.lead':'ISC-SKKU Seoul is a mission community that shares the gospel of Jesus Christ with international students at Sungkyunkwan University, especially Chinese students, and helps them live as true Christians.',
@@ -1058,6 +1083,7 @@ if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function()
 function applyLang(code){
   lang = I18N[code] ? code : 'ko';
   document.documentElement.lang = HTML_LANG[lang];
+  if(t('meta.title')) document.title = t('meta.title');
   var nodes = document.querySelectorAll('[data-i18n]');
   for(var i=0;i<nodes.length;i++){
     var k = nodes[i].getAttribute('data-i18n');
@@ -1104,11 +1130,20 @@ function applyLang(code){
       back = document.getElementById('mBack');
 
   function setMenu(open){
+    var wasOpen = mm.classList.contains('open');
     mm.classList.toggle('open', open);
     back.classList.toggle('open', open);
     hamb.classList.toggle('on', open);
     hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
     document.body.classList.toggle('menu-open', open);
+    mm.setAttribute('aria-hidden', open ? 'false' : 'true');
+    /* 키보드로 쓰는 분을 위해 초점을 옮겨 줍니다 */
+    if(open){
+      var first = mm.querySelector('a');
+      if(first) setTimeout(function(){ try{ first.focus(); }catch(e){} }, 340);
+    }else if(wasOpen){
+      try{ hamb.focus(); }catch(e){}
+    }
   }
   hamb.addEventListener('click', function(){ setMenu(!mm.classList.contains('open')); });
   back.addEventListener('click', function(){ setMenu(false); });
