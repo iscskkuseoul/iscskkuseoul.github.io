@@ -212,7 +212,11 @@ header{
   opacity:0;pointer-events:none;transition:opacity .34s ease;
 }
 .menu-back.open{opacity:1;pointer-events:auto}
-body.menu-open{overflow:hidden}
+/* 서랍·팝업이 열렸을 때 뒤 화면 잠금
+   (overflow:hidden 만 쓰면 sticky 헤더가 화면 밖으로 밀려나므로 이렇게 합니다) */
+body.scroll-lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
+body.scroll-lock header{position:fixed;top:0;left:0;right:0}
+body.scroll-lock,body.scroll-lock header{padding-right:var(--sbw,0px)}
 /* 흐림 효과를 지원하는 브라우저에서만 진짜 유리처럼 (미지원 시 위의 흰색 유지) */
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
   .mobile-menu{
@@ -366,6 +370,8 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transfor
 
 /* 처음 오셨나요 팝업 */
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px}
+/* 아이폰 주소창 때문에 vh 가 실제 화면보다 커지는 문제를 피합니다 */
+@supports (height:100dvh){ .modal{height:100dvh} }
 .modal[hidden]{display:none}
 .modal-back{
   position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(14,22,18,.46);
@@ -375,30 +381,33 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transfor
 .modal.on .modal-back{opacity:1}
 .modal-box{
   position:relative;background:#FAF7F2;border-radius:22px;width:100%;max-width:960px;
-  max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
-  padding:38px 40px 36px;box-shadow:0 30px 80px rgba(14,22,18,.32);
+  max-height:100%;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 30px 80px rgba(14,22,18,.32);
   opacity:0;transform:translateY(18px) scale(.985);
   transition:opacity .3s ease,transform .3s cubic-bezier(.32,.72,0,1);
 }
+/* 내용만 스크롤되고 ✕ 는 늘 제자리에 남습니다 */
+.modal-scroll{
+  overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  padding:38px 40px 36px;
+}
 .modal.on .modal-box{opacity:1;transform:none}
 .modal-x{
-  position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50%;
-  border:none;background:rgba(255,255,255,.9);cursor:pointer;color:var(--ink);
+  position:absolute;top:14px;right:14px;z-index:3;width:38px;height:38px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.94);cursor:pointer;color:var(--ink);
   font-size:1.05rem;line-height:1;font-family:inherit;
+  box-shadow:0 2px 10px rgba(14,22,18,.14);
 }
 .modal-x:hover{background:#fff;color:var(--pine)}
-.modal-box .sec-head{margin-bottom:30px;padding-right:44px}
-.modal-box .steps{margin-bottom:32px}
-body.modal-open{overflow:hidden}
+.modal-scroll .sec-head{margin-bottom:30px;padding-right:44px}
+.modal-scroll .steps{margin-bottom:32px}
 
 @media (max-width:700px){
   /* 휴대폰에서는 아래에서 올라오는 형태 */
   .modal{padding:0;align-items:flex-end}
-  .modal-box{
-    max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;
-    padding:30px 20px calc(28px + env(safe-area-inset-bottom,0px));
-    transform:translateY(100%);
-  }
+  .modal-box{max-width:100%;max-height:92%;border-radius:20px 20px 0 0;transform:translateY(100%)}
+  .modal-scroll{padding:30px 20px 28px}
+  .modal-scroll{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
   .modal.on .modal-box{transform:none}
   .modal-x{top:12px;right:12px}
 }
@@ -1040,6 +1049,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="modal-back" data-close></div>
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="firstTitle">
     <button class="modal-x" type="button" data-close aria-label="Close">✕</button>
+    <div class="modal-scroll">
 
     <div class="sec-head">
       <p class="eyebrow" data-i18n="first.eyebrow">FIRST VISIT</p>
@@ -1075,6 +1085,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="first-cta">
       <a class="btn btn-pine" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="first.cta1">새가족 등록하기</a>
       <a class="btn btn-line" href="#visit" data-i18n="first.cta2">오시는 길 보기</a>
+    </div>
+
     </div>
   </div>
 </div>
@@ -1292,6 +1304,32 @@ function movePill(){
   pill.style.transform = 'translateX(' + (b.offsetLeft - 3) + 'px)';
 }
 window.addEventListener('resize', function(){ movePill(); });
+
+/* ── 뒤 화면 스크롤 잠금 (서랍·팝업 공용) ──
+   여는 순간의 위치를 기억했다가 닫을 때 그대로 돌려놓습니다.
+   두 개가 동시에 열려도 어긋나지 않도록 개수를 셉니다. */
+var __locks = 0, __lockY = 0;
+function lockScroll(on){
+  var b = document.body;
+  if(on){
+    if(__locks === 0){
+      __lockY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.setProperty('--sbw', (sbw > 0 ? sbw : 0) + 'px');
+      b.style.top = (-__lockY) + 'px';
+      b.classList.add('scroll-lock');
+    }
+    __locks++;
+  }else{
+    __locks = Math.max(0, __locks - 1);
+    if(__locks === 0){
+      b.classList.remove('scroll-lock');
+      b.style.top = '';
+      document.documentElement.style.setProperty('--sbw', '0px');
+      window.scrollTo(0, __lockY);
+    }
+  }
+}
 window.addEventListener('load', function(){ movePill(); });
 if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ movePill(); }); }
 
@@ -1346,11 +1384,13 @@ function applyLang(code){
 
   function setMenu(open){
     var wasOpen = mm.classList.contains('open');
+    if(open === wasOpen) return;      /* 이미 그 상태면 아무것도 하지 않음
+                                         (닫힌 서랍을 또 닫으면 잠금이 어긋납니다) */
+    lockScroll(open);
     mm.classList.toggle('open', open);
     back.classList.toggle('open', open);
     hamb.classList.toggle('on', open);
     hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.body.classList.toggle('menu-open', open);
     mm.setAttribute('aria-hidden', open ? 'false' : 'true');
     /* 키보드로 쓰는 분을 위해 초점을 옮겨 줍니다 */
     if(open){
@@ -1804,24 +1844,26 @@ function swipe(el, onLeft, onRight){
 (function(){
   var modal = document.getElementById('firstModal');
   if(!modal) return;
-  var box = modal.querySelector('.modal-box');
   var opener = null;
 
   function open(from){
     opener = from || null;
     modal.hidden = false;
-    document.body.classList.add('modal-open');
+    lockScroll(true);
     /* hidden 을 뗀 직후에 클래스를 붙여야 나타나는 동작이 보입니다 */
     requestAnimationFrame(function(){
-      requestAnimationFrame(function(){ modal.classList.add('on'); });
+      requestAnimationFrame(function(){
+        modal.classList.add('on');
+        var sc = modal.querySelector('.modal-scroll');
+        if(sc) sc.scrollTop = 0;      /* 항상 맨 위부터 보이도록 */
+      });
     });
-    box.scrollTop = 0;
     var x = modal.querySelector('.modal-x');
     if(x) setTimeout(function(){ try{ x.focus(); }catch(e){} }, 60);
   }
   function close(){
     modal.classList.remove('on');
-    document.body.classList.remove('modal-open');
+    lockScroll(false);
     setTimeout(function(){ modal.hidden = true; }, 300);
     if(opener){ try{ opener.focus(); }catch(e){} opener = null; }
   }
