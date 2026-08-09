@@ -1323,10 +1323,26 @@ function lockScroll(on){
   }else{
     __locks = Math.max(0, __locks - 1);
     if(__locks === 0){
+      var el = document.documentElement;
+      /* 페이지 전체에 걸린 "부드러운 스크롤"을 잠시 꺼 둡니다.
+         켜 둔 채로 위치를 되돌리면 맨 위에서 원래 자리까지 스르륵
+         내려가는 장면이 보이기 때문입니다. */
+      var prev = el.style.scrollBehavior;
+      el.style.scrollBehavior = 'auto';
+
       b.classList.remove('scroll-lock');
       b.style.top = '';
-      document.documentElement.style.setProperty('--sbw', '0px');
-      window.scrollTo(0, __lockY);
+      el.style.setProperty('--sbw', '0px');
+
+      try{ window.scrollTo({top: __lockY, left: 0, behavior: 'instant'}); }
+      catch(e){ window.scrollTo(0, __lockY); }
+
+      /* 다음 화면 갱신 때 원래 설정으로 되돌립니다 */
+      if(window.requestAnimationFrame){
+        requestAnimationFrame(function(){ el.style.scrollBehavior = prev; });
+      }else{
+        el.style.scrollBehavior = prev;
+      }
     }
   }
 }
