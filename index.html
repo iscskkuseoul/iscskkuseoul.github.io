@@ -210,10 +210,11 @@ header{
   font-weight:700;font-size:.95rem;
 }
 .m-btn svg{width:17px;height:17px;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.m-btn-fill{background:var(--pine);color:#fff}
-.m-btn-fill svg{stroke:#fff}
-.m-btn-fill:active{background:#0c4630;color:#fff}
-.m-btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}
+/* 목록 링크(.mobile-menu li a)보다 우선하도록 선택자를 맞춰 줍니다 */
+.mobile-menu li a.m-btn-fill{background:var(--pine);color:#fff;text-shadow:none;letter-spacing:.01em}
+.mobile-menu li a.m-btn-fill svg{stroke:#fff}
+.mobile-menu li a.m-btn-fill:active{background:#0c4630;color:#fff}
+.mobile-menu li a.m-btn-line{background:#fff;border:1px solid var(--line);color:var(--ink);text-shadow:none}
 .m-btn-line svg{stroke:#FF0000}
 .m-btn-line .yt-i path{fill:#FF0000;stroke:none}
 /* 서랍 맨 아래 예배 정보 */
@@ -244,7 +245,7 @@ body.scroll-lock,body.scroll-lock header{padding-right:var(--sbw,0px)}
     border-left:1px solid rgba(255,255,255,.55);
     box-shadow:-16px 0 46px rgba(14,22,18,.22);
   }
-  .mobile-menu li a{
+  .mobile-menu li a:not(.m-btn){
     border-bottom-color:rgba(35,40,45,.10);
     text-shadow:0 1px 0 rgba(255,255,255,.6);
   }
@@ -262,10 +263,14 @@ body.scroll-lock,body.scroll-lock header{padding-right:var(--sbw,0px)}
 .hero-bg .slide{
   position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;
   background-size:cover;background-position:center;
-  transition:opacity 1.6s ease;
+  transform:scale(1);will-change:opacity,transform;
+  transition:opacity 1.8s cubic-bezier(.4,0,.2,1);
 }
-.hero-bg .slide.active{opacity:1;animation:kb 14s ease-out forwards}
-@keyframes kb{from{transform:scale(1.0)}to{transform:scale(1.07)}}
+.hero-bg .slide.active{opacity:1}
+/* 확대는 .active 가 아니라 .kb 로 따로 관리합니다.
+   그래야 사라지는 사진이 확대된 상태를 유지한 채 조용히 사라집니다. */
+.hero-bg .slide.kb{animation:kb 13s linear forwards}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.075)}}
 .hero-veil{
   position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;
   background:
@@ -729,7 +734,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
 }
 @media (prefers-reduced-motion:reduce){
   html.js .reveal{opacity:1;transform:none}
-  .hero-bg .slide.active{animation:none}
+  .hero-bg .slide.kb{animation:none}
   .hero-bg .slide,.carousel .slide{transition-duration:.2s}
   .mobile-menu,.mobile-menu li{transition-duration:.01s;transition-delay:0s}
   html{scroll-behavior:auto}
@@ -1558,15 +1563,34 @@ function applyLang(code){
   }
   var dots = dotsBox.querySelectorAll('button');
 
+  var FADE = 1800;                 /* 위 CSS 의 전환 시간과 맞춰 둡니다 */
+
+  function zoom(el){               /* 확대를 처음부터 다시 시작 */
+    el.classList.remove('kb');
+    void el.offsetWidth;           /* 브라우저가 변화를 알아채도록 한 번 재계산 */
+    el.classList.add('kb');
+  }
+
   function go(i){
-    slides[idx].classList.remove('active'); dots[idx].classList.remove('on');
+    var prev = idx;
     idx = (i + slides.length) % slides.length;
-    slides[idx].classList.add('active'); dots[idx].classList.add('on');
+    if(idx === prev) return;
+
+    slides[prev].classList.remove('active'); dots[prev].classList.remove('on');
+    slides[idx].classList.add('active');     dots[idx].classList.add('on');
+    zoom(slides[idx]);
+
+    /* 사라진 사진의 확대는 완전히 투명해진 뒤에 풀어 줍니다.
+       바로 풀면 아직 보이는 상태에서 크기가 튀어 "덜컹" 하고 보입니다. */
+    setTimeout(function(){
+      if(!slides[prev].classList.contains('active')) slides[prev].classList.remove('kb');
+    }, FADE + 120);
   }
   function restart(){
     clearInterval(timer);
-    timer = setInterval(function(){ preload(); go(idx + 1); }, 6000);
+    timer = setInterval(function(){ preload(); go(idx + 1); }, 7000);
   }
+  zoom(slides[0]);                 /* 첫 사진도 처음부터 천천히 확대 */
   /* 다른 탭을 보고 있을 때는 잠시 멈춥니다 (배터리 절약) */
   document.addEventListener('visibilitychange', function(){
     if(document.hidden) clearInterval(timer); else restart();
