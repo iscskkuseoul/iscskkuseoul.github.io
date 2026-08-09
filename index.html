@@ -200,8 +200,26 @@ header{
   display:block;padding:14px 2px;text-decoration:none;color:var(--ink);
   font-weight:600;font-size:1rem;border-bottom:1px solid #EFF2F0;
 }
-.mobile-menu li:last-child a{border-bottom:none}
 .mobile-menu li a:active{color:var(--pine)}
+
+/* 아래쪽 바로가기 묶음 (화면 이동 메뉴와 구분) */
+.m-actions{display:flex;flex-direction:column;gap:9px;margin-top:22px;padding-top:20px;border-top:1px solid #E4E9E6}
+.m-actions a.m-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 10px;border-radius:12px;border-bottom:none;
+  font-weight:700;font-size:.95rem;
+}
+.m-btn svg{width:17px;height:17px;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.m-btn-fill{background:var(--pine);color:#fff}
+.m-btn-fill svg{stroke:#fff}
+.m-btn-fill:active{background:#0c4630;color:#fff}
+.m-btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.m-btn-line svg{stroke:#FF0000}
+.m-btn-line .yt-i path{fill:#FF0000;stroke:none}
+/* 서랍 맨 아래 예배 정보 */
+.m-info{margin-top:22px;padding-top:16px;border-top:1px solid #EFF2F0;line-height:1.7}
+.m-info b{display:block;color:var(--pine);font-size:.74rem;letter-spacing:.12em;font-weight:700;margin-bottom:3px}
+.m-info span{display:block;color:var(--gray);font-size:.82rem}
 /* ✕ 단추는 항상 서랍 위에 */
 .hamburger{position:relative;z-index:62}
 /* 서랍 뒤 배경막 (헤더 아래쪽만 덮어 헤더는 계속 쓸 수 있게 함) */
@@ -359,14 +377,6 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transfor
 
 /* ─────────── 처음 오셨나요 ─────────── */
 .warm{background:#FAF7F2}
-
-/* 처음 오셨나요 단추 */
-.first-btn{
-  background:var(--pine-soft);color:var(--pine);border:none;cursor:pointer;
-  font-family:inherit;font-size:.84rem;font-weight:700;padding:7px 15px;border-radius:999px;
-  white-space:nowrap;transition:.18s;
-}
-.first-btn:hover{background:#E4EFE9}
 
 /* 처음 오셨나요 팝업 */
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px}
@@ -610,19 +620,73 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
 
 footer{border-top:1px solid var(--line);padding:36px 0;color:var(--gray);font-size:.86rem}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.top-btn{
-  position:fixed;right:20px;bottom:20px;z-index:55;width:44px;height:44px;border-radius:50%;
-  border:none;background:var(--ink);color:#fff;cursor:pointer;font-size:1.1rem;
-  box-shadow:0 4px 16px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .3s;
+/* ── 오른쪽 아래 고정 영역 (안내 위젯 + 위로가기) ── */
+.dock{
+  position:fixed;right:18px;bottom:18px;z-index:56;
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
 }
-.top-btn.on{opacity:.92;pointer-events:auto}
+.dock{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+body.scroll-lock .dock{opacity:0;pointer-events:none}
+.dock{transition:opacity .25s ease}
+
+.top-btn{
+  width:44px;height:44px;border-radius:50%;border:none;background:var(--ink);color:#fff;
+  cursor:pointer;font-size:1.1rem;line-height:1;font-family:inherit;
+  box-shadow:0 4px 16px rgba(0,0,0,.2);display:none;
+}
+.top-btn.on{display:block;opacity:.92;animation:pop .3s ease both}
 .top-btn:hover{opacity:1}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:.92;transform:none}}
+
+/* 평소 모습: 작은 알약 */
+.fv-pill{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;
+  background:#fff;border:1px solid var(--line);border-radius:999px;
+  padding:10px 16px 10px 12px;font-size:.83rem;font-weight:700;color:var(--pine);
+  box-shadow:0 6px 22px rgba(20,28,24,.15);white-space:nowrap;
+  animation:pop .3s ease both;
+}
+.fv-pill:hover{background:var(--pine-soft);border-color:#CFE0D6}
+.fv-pill svg{width:18px;height:18px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+
+/* 처음 방문에만 잠깐 펼쳐지는 카드 */
+.fv-card{
+  position:relative;width:min(82vw,286px);background:#fff;border:1px solid var(--line);
+  border-radius:18px;padding:20px 20px 18px;box-shadow:0 16px 44px rgba(20,28,24,.20);
+  animation:fvIn .38s cubic-bezier(.32,.72,0,1) both;
+}
+@keyframes fvIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.fv-card .fv-ic{
+  width:38px;height:38px;border-radius:50%;background:var(--pine-soft);
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+}
+.fv-card .fv-ic svg{width:19px;height:19px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fv-card h4{font-family:'Gowun Batang',serif;font-size:1.04rem;margin-bottom:6px}
+.fv-card p{color:var(--gray);font-size:.85rem;line-height:1.6;margin-bottom:15px}
+.fv-card .fv-go{
+  display:block;width:100%;text-align:center;background:var(--pine);color:#fff;border:none;
+  cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:700;padding:11px 0;border-radius:11px;
+}
+.fv-card .fv-go:hover{background:#0c4630}
+.fv-x{
+  position:absolute;top:9px;right:9px;width:28px;height:28px;border-radius:50%;
+  border:none;background:none;cursor:pointer;color:var(--gray);font-size:.95rem;
+  line-height:1;font-family:inherit;
+}
+.fv-x:hover{background:#F1F4F2;color:var(--ink)}
+@media (max-width:540px){
+  .dock{right:14px;bottom:14px}
+  .fv-pill{font-size:.78rem;padding:9px 14px 9px 11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .fv-card,.fv-pill,.top-btn.on{animation:none}
+}
 
 /* ─────────── 모바일 ─────────── */
 @media (max-width:900px){
   .menu{display:none}
   .hamburger{display:flex}
-  .reg-btn,.yt-btn,.first-btn{display:none}
+  .reg-btn,.yt-btn{display:none}
   .nav-right{gap:8px}
   .lang-seg button{font-size:.76rem;padding:6px 10px}
   section{padding:56px 0}
@@ -696,7 +760,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <button type="button" data-lang="zh">中文</button>
         <button type="button" data-lang="en">EN</button>
       </div>
-      <button class="first-btn" type="button" data-first data-i18n="nav.first">처음 오셨나요?</button>
       <!-- ▶ 새가족 등록 구글 폼 주소 -->
       <a class="reg-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="nav.register">새가족 등록</a>
       <a class="yt-btn" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a>
@@ -712,9 +775,23 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <li><a href="#ministry" data-i18n="nav.ministry">사역</a></li>
     <li><a href="#news" data-i18n="nav.news">교회 소식</a></li>
     <li><a href="#visit" data-i18n="nav.visit">오시는 길</a></li>
-    <li><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a></li>
-    <li><a href="#" data-first data-i18n="nav.first">처음 오셨나요?</a></li>
-    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="nav.register">새가족 등록</a></li>
+
+    <li class="m-actions">
+      <a class="m-btn m-btn-fill" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <span data-i18n="nav.register">새가족 등록</span>
+      </a>
+      <a class="m-btn m-btn-line" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" class="yt-i"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg>
+        <span>YouTube</span>
+      </a>
+    </li>
+
+    <li class="m-info">
+      <b data-i18n="strip.service">주일예배</b>
+      <span data-i18n="strip.serviceVal">매주 일요일 오후 3:00</span>
+      <span data-i18n="strip.placeVal">서울 종로구 명륜길 22, 2층</span>
+    </li>
 </ul>
 
 
@@ -1091,7 +1168,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </div>
 
-<button class="top-btn" id="topBtn" type="button" aria-label="Top">↑</button>
+<!-- ═══ 오른쪽 아래 고정 영역 ═══
+     처음 오셨나요 안내: 평소에는 작은 알약, 첫 방문 때만 잠깐 펼쳐집니다. -->
+<div class="dock">
+  <div id="fvBox">
+    <button class="fv-pill" type="button" data-first>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.7 1.1c0 1.7-2.3 2-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>
+      <span data-i18n="nav.first">처음 오셨나요?</span>
+    </button>
+  </div>
+  <button class="top-btn" id="topBtn" type="button" aria-label="Top">↑</button>
+</div>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -1102,6 +1189,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    ═══════════════════════════════════════════════════════════════ */
 var I18N = {
 ko:{
+ 'fv.title':'교회가 처음이신가요?','fv.desc':'오시기 전에 알아두시면 좋은 것들을 짧게 정리해 두었습니다.','fv.go':'안내 보기','fv.close':'닫기',
  'nav.first':'처음 오셨나요?',
  'first.eyebrow':'FIRST VISIT','first.title':'처음 오셨나요?',
  'first.sub':'교회가 처음이셔도, 한국어가 서툴러도 괜찮습니다. 오시는 순간부터 저희가 함께하겠습니다.',
@@ -1164,6 +1252,7 @@ ko:{
  'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기'
 },
 zh:{
+ 'fv.title':'第一次来教会吗?','fv.desc':'我们把第一次来之前值得先了解的事，简单整理好了。','fv.go':'查看指南','fv.close':'关闭',
  'nav.first':'第一次来?',
  'first.eyebrow':'FIRST VISIT','first.title':'第一次来教会吗?',
  'first.sub':'第一次进教会、韩语还不熟练，都完全没关系。从你踏进门的那一刻起，我们会一直陪着你。',
@@ -1226,6 +1315,7 @@ zh:{
  'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看'
 },
 en:{
+ 'fv.title':'First time here?','fv.desc':'We have put together a few things worth knowing before you visit.','fv.go':'Take a look','fv.close':'Dismiss',
  'nav.first':'First Visit',
  'first.eyebrow':'FIRST VISIT','first.title':'Is This Your First Time?',
  'first.sub':'It is completely fine if you have never been to a church, or if your Korean is limited. From the moment you arrive, you will not be on your own.',
@@ -1366,6 +1456,7 @@ function applyLang(code){
   movePill();
   try{ localStorage.setItem('isc-lang', lang); }catch(e){}
   if(window.__rerender) window.__rerender();
+  if(window.__applyExtra) window.__applyExtra();
 }
 
 (function initLang(){
@@ -1898,6 +1989,62 @@ function swipe(el, onLeft, onRight){
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && !modal.hidden) close();
   });
+})();
+
+/* ═══ 7-2. 처음 오셨나요 안내 위젯 ═══
+   평소에는 작은 알약으로만 있습니다.
+   처음 방문하신 분에게만, 6초쯤 뒤에 한 번 카드로 펼쳐 보여 드리고
+   닫거나 열어 보시면 다시 알약으로 돌아가 두 번 다시 펼쳐지지 않습니다. */
+(function(){
+  var box = document.getElementById('fvBox');
+  if(!box) return;
+
+  var SEEN = 'isc-fv-seen';
+  function seen(){ try{ return localStorage.getItem(SEEN) === '1'; }catch(e){ return true; } }
+  function markSeen(){ try{ localStorage.setItem(SEEN,'1'); }catch(e){} }
+
+  var ICON = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/>' +
+             '<path d="M9.6 9.4a2.5 2.5 0 0 1 4.7 1.1c0 1.7-2.3 2-2.3 3.4"/>' +
+             '<circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>';
+
+  function pill(){
+    box.innerHTML = '<button class="fv-pill" type="button" data-first>' + ICON +
+                    '<span data-i18n="nav.first">' + t('nav.first') + '</span></button>';
+  }
+  function card(){
+    box.innerHTML =
+      '<div class="fv-card">' +
+        '<button class="fv-x" type="button" id="fvX" aria-label="' + t('fv.close') + '">✕</button>' +
+        '<div class="fv-ic">' + ICON + '</div>' +
+        '<h4 data-i18n="fv.title">' + t('fv.title') + '</h4>' +
+        '<p data-i18n="fv.desc">' + t('fv.desc') + '</p>' +
+        '<button class="fv-go" type="button" data-first data-i18n="fv.go">' + t('fv.go') + '</button>' +
+      '</div>';
+    document.getElementById('fvX').addEventListener('click', function(){
+      markSeen(); pill();
+    });
+  }
+
+  /* 카드 안의 "안내 보기"를 누르면 팝업이 열리고 카드는 접힙니다 */
+  document.addEventListener('click', function(e){
+    if(e.target.closest('[data-first]')){ markSeen(); setTimeout(pill, 0); }
+  });
+
+  /* 언어를 바꿔도 위젯 글자가 따라오도록 */
+  var origin = window.__applyExtra;
+  window.__applyExtra = function(){
+    if(origin) origin();
+    if(box.querySelector('.fv-card')) card(); else pill();
+  };
+
+  if(!seen()){
+    setTimeout(function(){
+      var modal = document.getElementById('firstModal');
+      if(modal && !modal.hidden) return;      /* 이미 보고 계시면 방해하지 않음 */
+      if(box.querySelector('.fv-card')) return;
+      card();
+    }, 6000);
+  }
 })();
 
 /* ═══ 8. 헌금 계좌번호 복사 ═══ */
