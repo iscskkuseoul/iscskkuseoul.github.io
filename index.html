@@ -110,8 +110,8 @@
   --line:#E3E7E9;         /* 테두리 */
   --line-soft:#EFF1F0;    /* 안쪽 구분선 */
   --paper:#FFFFFF;
-  --warm:var(--warm);         /* 처음 오셨나요 배경 */
-  --warm-line:var(--warm-line);
+  --warm:#FAF7F2;         /* 처음 오셨나요 배경 (따뜻한 아이보리) */
+  --warm-line:#EDE7DD;    /* 그 위의 테두리 */
 
   /* ── 글자 크기 (7단계) ── */
   --t-1:.78rem;           /* 아주 작은 라벨 */
@@ -311,6 +311,20 @@ body.scroll-lock,body.scroll-lock header{padding-right:var(--sbw,0px)}
 }
 @media (min-width:901px){ .mobile-menu,.menu-back{display:none} }
 
+/* 팝업에 은은한 유리 질감 (글자 가독성을 위해 불투명도는 충분히 높게 유지) */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .modal-box{
+    background:rgba(250,247,242,.94);
+    -webkit-backdrop-filter:blur(30px) saturate(150%);
+    backdrop-filter:blur(30px) saturate(150%);
+    border:1px solid rgba(255,255,255,.6);
+  }
+  .modal-x{
+    background:rgba(255,255,255,.86);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  }
+}
+
 /* ─────────── 히어로 ─────────── */
 .hero{position:relative;min-height:min(80vh,640px);display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-deep)}
 .hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
@@ -443,8 +457,8 @@ html.js .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transfor
 @supports (height:100dvh){ .modal{height:100dvh} }
 .modal[hidden]{display:none}
 .modal-back{
-  position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(14,22,18,.46);
-  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(14,22,18,.52);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   opacity:0;transition:opacity .28s ease;
 }
 .modal.on .modal-back{opacity:1}
