@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>페이지를 찾을 수 없습니다 | ISC-SKKU Seoul</title>
-<meta name="robots" content="noindex">
+<!-- robots 태그를 일부러 넣지 않습니다.
+     404 페이지는 HTTP 상태코드 404 자체로 이미 색인되지 않습니다.
+     noindex 를 넣어 두면, 사이트를 새로 배포하는 짧은 순간에
+     검색로봇이 이 페이지를 받아 갈 경우 홈페이지까지 색인에서
+     빠질 위험이 있습니다. -->
 <meta name="theme-color" content="#10573B">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
