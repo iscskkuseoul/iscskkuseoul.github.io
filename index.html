@@ -720,8 +720,35 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
 .map-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;border-top:1px solid var(--line)}
 .map-actions .btn{padding:12px 8px;font-size:var(--t-2)}
 
-footer{border-top:1px solid var(--line);padding:40px 0;color:var(--gray);font-size:var(--t-2)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* ─────────── 푸터 ─────────── */
+footer{
+  background:var(--pine-soft);border-top:1px solid var(--line);
+  padding:48px 0 24px;color:var(--gray);font-size:var(--t-2);
+}
+.f-top{display:flex;justify-content:space-between;gap:48px;align-items:flex-start}
+.f-brand{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.f-brand picture{flex:0 0 auto}
+.f-brand img{width:44px;height:auto;margin-top:2px;flex:0 0 auto}
+.f-name{font-family:'Gowun Batang',serif;font-size:var(--t-5);font-weight:700;color:var(--ink);line-height:var(--lh-head)}
+.f-sub{font-size:var(--t-1);color:var(--gray);margin-top:2px}
+.f-tag{font-size:var(--t-2);color:var(--gray);margin-top:12px;max-width:24em;line-height:var(--lh-tight)}
+.f-info{list-style:none;flex:0 0 auto}
+.f-info li{display:flex;gap:16px;padding:5px 0;align-items:baseline}
+.f-info b{flex:0 0 68px;font-size:var(--t-1);font-weight:700;color:var(--pine);letter-spacing:.06em}
+.f-info span,.f-info a{color:var(--ink);font-size:var(--t-2);text-decoration:none}
+.f-info a:hover{color:var(--pine);text-decoration:underline}
+.f-sns{display:flex;gap:8px;margin-top:16px}
+.f-sns a{
+  width:34px;height:34px;border-radius:var(--r-full);background:#fff;
+  border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--dur-1) var(--ease);
+}
+.f-sns a:hover{border-color:var(--pine)}
+.f-sns svg{width:16px;height:16px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.f-bot{
+  margin-top:32px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:var(--t-1);color:var(--gray);
+}
 /* ── 오른쪽 아래 고정 영역 (안내 위젯 + 위로가기) ── */
 .dock{
   position:fixed;right:18px;bottom:18px;z-index:56;
@@ -803,6 +830,14 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .strip .wrap>div{display:flex;gap:12px;align-items:baseline}
   .strip b{margin:0;min-width:96px}
   .about-grid,.ministry-grid,.visit,.news-grid,.faq{grid-template-columns:1fr}
+  footer{padding:36px 0 20px}
+  .f-top{flex-direction:column;gap:20px}
+  .f-brand img{width:36px}
+  .f-tag{max-width:none}
+  .f-info li{padding:4px 0}
+  .f-info b{flex-basis:56px}
+  /* 우하단 떠 있는 단추에 저작권 글자가 가리지 않도록 여유를 둡니다 */
+  .f-bot{margin-top:20px;padding-top:16px;padding-right:64px}
   .steps{grid-template-columns:1fr 1fr;gap:12px}
   .vstep{padding:20px 16px}
   .vstep:not(:last-child)::after{display:none}
@@ -1213,10 +1248,41 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   </div>
 </section>
 
+<!-- ═══ 푸터 ═══
+     바로 위 "오시는 길"에 주소·이메일·헌금계좌가 이미 있으므로,
+     여기서는 되풀이하지 않고 교회의 정체성과 최소한의 정보만 담았습니다. -->
 <footer>
   <div class="wrap">
-    <div>© ISC-SKKU Seoul (성균관대 유학생교회) · Since 2020</div>
-    <div>서울 종로구 명륜길 22, 2층 · iscskku.seoul@gmail.com</div>
+    <div class="f-top">
+      <div class="f-brand">
+        <picture><source srcset="assets/logo3.webp" type="image/webp"><img src="assets/logo3.png" alt="" loading="lazy"></picture>
+        <div>
+          <div class="f-name">ISC-SKKU Seoul</div>
+          <div class="f-sub" data-i18n="foot.sub">성균관대 유학생교회 · Since 2020</div>
+          <p class="f-tag" data-i18n="foot.tag">캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.</p>
+          <div class="f-sns">
+            <a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg>
+            </a>
+            <a href="mailto:iscskku.seoul@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="13" rx="2.4"/><path d="M4.6 7 12 13 19.4 7"/></svg>
+            </a>
+            <a href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" aria-label="Map">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <ul class="f-info">
+        <li><b data-i18n="strip.service">주일예배</b><span data-i18n="strip.serviceVal">매주 일요일 오후 3:00</span></li>
+        <li><b data-i18n="w2.short">기도회</b><span data-i18n="foot.prayer">수요일 저녁 6:00</span></li>
+        <li><b data-i18n="visit.addr">주소</b><span data-i18n="strip.placeVal">서울 종로구 명륜길 22, 2층</span></li>
+        <li><b data-i18n="visit.email">이메일</b><a href="mailto:iscskku.seoul@gmail.com">iscskku.seoul@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="f-bot" data-i18n="foot.rights">© 2026 ISC-SKKU Seoul (성균관대 유학생교회). All rights reserved.</div>
   </div>
 </footer>
 
@@ -1292,6 +1358,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
    ═══════════════════════════════════════════════════════════════ */
 var I18N = {
 ko:{
+ 'foot.sub':'성균관대 유학생교회 · Since 2020','foot.tag':'캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.','w2.short':'기도회','foot.prayer':'수요일 저녁 6:00','foot.rights':'© 2026 ISC-SKKU Seoul (성균관대 유학생교회). All rights reserved.',
  'fv.title':'교회가 처음이신가요?','fv.desc':'오시기 전에 알아두시면 좋은 것들을 짧게 정리해 두었습니다.','fv.go':'안내 보기','fv.close':'닫기',
  'nav.first':'처음 오셨나요?',
  'first.eyebrow':'FIRST VISIT','first.title':'처음 오셨나요?',
@@ -1355,6 +1422,7 @@ ko:{
  'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기'
 },
 zh:{
+ 'foot.sub':'成均馆大学留学生教会 · Since 2020','foot.tag':'陪伴在校园中遇见的每一位留学生，从认识耶稣，到回国传扬福音。','w2.short':'祷告会','foot.prayer':'周三晚上 6:00','foot.rights':'© 2026 ISC-SKKU Seoul（成均馆大学留学生教会）. All rights reserved.',
  'fv.title':'第一次来教会吗?','fv.desc':'我们把第一次来之前值得先了解的事，简单整理好了。','fv.go':'查看指南','fv.close':'关闭',
  'nav.first':'第一次来?',
  'first.eyebrow':'FIRST VISIT','first.title':'第一次来教会吗?',
@@ -1418,6 +1486,7 @@ zh:{
  'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看'
 },
 en:{
+ 'foot.sub':'SKKU International Student Church · Since 2020','foot.tag':'We walk with each student we meet on campus, from meeting Jesus to carrying the gospel home.','w2.short':'Prayer','foot.prayer':'Wednesdays 6:00 PM','foot.rights':'© 2026 ISC-SKKU Seoul. All rights reserved.',
  'fv.title':'First time here?','fv.desc':'We have put together a few things worth knowing before you visit.','fv.go':'Take a look','fv.close':'Dismiss',
  'nav.first':'First Visit',
  'first.eyebrow':'FIRST VISIT','first.title':'Is This Your First Time?',
