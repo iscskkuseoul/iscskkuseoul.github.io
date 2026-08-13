@@ -18,11 +18,13 @@
 <meta name="author" content="ISC-SKKU Seoul">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://iscskkuseoul.github.io/">
-<!-- 이 사이트가 한국어·중국어·영어를 함께 제공한다는 표시 (검색엔진용) -->
-<link rel="alternate" hreflang="ko" href="https://iscskkuseoul.github.io/">
-<link rel="alternate" hreflang="zh" href="https://iscskkuseoul.github.io/">
-<link rel="alternate" hreflang="en" href="https://iscskkuseoul.github.io/">
-<link rel="alternate" hreflang="x-default" href="https://iscskkuseoul.github.io/">
+<!-- hreflang 은 "언어마다 주소가 다른 사이트"에만 쓰는 표시입니다.
+     우리 사이트는 주소 하나에서 언어만 바뀌므로 쓰지 않는 것이 맞습니다.
+     (같은 주소를 여러 언어로 중복 지정하면 구글이 규격 위반으로 봅니다) -->
+
+<!-- ▶ 구글 소유확인을 "파일" 대신 "메타 태그"로도 해 두고 싶으시면
+     Search Console 이 알려주는 아래 형식의 줄을 이 자리에 붙여 넣으세요.
+     <meta name="google-site-verification" content="..."> -->
 
 <!-- ═══ 검색엔진 소유확인 (지우지 마세요) ═══ -->
 <meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
@@ -1135,7 +1137,14 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
       <div class="news" id="newsCard">
         <p class="date" id="newsDate" data-i18n="news.thisWeek">이번 주 소식</p>
         <div class="news-body" id="newsBody">
-          <ul id="newsList"><li data-i18n="news.loading">소식을 불러오는 중입니다.</li></ul>
+          <!-- 아래 3줄은 자바스크립트가 실제 소식으로 바꿔 줍니다.
+               바뀌기 전에도(검색로봇이 볼 때도) 교회의 핵심 정보가 보이도록
+               "항상 사실인 내용"을 적어 둡니다. 매주 고치실 필요 없습니다. -->
+          <ul id="newsList">
+            <li>주일예배는 매주 일요일 오후 3시에 드립니다.<em>서울 종로구 명륜길 22, 2층 · 현장 예배와 Zoom 온라인 예배를 함께 진행합니다.</em></li>
+            <li>교두보(BPM) 기도회는 매주 수요일 저녁 6시부터 9시까지 모입니다.</li>
+            <li>이번 주 주보는 오른쪽에서 온라인으로 바로 보실 수 있습니다.<em>지난 주보와 지난 소식도 함께 보관하고 있습니다.</em></li>
+          </ul>
         </div>
         <button class="more-btn" id="newsMore" type="button" data-i18n="news.more">소식 전체 보기</button>
         <details class="last-week" id="newsArchiveBox" hidden>
