@@ -54,42 +54,61 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="preload" as="image" href="assets/banner1.webp" type="image/webp">
 
+<!-- ═══ 검색엔진에게 교회 정보를 알려주는 부분 ═══
+     ▶ 매주 반복되는 예배는 반드시 openingHoursSpecification(정기 시간)으로 적습니다.
+        Event(행사) 타입은 구글이 "startDate(구체적 날짜)"를 필수로 요구해서,
+        매주 반복되는 예배에는 맞지 않고 오류로 잡힙니다. (2026-08 실제로 발생)
+     ▶ 시간이나 주소가 바뀌면 아래 값만 고치시면 됩니다. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Church",
   "name": "ISC-SKKU Seoul (성균관대 유학생교회)",
-  "alternateName": ["ISC-SKKU", "International Student Church SKKU Seoul", "성균관대 유학생교회", "成均馆大学留学生教会"],
+  "alternateName": [
+    "ISC-SKKU",
+    "International Student Church SKKU Seoul",
+    "성균관대 유학생교회",
+    "成均馆大学留学生教会"
+  ],
+  "description": "성균관대학교 외국인 유학생, 특히 중국인 유학생에게 복음을 전하는 유학생 선교 공동체입니다. 주일예배는 매주 일요일 오후 3시에 드립니다.",
   "url": "https://iscskkuseoul.github.io/",
   "logo": "https://iscskkuseoul.github.io/assets/logo3.png",
   "image": "https://iscskkuseoul.github.io/assets/banner1.jpg",
   "foundingDate": "2020-03-15",
   "email": "iscskku.seoul@gmail.com",
   "hasMap": "https://map.naver.com/p/entry/place/1585778785",
-  "knowsLanguage": ["ko", "zh", "en"],
+  "knowsLanguage": [
+    "ko",
+    "zh",
+    "en"
+  ],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "명륜길 22, 2층",
     "addressLocality": "종로구",
     "addressRegion": "서울특별시",
+    "postalCode": "03086",
     "addressCountry": "KR"
   },
-  "event": {
-    "@type": "Event",
-    "name": "주일예배 (Sunday Worship)",
-    "eventSchedule": {
-      "@type": "Schedule",
-      "byDay": "https://schema.org/Sunday",
-      "startTime": "15:00",
-      "scheduleTimezone": "Asia/Seoul"
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "https://schema.org/Sunday",
+      "opens": "15:00",
+      "closes": "17:00",
+      "name": "주일예배"
     },
-    "location": {
-      "@type": "Place",
-      "name": "ISC-SKKU Seoul",
-      "address": "서울특별시 종로구 명륜길 22, 2층"
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "https://schema.org/Wednesday",
+      "opens": "18:00",
+      "closes": "21:00",
+      "name": "교두보 기도회"
     }
-  },
-  "sameAs": ["https://www.youtube.com/@iscskku2020"]
+  ],
+  "sameAs": [
+    "https://www.youtube.com/@iscskku2020"
+  ]
 }
 </script>
 
