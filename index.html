@@ -711,8 +711,27 @@ html[lang="zh"] .news .news-arch details[open]>summary::after{content:"收起 �
 html[lang="en"] .news .news-arch summary::after{content:"View ›"}
 html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄"}
 /* 주가 많이 쌓이면 목록 안에서만 스크롤되게 합니다 */
-#newsArchive.scroll{max-height:min(60vh,460px);overflow-y:auto;padding-right:8px}
-#juboArchive.scroll{max-height:min(60vh,420px);overflow-y:auto;padding-right:8px}
+/* ── 지난 목록: 연·월을 골라 보는 방식 ──
+   몇 년이 쌓여도 펼친 높이가 늘 일정하게 유지됩니다. */
+.arch-nav{margin-top:12px}
+.arch-years{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.arch-years button{
+  border:1px solid var(--line);background:#fff;color:var(--gray);cursor:pointer;
+  font-family:inherit;font-size:var(--t-1);font-weight:700;padding:5px 12px;
+  border-radius:var(--r-full);transition:all var(--dur-1) var(--ease);
+}
+.arch-years button[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.arch-years button:hover{border-color:var(--pine);color:var(--pine)}
+.arch-years button[aria-current="true"]:hover{color:#fff}
+.arch-months{display:flex;gap:4px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--line-soft)}
+.arch-months button{
+  border:none;background:none;color:var(--gray);cursor:pointer;font-family:inherit;
+  font-size:var(--t-2);font-weight:600;padding:5px 9px;border-radius:var(--r-sm);
+  transition:all var(--dur-1) var(--ease);
+}
+.arch-months button:hover{background:var(--pine-soft);color:var(--pine)}
+.arch-months button[aria-current="true"]{background:var(--pine);color:#fff}
+.arch-empty{color:var(--gray);font-size:var(--t-2);padding:16px 2px}
 .jubo-arch{list-style:none;margin-top:8px}
 .jubo-arch li{border-bottom:1px solid var(--line-soft)}
 .jubo-arch li:last-child{border-bottom:none}
@@ -734,7 +753,7 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
 }
 .v-icon svg{width:20px;height:20px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .v-card b{display:block;font-size:var(--t-1);color:var(--gray);letter-spacing:.07em;margin-bottom:2px;font-weight:600}
-.v-card .val{font-weight:600;font-size:var(--t-3)}
+.v-card .val{font-weight:600;font-size:var(--t-3);word-break:keep-all}
 .v-card small{display:block;color:var(--gray);font-weight:400;margin-top:4px;font-size:var(--t-2)}
 .map-box{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column}
 .map-box iframe{border:0;width:100%;flex:1;min-height:330px}
@@ -757,6 +776,11 @@ footer{
 .f-info li{display:flex;gap:16px;padding:5px 0;align-items:baseline}
 .f-info b{flex:0 0 68px;font-size:var(--t-1);font-weight:700;color:var(--pine);letter-spacing:.06em}
 .f-info span,.f-info a{color:var(--ink);font-size:var(--t-2);text-decoration:none}
+/* 주소·시간처럼 짧은 값은 한 줄로 유지 (칸이 좁으면 글자를 살짝 줄여서라도) */
+.f-info span,.f-info a{white-space:nowrap}
+@media (max-width:360px){
+  .f-info span,.f-info a{white-space:normal}   /* 아주 좁은 화면에서는 넘침 방지를 위해 해제 */
+}
 .f-info a:hover{color:var(--pine);text-decoration:underline}
 .f-sns{display:flex;gap:8px;margin-top:16px}
 .f-sns a{
@@ -856,7 +880,8 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .f-brand img{width:36px}
   .f-tag{max-width:none}
   .f-info li{padding:4px 0}
-  .f-info b{flex-basis:56px}
+  .f-info b{flex-basis:52px}
+  .f-info li{gap:12px}
   /* 우하단 떠 있는 단추에 저작권 글자가 가리지 않도록 여유를 둡니다 */
   .f-bot{margin-top:20px;padding-top:16px;padding-right:64px}
   .steps{grid-template-columns:1fr 1fr;gap:12px}
@@ -1225,7 +1250,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
           <div class="v-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
           <div>
             <b data-i18n="visit.addr">주소</b>
-            <div class="val" data-i18n="visit.addrVal">서울특별시 종로구 명륜길 22, 2층</div>
+            <div class="val" data-i18n="visit.addrVal">서울 종로구 명륜길 22, 2층</div>
             <small data-i18n="visit.addrSub">성균관대학교 서울(인문사회)캠퍼스 인근</small>
           </div>
         </div>
@@ -1310,7 +1335,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
       </ul>
     </div>
 
-    <div class="f-bot" data-i18n="foot.rights">© 2026 ISC-SKKU Seoul (성균관대 유학생교회). All rights reserved.</div>
+    <div class="f-bot" data-i18n="foot.rights">© 2026 ISC-SKKU Seoul · 성균관대 유학생교회</div>
   </div>
 </footer>
 
@@ -1386,7 +1411,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
    ═══════════════════════════════════════════════════════════════ */
 var I18N = {
 ko:{
- 'foot.sub':'성균관대 유학생교회 · Since 2020','foot.tag':'캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.','w2.short':'기도회','foot.prayer':'수요일 저녁 6:00','foot.rights':'© 2026 ISC-SKKU Seoul (성균관대 유학생교회). All rights reserved.',
+ 'foot.sub':'성균관대 유학생교회 · Since 2020','foot.tag':'캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.','w2.short':'기도회','foot.prayer':'수요일 저녁 6:00','foot.rights':'© 2026 ISC-SKKU Seoul · 성균관대 유학생교회',
  'fv.title':'교회가 처음이신가요?','fv.desc':'오시기 전에 알아두시면 좋은 것들을 짧게 정리해 두었습니다.','fv.go':'안내 보기','fv.close':'닫기',
  'nav.first':'처음 오셨나요?',
  'first.eyebrow':'FIRST VISIT','first.title':'처음 오셨나요?',
@@ -1443,14 +1468,14 @@ ko:{
  
  'yt.eyebrow':'ONLINE WORSHIP','yt.title':'온라인 예배 · YouTube','yt.sub':'주일예배 실황과 설교 영상은 유튜브 채널에서 보실 수 있습니다. 아래 목록은 새 영상을 올리면 자동으로 갱신됩니다.','yt.link':'▶ 유튜브 채널 바로가기 (@iscskku2020)',
  'visit.eyebrow':'VISIT US','visit.title':'오시는 길 · 연락처',
- 'visit.addr':'주소','visit.addrVal':'서울특별시 종로구 명륜길 22, 2층','visit.addrSub':'성균관대학교 서울(인문사회)캠퍼스 인근',
+ 'visit.addr':'주소','visit.addrVal':'서울 종로구 명륜길 22, 2층','visit.addrSub':'성균관대학교 서울(인문사회)캠퍼스 인근',
  'visit.transit':'대중교통','visit.transitVal':'지하철 4호선 혜화역 4번 출구','visit.transitSub':'성균관대학교 방면 도보 약 10분 · 마을버스 종로08 이용 가능',
  'visit.service':'주일예배','visit.serviceVal':'매주 일요일 오후 3:00','visit.serviceSub':'현장 예배 + Zoom 온라인 동시 진행',
  'visit.email':'이메일','visit.offering':'온라인 헌금','visit.offeringSub':'예금주: ISCSKKU 교회',
  'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기'
 },
 zh:{
- 'foot.sub':'成均馆大学留学生教会 · Since 2020','foot.tag':'陪伴在校园中遇见的每一位留学生，从认识耶稣，到回国传扬福音。','w2.short':'祷告会','foot.prayer':'周三晚上 6:00','foot.rights':'© 2026 ISC-SKKU Seoul（成均馆大学留学生教会）. All rights reserved.',
+ 'foot.sub':'成均馆大学留学生教会 · Since 2020','foot.tag':'陪伴在校园中遇见的每一位留学生，从认识耶稣，到回国传扬福音。','w2.short':'祷告会','foot.prayer':'周三晚上 6:00','foot.rights':'© 2026 ISC-SKKU Seoul · 成均馆大学留学生教会',
  'fv.title':'第一次来教会吗?','fv.desc':'我们把第一次来之前值得先了解的事，简单整理好了。','fv.go':'查看指南','fv.close':'关闭',
  'nav.first':'第一次来?',
  'first.eyebrow':'FIRST VISIT','first.title':'第一次来教会吗?',
@@ -1514,7 +1539,7 @@ zh:{
  'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看'
 },
 en:{
- 'foot.sub':'SKKU International Student Church · Since 2020','foot.tag':'We walk with each student we meet on campus, from meeting Jesus to carrying the gospel home.','w2.short':'Prayer','foot.prayer':'Wednesdays 6:00 PM','foot.rights':'© 2026 ISC-SKKU Seoul. All rights reserved.',
+ 'foot.sub':'SKKU International Student Church · Since 2020','foot.tag':'We walk with each student we meet on campus, from meeting Jesus to carrying the gospel home.','w2.short':'Prayer','foot.prayer':'Wednesdays 6:00 PM','foot.rights':'© 2026 ISC-SKKU Seoul · SKKU International Student Church',
  'fv.title':'First time here?','fv.desc':'We have put together a few things worth knowing before you visit.','fv.go':'Take a look','fv.close':'Dismiss',
  'nav.first':'First Visit',
  'first.eyebrow':'FIRST VISIT','first.title':'Is This Your First Time?',
@@ -1976,6 +2001,69 @@ function swipe(el, onLeft, onRight){
 
   var NEWS = [], juboWeeks = [], juboIdx = -1;
 
+  /* ═══ 지난 목록을 연·월로 묶어 보여 주는 공용 도우미 ═══
+     항목이 몇백 개로 늘어나도 화면에는 "그 달의 4~5개"만 나오므로
+     펼친 높이가 늘 일정하게 유지됩니다. */
+  function buildArchive(box, list, makeRow, stateKey){
+    if(!list.length){ return; }
+
+    /* 연도 → 월 → 항목 으로 정리 */
+    var tree = {};
+    list.forEach(function(w){
+      var y = w.ymd.slice(0,4), m = w.ymd.slice(5,7);
+      (tree[y] = tree[y] || {});
+      (tree[y][m] = tree[y][m] || []).push(w);
+    });
+    var years = Object.keys(tree).sort().reverse();
+
+    /* 처음에는 가장 최근 연·월을 보여 줍니다 */
+    var st = buildArchive[stateKey] || {};
+    if(!st.y || !tree[st.y]) {
+      st.y = years[0];
+      st.m = Object.keys(tree[st.y]).sort().reverse()[0];
+    } else if(!tree[st.y][st.m]) {
+      st.m = Object.keys(tree[st.y]).sort().reverse()[0];
+    }
+    buildArchive[stateKey] = st;
+
+    function draw(){
+      var months = Object.keys(tree[st.y]).sort().reverse();
+      var mn = t('cal.mon').split(',');
+
+      var html = '<div class="arch-nav">';
+      if(years.length > 1){
+        html += '<div class="arch-years">' + years.map(function(y){
+          return '<button type="button" data-y="' + y + '" aria-current="' +
+                 (y === st.y) + '">' + y + '</button>';
+        }).join('') + '</div>';
+      }
+      html += '<div class="arch-months">' + months.map(function(m){
+        return '<button type="button" data-m="' + m + '" aria-current="' +
+               (m === st.m) + '">' + mn[parseInt(m,10)-1] + '</button>';
+      }).join('') + '</div></div>';
+
+      var rows = (tree[st.y][st.m] || []).slice().sort(function(a,b){
+        return a.ymd < b.ymd ? 1 : -1;
+      });
+      html += rows.length ? makeRow(rows) : '<p class="arch-empty">—</p>';
+      box.innerHTML = html;
+
+      box.querySelectorAll('.arch-years button').forEach(function(b){
+        b.addEventListener('click', function(){
+          st.y = b.getAttribute('data-y');
+          st.m = Object.keys(tree[st.y]).sort().reverse()[0];
+          draw();
+        });
+      });
+      box.querySelectorAll('.arch-months button').forEach(function(b){
+        b.addEventListener('click', function(){
+          st.m = b.getAttribute('data-m'); draw();
+        });
+      });
+    }
+    draw();
+  }
+
   /* ── 화면 그리기 ── */
   function renderNews(){
     if(!NEWS.length) return;
@@ -1987,11 +2075,12 @@ function swipe(el, onLeft, onRight){
     if(past.length){
       var box = document.getElementById('newsArchiveBox');
       var el  = document.getElementById('newsArchive');
-      el.innerHTML = '<ul class="news-arch">' + past.map(function(w){
-        return '<li><details><summary><span>' + fmtDate(w.ymd, false) +
-               '</span></summary><ul>' + itemsHtml(w.items) + '</ul></details></li>';
-      }).join('') + '</ul>';
-      el.classList.toggle('scroll', past.length > 8);
+      buildArchive(el, past, function(rows){
+        return '<ul class="news-arch">' + rows.map(function(w){
+          return '<li><details><summary><span>' + fmtDate(w.ymd, false) +
+                 '</span></summary><ul>' + itemsHtml(w.items) + '</ul></details></li>';
+        }).join('') + '</ul>';
+      }, 'newsState');
       var sum = box.querySelector('summary');
       sum.textContent = t('news.archive') + ' (' + past.length + ')';
       sum.removeAttribute('data-i18n');
@@ -2019,11 +2108,12 @@ function swipe(el, onLeft, onRight){
     jd.removeAttribute('data-i18n');
     var rest = juboArchList;
     if(rest && rest.length){
-      document.getElementById('juboArchive').innerHTML =
-        '<ul class="jubo-arch">' + rest.map(function(w){
+      buildArchive(document.getElementById('juboArchive'), rest, function(rows){
+        return '<ul class="jubo-arch">' + rows.map(function(w){
           return '<li><a href="jubo/' + w.ymd + '.pdf" target="_blank" rel="noopener">' +
                  fmtDate(w.ymd, false) + '<span>PDF ›</span></a></li>';
         }).join('') + '</ul>';
+      }, 'juboState');
     }
   }
   var juboArchList = null;
@@ -2193,7 +2283,6 @@ function swipe(el, onLeft, onRight){
             var s = archBox.querySelector('summary');
             s.textContent = t('jubo.archive') + ' (' + juboArchList.length + ')';
             s.removeAttribute('data-i18n');
-            document.getElementById('juboArchive').classList.toggle('scroll', juboArchList.length > 10);
             renderJubo();
           });
         });
