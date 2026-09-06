@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://iscskkuseoul.github.io/sitemap.xml
+Sitemap: https://iscskku.co.kr/sitemap.xml
