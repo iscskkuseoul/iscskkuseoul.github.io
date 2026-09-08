@@ -23,8 +23,8 @@
      (같은 주소를 여러 언어로 중복 지정하면 구글이 규격 위반으로 봅니다) -->
 
 <!-- ═══ 검색엔진 소유확인 (절대 지우지 마세요) ═══
-     이 세 줄은 구글·네이버에 "이 사이트의 주인이 맞다"를 증명하는 표시입니다.
-     주석(<!-- -->) 안에 넣으면 검색엔진이 읽지 못하니 반드시 밖에 두세요. -->
+     아래 세 줄은 구글·네이버에 이 사이트의 주인임을 증명하는 표시입니다.
+     반드시 이 설명 바깥에 두어야 검색엔진이 읽을 수 있습니다. ═══ -->
 <meta name="google-site-verification" content="KvNSy-7MWLSy-Xr_7EMVMob9RwjcEPcBeT4yMwK-sWk" />
 <meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
 <meta name="naver-site-verification" content="d8c020282f0b9d54cbac9d459e67c5df441e4387" />
@@ -218,7 +218,13 @@ header{
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
 }
 .nav{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);min-width:0}
+/* 로고+이름: 좁은 화면에서 언어 단추와 절대 겹치지 않도록
+   ① 넓으면 'ISC-SKKU Seoul'  ② 좁으면 'ISC-SKKU'  ③ 아주 좁으면 로고만 */
+.brand{
+  display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);
+  min-width:0;flex:0 1 auto;overflow:hidden;
+}
+.brand .bn-short{display:none}
 .brand img{height:30px;width:auto}   /* 가로형 로고 — 높이 기준으로 맞춥니다 */
 .brand b{font-family:'Gowun Batang',serif;font-size:var(--t-4);white-space:nowrap}
 .menu{display:flex;gap:24px;list-style:none;align-items:center}
@@ -227,7 +233,7 @@ header{
 .menu a:hover{color:var(--pine)}
 .menu a.active{color:var(--pine);font-weight:700}
 .menu a.active::after{content:'';display:block;height:2px;background:var(--pine);border-radius:var(--r-xs);margin-top:4px}
-.nav-right{display:flex;align-items:center;gap:12px}
+.nav-right{display:flex;align-items:center;gap:12px;flex:0 0 auto}
 .reg-btn{
   border:1.5px solid var(--pine);color:var(--pine);padding:8px 16px;border-radius:var(--r-full);
   font-size:var(--t-2);font-weight:600;text-decoration:none;white-space:nowrap;
@@ -907,9 +913,16 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .jubo-foot{padding-left:20px;padding-right:20px}
   .v-card{padding:20px 16px}
 }
-@media (max-width:400px){
+/* ── 헤더 이름 축약 (실측 기준) ──
+   'ISC-SKKU Seoul' 전체가 들어가려면 최소 406px 이 필요합니다.
+   그보다 좁으면 'ISC-SKKU' 로, 더 좁으면 로고만 남겨 언어 단추와 겹치지 않게 합니다. */
+@media (max-width:420px){
+  .brand .bn-full{display:none}
+  .brand .bn-short{display:inline}
+}
+@media (max-width:360px){
   .brand b{display:none}
-  .lang-seg button{transition:color var(--dur-1) var(--ease);font-size:var(--t-1);padding:8px 8px}
+  .lang-seg button{transition:color var(--dur-1) var(--ease);font-size:var(--t-1);padding:8px 9px}
 }
 @media (prefers-reduced-motion:reduce){
   html.js .reveal{opacity:1;transform:none}
@@ -928,7 +941,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   <div class="wrap nav">
     <a class="brand" href="#top">
       <picture><source srcset="assets/logo1.webp" type="image/webp"><img src="assets/logo1.png" alt="ISC-SKKU Seoul"></picture>
-      <b>ISC-SKKU Seoul</b>
+      <b><span class="bn-full">ISC-SKKU Seoul</span><span class="bn-short">ISC-SKKU</span></b>
     </a>
     <ul class="menu">
       <li><a href="#about" data-i18n="nav.about">교회 소개</a></li>
