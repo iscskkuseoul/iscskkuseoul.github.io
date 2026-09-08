@@ -22,11 +22,10 @@
      우리 사이트는 주소 하나에서 언어만 바뀌므로 쓰지 않는 것이 맞습니다.
      (같은 주소를 여러 언어로 중복 지정하면 구글이 규격 위반으로 봅니다) -->
 
-<!-- ▶ 구글 소유확인을 "파일" 대신 "메타 태그"로도 해 두고 싶으시면
-     Search Console 이 알려주는 아래 형식의 줄을 이 자리에 붙여 넣으세요.
-     <meta name="google-site-verification" content="KvNSy-7MWLSy-Xr_7EMVMob9RwjcEPcBeT4yMwK-sWk" /> -->
-
-<!-- ═══ 검색엔진 소유확인 (지우지 마세요) ═══ -->
+<!-- ═══ 검색엔진 소유확인 (절대 지우지 마세요) ═══
+     이 세 줄은 구글·네이버에 "이 사이트의 주인이 맞다"를 증명하는 표시입니다.
+     주석(<!-- -->) 안에 넣으면 검색엔진이 읽지 못하니 반드시 밖에 두세요. -->
+<meta name="google-site-verification" content="KvNSy-7MWLSy-Xr_7EMVMob9RwjcEPcBeT4yMwK-sWk" />
 <meta name="naver-site-verification" content="51dd6dfe4d7bef10681d08ad5670092593111b14" />
 <meta name="naver-site-verification" content="d8c020282f0b9d54cbac9d459e67c5df441e4387" />
 <!-- 카카오톡·위챗 공유 미리보기 -->
@@ -44,8 +43,8 @@
 <meta name="twitter:image" content="https://iscskku.co.kr/assets/banner1.jpg">
 
 <meta name="theme-color" content="#10573B">
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="icon" type="image/png" sizes="180x180" href="assets/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -219,8 +218,8 @@ header{
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
 }
 .nav{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
-.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);min-width:0}
-.brand img{height:34px;width:auto}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);min-width:0}
+.brand img{height:30px;width:auto}   /* 가로형 로고 — 높이 기준으로 맞춥니다 */
 .brand b{font-family:'Gowun Batang',serif;font-size:var(--t-4);white-space:nowrap}
 .menu{display:flex;gap:24px;list-style:none;align-items:center}
 .menu a{text-decoration:none;color:var(--ink);font-size:var(--t-3);font-weight:500;white-space:nowrap}
@@ -767,8 +766,9 @@ footer{
 }
 .f-top{display:flex;justify-content:space-between;gap:48px;align-items:flex-start}
 .f-brand{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.f-brand>div{min-width:0}
 .f-brand picture{flex:0 0 auto}
-.f-brand img{width:44px;height:auto;margin-top:2px;flex:0 0 auto}
+.f-brand img{height:42px;width:auto;margin-top:2px;flex:0 0 auto}  /* 가로형 로고 */
 .f-name{font-family:'Gowun Batang',serif;font-size:var(--t-5);font-weight:700;color:var(--ink);line-height:var(--lh-head)}
 .f-sub{font-size:var(--t-1);color:var(--gray);margin-top:2px}
 .f-tag{font-size:var(--t-2);color:var(--gray);margin-top:12px;max-width:24em;line-height:var(--lh-tight)}
@@ -877,7 +877,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .about-grid,.ministry-grid,.visit,.news-grid,.faq{grid-template-columns:1fr}
   footer{padding:36px 0 20px}
   .f-top{flex-direction:column;gap:20px}
-  .f-brand img{width:36px}
+  .f-brand img{height:34px;width:auto}
   .f-tag{max-width:none}
   .f-info li{padding:4px 0}
   .f-info b{flex-basis:52px}
