@@ -79,7 +79,15 @@
   "image": "https://iscskku.co.kr/assets/banner1.jpg",
   "foundingDate": "2020-03-15",
   "email": "iscskku.seoul@gmail.com",
-  "hasMap": "https://map.naver.com/p/entry/place/1585778785",
+  "hasMap": [
+    "https://www.google.com/maps?cid=5142664069076694680",
+    "https://map.naver.com/p/entry/place/1585778785"
+  ],
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 37.588422,
+    "longitude": 126.995738
+  },
   "knowsLanguage": [
     "ko",
     "zh",
@@ -127,6 +135,7 @@
   --pine-mist:#EDF1EE;    /* 언어 단추 바탕 */
   --pine-tint:#E2EAE5;    /* 사진 자리 */
   --pine-line:#CFE0D6;
+  --gold:#D09840;         /* 로고의 금빛 — 가는 포인트 선에만 씁니다 */
   --on-dark:#A8E3C4;      /* 어두운 배경 위 강조 글자 */
   --on-dark-2:#7CCCA2;
   --ink-deep:#0F1815;     /* 히어로 바탕 */
@@ -229,7 +238,10 @@ header{
   min-width:0;flex:0 1 auto;overflow:hidden;
 }
 .brand .bn-short{display:none}
-.brand img{height:30px;width:auto}   /* 가로형 로고 — 높이 기준으로 맞춥니다 */
+/* picture 는 기본이 display:contents 라서, 안의 <source> 가 보이지 않는 칸으로 남아
+   gap 을 한 번 더 먹습니다. 로고가 들어가는 세 곳만 실제 상자로 되돌립니다. */
+.brand picture,.f-brand picture,.map-head picture{display:block;flex:0 0 auto;line-height:0}
+.brand img{height:27px;width:auto;display:block}   /* 가로형 로고 — 높이 기준으로 맞춥니다 */
 .brand b{font-family:'Gowun Batang',serif;font-size:var(--t-4);white-space:nowrap}
 .menu{display:flex;gap:24px;list-style:none;align-items:center}
 .menu a{text-decoration:none;color:var(--ink);font-size:var(--t-3);font-weight:500;white-space:nowrap}
@@ -362,7 +374,9 @@ body.scroll-lock,body.scroll-lock header{padding-right:var(--sbw,0px)}
     backdrop-filter:blur(18px) saturate(180%);
   }
 }
-@media (min-width:901px){ .mobile-menu,.menu-back{display:none} }
+/* 햄버거가 보이는 구간(1060px 이하)과 반드시 같은 기준이어야 합니다.
+   서랍이 숨겨진 폭에서 햄버거만 보이면 눌러도 아무 일이 일어나지 않습니다. */
+@media (min-width:1061px){ .mobile-menu,.menu-back{display:none} }
 
 /* 팝업에 은은한 유리 질감 (글자 가독성을 위해 불투명도는 충분히 높게 유지) */
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
@@ -764,8 +778,26 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
 .v-card b{display:block;font-size:var(--t-1);color:var(--gray);letter-spacing:.07em;margin-bottom:2px;font-weight:600}
 .v-card .val{font-weight:600;font-size:var(--t-3);word-break:keep-all}
 .v-card small{display:block;color:var(--gray);font-weight:400;margin-top:4px;font-size:var(--t-2)}
-.map-box{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column}
-.map-box iframe{border:0;width:100%;flex:1;min-height:330px}
+/* ── 지도 카드 ──
+   지도 위에 교회 이름표를 얹어, 주소 문자열 대신 교회가 먼저 보이게 했습니다. */
+.map-box{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);
+  overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-1);
+}
+.map-box::before{content:'';display:block;height:3px;background:var(--gold);flex:0 0 auto}
+.map-head{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  background:var(--pine-soft);border-bottom:1px solid var(--pine-line);flex:0 0 auto;
+}
+.map-head picture{flex:0 0 auto}
+.map-head img{height:30px;width:auto;display:block}
+.map-head .mh-txt{min-width:0}
+.map-head b{
+  display:block;font-size:var(--t-3);color:var(--ink);font-weight:700;
+  line-height:var(--lh-head);letter-spacing:var(--ls-title);
+}
+.map-head span{display:block;font-size:var(--t-2);color:var(--pine);line-height:var(--lh-tight);font-weight:600}
+.map-box iframe{border:0;width:100%;flex:1;min-height:330px;display:block}
 .map-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;border-top:1px solid var(--line)}
 .map-actions .btn{padding:12px 8px;font-size:var(--t-2)}
 
@@ -778,7 +810,7 @@ footer{
 .f-brand{display:flex;gap:16px;align-items:flex-start;min-width:0}
 .f-brand>div{min-width:0}
 .f-brand picture{flex:0 0 auto}
-.f-brand img{height:42px;width:auto;margin-top:2px;flex:0 0 auto}  /* 가로형 로고 */
+.f-brand img{height:36px;width:auto;margin-top:2px;flex:0 0 auto;display:block}  /* 가로형 로고 */
 .f-name{font-family:'Gowun Batang',serif;font-size:var(--t-5);font-weight:700;color:var(--ink);line-height:var(--lh-head)}
 .f-sub{font-size:var(--t-1);color:var(--gray);margin-top:2px}
 .f-tag{font-size:var(--t-2);color:var(--gray);margin-top:12px;max-width:24em;line-height:var(--lh-tight)}
@@ -868,12 +900,18 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
 }
 
 /* ─────────── 모바일 ─────────── */
-@media (max-width:900px){
+/* ── 헤더 전환 기준 (실측) ──
+   가로 메뉴 + 언어 단추 + 두 개의 단추가 모두 들어가려면 1027px 이 필요합니다.
+   그보다 좁으면 교회 이름이 잘리므로, 여유를 두고 1060px 아래에서는 햄버거 메뉴를 씁니다.
+   (본문 단을 1단으로 바꾸는 기준은 아래 900px 그대로입니다.) */
+@media (max-width:1060px){
   .menu{display:none}
   .hamburger{display:flex}
   .reg-btn,.yt-btn{display:none}
   .nav-right{gap:8px}
   .lang-seg button{transition:color var(--dur-1) var(--ease);font-size:var(--t-1);padding:8px 12px}
+}
+@media (max-width:900px){
   section{padding:56px 0}
   .hero{min-height:520px}
   @supports (height:100svh){ .hero{min-height:min(86svh,560px)} }
@@ -887,7 +925,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .about-grid,.ministry-grid,.visit,.news-grid,.faq{grid-template-columns:1fr}
   footer{padding:36px 0 20px}
   .f-top{flex-direction:column;gap:20px}
-  .f-brand img{height:34px;width:auto}
+  .f-brand img{height:31px;width:auto}
   .f-tag{max-width:none}
   .f-info li{padding:4px 0}
   .f-info b{flex-basis:52px}
@@ -907,6 +945,8 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .cta .btn{flex:1}
   .c-btn{width:32px;height:32px}
   .map-box iframe{min-height:260px}
+  .map-head{padding:12px 14px;gap:10px}
+  .map-head img{height:26px}
 }
 @media (max-width:540px){
   .cards{grid-template-columns:1fr}
@@ -918,13 +958,18 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .v-card{padding:20px 16px}
 }
 /* ── 헤더 이름 축약 (실측 기준) ──
-   'ISC SKKU Seoul' 전체가 들어가려면 최소 406px 이 필요합니다.
-   그보다 좁으면 'ISC SKKU' 로, 더 좁으면 로고만 남겨 언어 단추와 겹치지 않게 합니다. */
-@media (max-width:420px){
+   새 가로형 로고는 예전 로고보다 폭이 넓어, 글자가 잘리지 않도록 기준을 다시 쟀습니다.
+   460px 아래에서는 'ISC SKKU' 로, 420px 아래에서는 로고를 한 단계 줄이고,
+   384px 아래에서는 로고만 남겨 언어 단추와 절대 겹치지 않게 합니다. */
+@media (max-width:460px){
   .brand .bn-full{display:none}
   .brand .bn-short{display:inline}
 }
-@media (max-width:360px){
+@media (max-width:420px){
+  .brand{gap:8px}
+  .brand img{height:24px}
+}
+@media (max-width:384px){
   .brand b{display:none}
   .lang-seg button{transition:color var(--dur-1) var(--ease);font-size:var(--t-1);padding:8px 9px}
 }
@@ -1307,11 +1352,18 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
         </div>
       </div>
       <div class="map-box">
-        <iframe src="https://www.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EB%AA%85%EB%A5%9C%EA%B8%B8%2022&hl=ko&z=16&output=embed"
-                title="ISC SKKU Seoul 위치" loading="lazy" allowfullscreen></iframe>
+        <div class="map-head">
+          <picture><source srcset="assets/logo1.webp" type="image/webp"><img src="assets/logo1.png" alt="" loading="lazy"></picture>
+          <div class="mh-txt">
+            <b>ISC SKKU Seoul</b>
+            <span data-i18n="map.sub">성균관대 유학생교회</span>
+          </div>
+        </div>
+        <iframe src="https://www.google.com/maps?q=%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%20%EC%9C%A0%ED%95%99%EC%83%9D%EA%B5%90%ED%9A%8C&hl=ko&z=17&output=embed"
+                title="ISC SKKU Seoul 성균관대 유학생교회 위치" loading="lazy" allowfullscreen></iframe>
         <div class="map-actions">
           <a class="btn btn-pine" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" data-i18n="visit.naver">네이버 지도로 길찾기</a>
-          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%20%EC%A2%85%EB%A1%9C%EA%B5%AC%20%EB%AA%85%EB%A5%9C%EA%B8%B8%2022" target="_blank" rel="noopener" data-i18n="visit.google">구글 지도로 보기</a>
+          <a class="btn btn-line" href="https://www.google.com/maps?cid=5142664069076694680" target="_blank" rel="noopener" data-i18n="visit.google">구글 지도로 보기</a>
         </div>
       </div>
     </div>
@@ -1489,7 +1541,7 @@ ko:{
  'visit.transit':'대중교통','visit.transitVal':'지하철 4호선 혜화역 4번 출구','visit.transitSub':'성균관대학교 방면 도보 약 10분 · 마을버스 종로08 이용 가능',
  'visit.service':'주일예배','visit.serviceVal':'매주 일요일 오후 3:00','visit.serviceSub':'현장 예배 + Zoom 온라인 동시 진행',
  'visit.email':'이메일','visit.offering':'온라인 헌금','visit.offeringSub':'예금주: ISCSKKU 교회',
- 'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기'
+ 'visit.naver':'네이버 지도로 길찾기','visit.google':'구글 지도로 보기','map.sub':'성균관대 유학생교회'
 },
 zh:{
  'foot.sub':'成均馆大学留学生教会 · Since 2020','foot.tag':'陪伴在校园中遇见的每一位留学生，从认识耶稣，到回国传扬福音。','w2.short':'祷告会','foot.prayer':'周三晚上 6:00','foot.rights':'© 2026 ISC SKKU Seoul · 成均馆大学留学生教会',
@@ -1553,7 +1605,7 @@ zh:{
  'visit.transit':'交通','visit.transitVal':'地铁 4 号线惠化站 4 号出口','visit.transitSub':'往成均馆大学方向步行约 10 分钟 · 可乘社区巴士 钟路08',
  'visit.service':'主日崇拜','visit.serviceVal':'每周日下午 3:00','visit.serviceSub':'现场崇拜 + Zoom 在线同步进行',
  'visit.email':'邮箱','visit.offering':'在线奉献','visit.offeringSub':'户名：ISCSKKU 教会',
- 'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看'
+ 'visit.naver':'用 Naver 地图导航','visit.google':'用谷歌地图查看','map.sub':'成均馆大学留学生教会'
 },
 en:{
  'foot.sub':'SKKU International Student Church · Since 2020','foot.tag':'We walk with each student we meet on campus, from meeting Jesus to carrying the gospel home.','w2.short':'Prayer','foot.prayer':'Wednesdays 6:00 PM','foot.rights':'© 2026 ISC SKKU Seoul · SKKU International Student Church',
@@ -1617,7 +1669,7 @@ en:{
  'visit.transit':'GETTING HERE','visit.transitVal':'Line 4, Hyehwa Station, Exit 4','visit.transitSub':'About a 10 minute walk toward SKKU · Village bus Jongno 08',
  'visit.service':'SUNDAY WORSHIP','visit.serviceVal':'Every Sunday 3:00 PM','visit.serviceSub':'On site and on Zoom at the same time',
  'visit.email':'EMAIL','visit.offering':'ONLINE OFFERING','visit.offeringSub':'Account holder: ISCSKKU Church',
- 'visit.naver':'Directions on Naver Map','visit.google':'View on Google Maps'
+ 'visit.naver':'Directions on Naver Map','visit.google':'View on Google Maps','map.sub':'SKKU International Student Church'
 }
 };
 var LANG_NAME = {ko:'한국어', zh:'中文', en:'English'};
@@ -1756,7 +1808,8 @@ function applyLang(code){
     if(e.key === 'Escape' && mm.classList.contains('open')) setMenu(false);
   });
   window.addEventListener('resize', function(){
-    if(window.innerWidth > 900 && mm.classList.contains('open')) setMenu(false);
+    /* 햄버거가 사라지는 폭(1060px)과 같은 기준으로 서랍을 닫습니다. */
+    if(window.innerWidth > 1060 && mm.classList.contains('open')) setMenu(false);
   });
 
   var tb = document.getElementById('topBtn');
