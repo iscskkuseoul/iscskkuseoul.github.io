@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko" class="no-js has-tabs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script>
+/* 화면을 그리기 전에: 자바스크립트 사용 표시 + 저장된 언어가 한국어가 아니면 번역이 끝날 때까지 잠깐 가려 둡니다
+   (1.5초 안에 끝나지 않으면 그대로 보여 줍니다)
+   만일 공용 파일(assets/site.js)을 4초 안에 받지 못하면, 내용이 가려지지 않도록 안전 모드로 바꿉니다 */
+(function(d){d.className=d.className.replace('no-js','js');try{var l=localStorage.getItem('isc-lang');if(!l){l=(navigator.language||'').toLowerCase().indexOf('zh')===0?'zh':'ko';}if(l!=='ko'){d.className+=' i18n-wait';setTimeout(function(){d.classList.remove('i18n-wait');},1500);}}catch(e){}setTimeout(function(){if(!window.__isc){d.classList.add('js-fail');}},4000);})(document.documentElement);
+</script>
+<style>html.i18n-wait body{visibility:hidden}</style>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     ISC SKKU Seoul 교회 홈페이지 · 예배 안내
+     ▶ 매주 바꾸실 것은 news.txt 와 jubo 폴더의 PDF 두 가지뿐입니다.
+       이 파일은 손대지 않으셔도 됩니다.
+     ▶ 디자인은 assets/site.css, 동작과 3개 국어 문구는 assets/site.js 에 모여 있습니다.
+     ═══════════════════════════════════════════════════════════════ -->
+<title>예배 안내 | ISC SKKU Seoul 성균관대 유학생교회</title>
+<meta name="description" content="ISC SKKU Seoul(성균관대 유학생교회) 예배 안내: 주일예배 매주 일요일 오후 3시, 교두보 기도회 매주 수요일 저녁 6시~9시, 셀 모임, 샬롬 라운지. 현장 예배와 Zoom 온라인 예배를 함께 드리며, 처음 오시는 분을 위한 안내도 있습니다.">
+<meta name="author" content="ISC SKKU Seoul">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://iscskku.co.kr/worship.html">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'">
+
+<!-- 카카오톡·위챗 공유 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ISC SKKU Seoul">
+<meta property="og:title" content="예배 안내 | ISC SKKU Seoul 성균관대 유학생교회">
+<meta property="og:description" content="주일예배 매주 일요일 오후 3시 · 교두보 기도회 수요일 저녁 6시 · 처음 오시는 분 안내.">
+<meta property="og:url" content="https://iscskku.co.kr/worship.html">
+<meta property="og:image" content="https://iscskku.co.kr/assets/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ISC SKKU Seoul 성균관대 유학생교회 · 매주 일요일 오후 3시">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="예배 안내 | ISC SKKU Seoul 성균관대 유학생교회">
+<meta name="twitter:description" content="주일예배 매주 일요일 오후 3시 · 교두보 기도회 수요일 저녁 6시 · 처음 오시는 분 안내.">
+<meta name="twitter:image" content="https://iscskku.co.kr/assets/share.jpg">
+
+<meta name="theme-color" content="#10573B">
+<link rel="icon" type="image/png" sizes="180x180" href="assets/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png">
+<meta name="apple-mobile-web-app-title" content="ISC SKKU">
+
+<!-- ═══ 글꼴 ═══
+     글꼴을 기다리지 않고 화면부터 보여 줍니다. (중국처럼 글꼴 서버가 느린 곳에서도 바로 열립니다)
+     중국어 글자는 휴대폰·컴퓨터에 원래 들어 있는 중국어 글꼴로 보입니다. -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<script>
+/* 글꼴은 첫 화면 사진이 화면에 그려진 뒤에 받습니다 (사진이 먼저 빨리 뜨도록).
+   늦어도 페이지를 다 받았을 때, 또는 2.5초 뒤에는 적용됩니다. */
+(function(){var done=false;function go(){if(done)return;done=true;var l=document.querySelectorAll('link[data-font]');for(var i=0;i<l.length;i++){l[i].media='all';}}try{new PerformanceObserver(function(x){var e=x.getEntries();for(var i=0;i<e.length;i++){if(e[i].url){setTimeout(go,0);return;}}}).observe({type:'largest-contentful-paint',buffered:true});}catch(err){}window.addEventListener('load',go);setTimeout(go,2500);})();
+</script>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" data-font>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" media="print" data-font>
+<noscript>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+</noscript>
+<!-- 첫 화면 사진을 가장 먼저 받아 옵니다 -->
+<link rel="preload" as="image" href="assets/banner2.jpg" fetchpriority="high">
+
+<!-- 사이트 공용 디자인과 동작 (고친 뒤에는 ?v= 뒤의 날짜를 바꿔 주세요) -->
+<link rel="stylesheet" href="assets/site.css?v=20261022">
+<script src="assets/site.js?v=20261022" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "홈",
+      "item": "https://iscskku.co.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "예배 안내",
+      "item": "https://iscskku.co.kr/worship.html"
+    }
+  ]
+}
+</script>
+</head>
+
+<body data-page="worship">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap nav">
+    <a class="brand" href="./" aria-label="ISC SKKU Seoul 홈">
+      <span class="brand-logo">
+        <picture><source srcset="assets/logo1.webp" type="image/webp"><img class="logo-c" src="assets/logo1.png" alt="" width="245" height="120"></picture>
+        <img class="logo-w" src="assets/logo-white.png" alt="" width="245" height="120">
+      </span>
+      <b><span class="bn-full">ISC SKKU Seoul</span><span class="bn-short">ISC SKKU</span></b>
+    </a>
+    <nav class="gnb" id="gnb" aria-label="주 메뉴">
+      <ul class="gnb-list">
+        <li class="gnb-item" data-sec="about">
+          <a class="gnb-top" href="about.html" data-i18n="nav.about">교회 소개</a>
+          <ul class="gnb-sub"><li><a href="about.html#intro" data-i18n="sub.intro">공동체 소개</a></li><li><a href="about.html#vision" data-i18n="sub.vision">비전</a></li><li><a href="about.html#team" data-i18n="sub.team">섬기는 사람들</a></li></ul>
+        </li>
+        <li class="gnb-item" data-sec="worship">
+          <a class="gnb-top" href="worship.html" data-i18n="nav.worship">예배 안내</a>
+          <ul class="gnb-sub"><li><a href="worship.html#times" data-i18n="sub.times">예배와 모임</a></li><li><a href="worship.html#online" data-i18n="sub.online">온라인 예배</a></li><li><a href="worship.html#first" data-i18n="sub.first">처음 오신 분</a></li></ul>
+        </li>
+        <li class="gnb-item" data-sec="ministry">
+          <a class="gnb-top" href="ministry.html" data-i18n="nav.ministry">사역</a>
+          <ul class="gnb-sub"><li><a href="ministry.html#ministries" data-i18n="sub.ministries">주요 사역</a></li><li><a href="ministry.html#gallery" data-i18n="sub.gallery">함께한 순간들</a></li></ul>
+        </li>
+        <li class="gnb-item" data-sec="news">
+          <a class="gnb-top" href="news.html" data-i18n="nav.news">교회 소식</a>
+          <ul class="gnb-sub"><li><a href="news.html#news" data-i18n="news.thisWeek">이번 주 소식</a></li><li><a href="news.html#bulletin" data-i18n="sub.bulletin">주보</a></li></ul>
+        </li>
+        <li class="gnb-item" data-sec="visit">
+          <a class="gnb-top" href="visit.html" data-i18n="nav.visit">오시는 길</a>
+          <ul class="gnb-sub"><li><a href="visit.html#map" data-i18n="sub.map">찾아오시는 길</a></li><li><a href="visit.html#contact" data-i18n="sub.contact">연락처</a></li><li><a href="visit.html#offering" data-i18n="sub.offering">온라인 헌금</a></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-seg" id="langSeg" role="group" aria-label="Language / 语言 / 언어">
+        <span class="lang-pill" id="langPill" aria-hidden="true"></span>
+        <button type="button" data-lang="ko" lang="ko">한국어</button>
+        <button type="button" data-lang="zh" lang="zh-CN">中文</button>
+        <button type="button" data-lang="en" lang="en">EN</button>
+      </div>
+      <!-- ▶ 새가족 등록 구글 폼 주소 -->
+      <a class="reg-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="nav.register">새가족 등록</a>
+      <a class="yt-btn" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">YouTube ▶</a>
+      <button class="hamburger" id="hamb" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mMenu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mega-bg" aria-hidden="true">
+    <div class="wrap">
+        <div class="mega-intro">
+          <b>ISC SKKU Seoul</b>
+          <span data-i18n="foot.sub">성균관대 유학생교회 · Since 2020</span>
+          <em><span data-i18n="strip.service">주일예배</span> · <span data-i18n="strip.serviceVal">매주 일요일 오후&nbsp;3:00</span></em>
+        </div>
+    </div>
+  </div>
+</header>
+<script>
+/* 첫 화면 사진 위에서는 머리글을 투명하게, 조금이라도 내리면 흰 머리글로 */
+(function(){var h=document.getElementById('siteHeader');if(!h)return;var f=function(){if(document.body.classList.contains('scroll-lock'))return;h.classList.toggle('is-solid',(window.pageYOffset||document.documentElement.scrollTop||0)>8);};f();window.addEventListener('scroll',f,{passive:true});})();
+</script>
+
+<div class="menu-back" id="mBack" aria-hidden="true"></div>
+<nav class="mobile-menu" id="mMenu" aria-label="메뉴" aria-hidden="true">
+  <ul class="m-list">
+    <li class="m-group" data-sec="about">
+      <div class="m-row">
+        <a href="about.html" data-i18n="nav.about">교회 소개</a>
+        <button type="button" class="m-tog" aria-expanded="false" aria-controls="ms-about"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><span class="sr">하위 메뉴 열기</span></button>
+      </div>
+      <ul class="m-sub" id="ms-about" hidden><li><a href="about.html#intro" data-i18n="sub.intro">공동체 소개</a></li><li><a href="about.html#vision" data-i18n="sub.vision">비전</a></li><li><a href="about.html#team" data-i18n="sub.team">섬기는 사람들</a></li></ul>
+    </li>
+    <li class="m-group" data-sec="worship">
+      <div class="m-row">
+        <a href="worship.html" data-i18n="nav.worship">예배 안내</a>
+        <button type="button" class="m-tog" aria-expanded="false" aria-controls="ms-worship"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><span class="sr">하위 메뉴 열기</span></button>
+      </div>
+      <ul class="m-sub" id="ms-worship" hidden><li><a href="worship.html#times" data-i18n="sub.times">예배와 모임</a></li><li><a href="worship.html#online" data-i18n="sub.online">온라인 예배</a></li><li><a href="worship.html#first" data-i18n="sub.first">처음 오신 분</a></li></ul>
+    </li>
+    <li class="m-group" data-sec="ministry">
+      <div class="m-row">
+        <a href="ministry.html" data-i18n="nav.ministry">사역</a>
+        <button type="button" class="m-tog" aria-expanded="false" aria-controls="ms-ministry"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><span class="sr">하위 메뉴 열기</span></button>
+      </div>
+      <ul class="m-sub" id="ms-ministry" hidden><li><a href="ministry.html#ministries" data-i18n="sub.ministries">주요 사역</a></li><li><a href="ministry.html#gallery" data-i18n="sub.gallery">함께한 순간들</a></li></ul>
+    </li>
+    <li class="m-group" data-sec="news">
+      <div class="m-row">
+        <a href="news.html" data-i18n="nav.news">교회 소식</a>
+        <button type="button" class="m-tog" aria-expanded="false" aria-controls="ms-news"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><span class="sr">하위 메뉴 열기</span></button>
+      </div>
+      <ul class="m-sub" id="ms-news" hidden><li><a href="news.html#news" data-i18n="news.thisWeek">이번 주 소식</a></li><li><a href="news.html#bulletin" data-i18n="sub.bulletin">주보</a></li></ul>
+    </li>
+    <li class="m-group" data-sec="visit">
+      <div class="m-row">
+        <a href="visit.html" data-i18n="nav.visit">오시는 길</a>
+        <button type="button" class="m-tog" aria-expanded="false" aria-controls="ms-visit"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg><span class="sr">하위 메뉴 열기</span></button>
+      </div>
+      <ul class="m-sub" id="ms-visit" hidden><li><a href="visit.html#map" data-i18n="sub.map">찾아오시는 길</a></li><li><a href="visit.html#contact" data-i18n="sub.contact">연락처</a></li><li><a href="visit.html#offering" data-i18n="sub.offering">온라인 헌금</a></li></ul>
+    </li>
+  </ul>
+  <div class="m-actions">
+    <a class="m-btn m-btn-fill" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      <span data-i18n="nav.register">새가족 등록</span>
+    </a>
+    <a class="m-btn m-btn-line" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" class="yt-i"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg>
+      <span>YouTube</span>
+    </a>
+  </div>
+  <div class="m-info">
+    <b data-i18n="strip.service">주일예배</b>
+    <span data-i18n="strip.serviceVal">매주 일요일 오후&nbsp;3:00</span>
+    <span data-i18n="strip.placeVal">서울 종로구 명륜길 22, 2층</span>
+  </div>
+</nav>
+
+<!-- 본문 시작 -->
+<main id="main" tabindex="-1">
+
+<!-- ═══ 머리 그림 ═══
+     ▶ 사진은 첫 화면 배경 사진(banner2.jpg)을 함께 씁니다. 그 사진을 바꾸면 여기도 함께 바뀝니다. -->
+<div class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('assets/banner2.jpg')"></div>
+  <div class="hero-veil"></div>
+  <div class="wrap page-hero-inner">
+    <p class="eyebrow" data-i18n="worship.eyebrow">WORSHIP</p>
+    <h1 data-i18n="nav.worship">예배 안내</h1>
+    <ol class="crumbs" aria-label="현재 위치">
+      <li><a href="./" data-i18n="bc.home">홈</a></li>
+      <li aria-current="page"><span data-i18n="nav.worship">예배 안내</span></li>
+    </ol>
+  </div>
+</div>
+
+<nav class="subnav" aria-label="이 페이지의 메뉴">
+  <div class="wrap"><ul><li><a href="#times" data-i18n="sub.times">예배와 모임</a></li><li><a href="#online" data-i18n="sub.online">온라인 예배</a></li><li><a href="#first" data-i18n="sub.first">처음 오신 분</a></li></ul></div>
+</nav>
+
+<!-- ═══ 예배와 모임 ═══ -->
+<section id="times">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">SERVICES</p>
+      <h2 data-i18n="worship.title">예배와 모임</h2>
+      <p class="sub" data-i18n="worship.sub">현장 예배와 Zoom 온라인 예배를 함께 드립니다. 처음 오시는 분도 언제든지 환영합니다.</p>
+    </div>
+    <div class="cards reveal">
+      <div class="card">
+        <h3 data-i18n="w1.t">주일예배</h3>
+        <p class="time" data-i18n="w1.time">매주 일요일 오후 3:00</p>
+        <p data-i18n="w1.d">말씀 선포, 찬양, 기도, 나눔. 예배 후 셀 모임과 격주 애찬 교제가 이어집니다.</p>
+      </div>
+      <div class="card">
+        <h3 data-i18n="w2.t">교두보 기도회 (BPM)</h3>
+        <p class="time" data-i18n="w2.time">매주 수요일 저녁 6:00~9:00</p>
+        <p data-i18n="w2.d">교회 부흥과 영적 각성을 위한 집중 기도의 시간입니다.</p>
+      </div>
+      <div class="card">
+        <h3 data-i18n="w3.t">셀 모임</h3>
+        <p class="time" data-i18n="w3.time">주일예배 후</p>
+        <p data-i18n="w3.d">말씀을 나누고 서로의 삶을 위해 기도하는 소그룹 모임입니다.</p>
+      </div>
+      <div class="card">
+        <h3 data-i18n="w4.t">샬롬 라운지</h3>
+        <p class="time" data-i18n="w4.time">평일 상시 개방</p>
+        <p data-i18n="w4.d">학습 공간과 커피·차가 준비된 유학생들의 영적·학업적 쉼터입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 온라인 예배 ═══ -->
+<section id="online" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow" data-i18n="yt.eyebrow">ONLINE WORSHIP</p>
+      <h2 data-i18n="yt.title">온라인 예배 · YouTube</h2>
+      <p class="sub" data-i18n="yt.sub">주일예배 실황과 설교 영상은 유튜브 채널에서 보실 수 있습니다. 아래 목록은 새 영상을 올리면 자동으로 갱신됩니다.</p>
+    </div>
+    <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
+      <div class="video reveal" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
+        <a class="yt-fallback" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ YouTube @iscskku2020</a>
+        <noscript><iframe src="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg" title="ISC SKKU Seoul YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></noscript>
+      </div>
+    <p class="yt-line"><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" data-i18n="yt.link">▶ 유튜브 채널 바로가기 (@iscskku2020)</a></p>
+  </div>
+</section>
+
+<!-- ═══ 처음 오신 분 ═══
+     ▶ 내용은 assets/site.js 의 다국어 사전에서 s1~s4, q1~q6, a1~a6 줄을 고치시면 됩니다.
+       (오른쪽 아래 "처음 오셨나요?" 팝업도 같은 문구를 씁니다) -->
+<section id="first" class="warm">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow" data-i18n="first.eyebrow">FIRST VISIT</p>
+      <h2 data-i18n="first.title">처음 오셨나요?</h2>
+      <p class="sub" data-i18n="first.sub">교회가 처음이셔도, 한국어가 서툴러도 괜찮습니다. 오시는 순간부터 저희가 함께하겠습니다.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg><span class="vnum">1</span>
+        <h3 data-i18n="s1.t">도착</h3>
+        <p data-i18n="s1.d">주일 오후 2시 50분까지 오시면 넉넉합니다. 명륜길 22 건물 2층으로 올라오세요.</p></div>
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M12 20.5c4-2.6 7-5.4 7-9a3.6 3.6 0 0 0-7-1.3A3.6 3.6 0 0 0 5 11.5c0 3.6 3 6.4 7 9z"/></svg><span class="vnum">2</span>
+        <h3 data-i18n="s2.t">환영</h3>
+        <p data-i18n="s2.d">입구에서 맞아 드립니다. “처음 왔어요”라고 말씀해 주시면 자리까지 안내해 드립니다.</p></div>
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M12 3.5v17M7 9h10"/></svg><span class="vnum">3</span>
+        <h3 data-i18n="s3.t">예배</h3>
+        <p data-i18n="s3.d">오후 3시에 시작해 약 한 시간입니다. 찬양과 말씀을 한국어와 중국어로 함께 나눕니다.</p></div>
+      <div class="vstep"><svg viewBox="0 0 24 24"><path d="M4.5 8h13v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z"/><path d="M17.5 9.5h1.6a2.4 2.4 0 0 1 0 4.8h-1.6"/><path d="M7 4.5v1.6M11 4v2M15 4.5v1.6"/></svg><span class="vnum">4</span>
+        <h3 data-i18n="s4.t">교제</h3>
+        <p data-i18n="s4.d">예배 후 셀 모임과 다과가 있습니다. 부담되시면 먼저 돌아가셔도 괜찮습니다.</p></div>
+    </div>
+    <p class="faq-head" data-i18n="faq.title">자주 묻는 질문</p>
+    <div class="faq">
+      <details><summary><span data-i18n="q1">교회가 처음인데 괜찮을까요?</span></summary><div class="ans" data-i18n="a1">물론입니다. 저희 교회에 오시는 유학생 대부분이 교회가 처음이었습니다. 아무것도 모르셔도 괜찮으니 편한 마음으로 오세요.</div></details>
+      <details><summary><span data-i18n="q2">무엇을 입고 가야 하나요?</span></summary><div class="ans" data-i18n="a2">평소 편한 옷차림이면 충분합니다. 정장을 갖춰 입으실 필요는 전혀 없습니다.</div></details>
+      <details><summary><span data-i18n="q3">한국어를 잘 못하는데 괜찮을까요?</span></summary><div class="ans" data-i18n="a3">예배는 한국어와 중국어로 함께 드립니다. 중국어로 도와드릴 분들이 늘 함께 있으니 걱정하지 않으셔도 됩니다.</div></details>
+      <details><summary><span data-i18n="q4">헌금을 꼭 해야 하나요?</span></summary><div class="ans" data-i18n="a4">아닙니다. 헌금은 각자의 마음으로 드리는 것이며, 처음 오신 분께는 전혀 부담을 드리지 않습니다.</div></details>
+      <details><summary><span data-i18n="q5">혼자 가도 괜찮을까요?</span></summary><div class="ans" data-i18n="a5">대부분 혼자 오십니다. 오시면 자연스럽게 인사를 나누고 함께 앉으실 수 있도록 도와드립니다.</div></details>
+      <details><summary><span data-i18n="q6">꼭 등록해야 하나요?</span></summary><div class="ans" data-i18n="a6">아닙니다. 여러 번 예배에 참석해 보시고, 마음이 편해지셨을 때 결정하시면 됩니다.</div></details>
+    </div>
+    <div class="first-cta">
+      <a class="btn btn-pine" href="https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor" target="_blank" rel="noopener" data-i18n="first.cta1">새가족 등록하기</a>
+      <a class="btn btn-line" href="visit.html" data-i18n="first.cta2">오시는 길 보기</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ 바닥글 ═══ -->
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <picture><source srcset="assets/logo3.webp" type="image/webp"><img src="assets/logo3.png" alt="" loading="lazy" width="359" height="176"></picture>
+        <div>
+          <div class="f-name">ISC SKKU Seoul</div>
+          <div class="f-sub" data-i18n="foot.sub">성균관대 유학생교회 · Since 2020</div>
+          <p class="f-tag" data-i18n="foot.tag">캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.</p>
+          <div class="f-sns">
+            <a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg>
+            </a>
+            <a href="mailto:iscskku.seoul@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="13" rx="2.4"/><path d="M4.6 7 12 13 19.4 7"/></svg>
+            </a>
+            <a href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" aria-label="Map">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <ul class="f-info">
+        <li><b data-i18n="strip.service">주일예배</b><span data-i18n="strip.serviceVal">매주 일요일 오후&nbsp;3:00</span></li>
+        <li><b data-i18n="w2.short">기도회</b><span data-i18n="foot.prayer">수요일 저녁 6:00</span></li>
+        <li><b data-i18n="visit.addr">주소</b><span data-i18n="strip.placeVal">서울 종로구 명륜길 22, 2층</span></li>
+        <li><b data-i18n="visit.email">이메일</b><a href="mailto:iscskku.seoul@gmail.com">iscskku.seoul@gmail.com</a></li>
+      </ul>
+    </div>
+    <div class="f-bot">
+      <div data-i18n="foot.rights">© 2026 ISC SKKU Seoul · 성균관대 유학생교회</div>
+      <ul class="f-nav"><li><a href="about.html" data-i18n="nav.about">교회 소개</a></li><li><a href="worship.html" data-i18n="nav.worship">예배 안내</a></li><li><a href="ministry.html" data-i18n="nav.ministry">사역</a></li><li><a href="news.html" data-i18n="nav.news">교회 소식</a></li><li><a href="visit.html" data-i18n="nav.visit">오시는 길</a></li></ul>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ 오른쪽 아래 고정 영역 ═══
+     처음 오셨나요 안내: 평소에는 작은 알약, 첫 방문 때만 잠깐 펼쳐집니다. -->
+<div class="dock">
+  <div id="fvBox">
+    <button class="fv-pill" type="button" data-first>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.7 1.1c0 1.7-2.3 2-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>
+      <span data-i18n="nav.first">처음 오셨나요?</span>
+    </button>
+  </div>
+  <button class="top-btn" id="topBtn" type="button" aria-label="Top">↑</button>
+</div>
+
+</body>
+</html>
