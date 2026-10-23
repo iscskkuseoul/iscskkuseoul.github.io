@@ -442,12 +442,15 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .week-more:empty,.week-more [hidden]{display:none}
 .week-more .more-link{font-size:var(--t-2)}
 
-/* ═══════════ 홈: 예배 안내 + 영상 ═══════════ */
-.worship-split{display:grid;grid-template-columns:1fr 1.25fr;gap:28px;align-items:center}
+/* ═══════════ 홈: 예배와 모임 + 최신 영상 (영상 왼쪽 · 시간표 오른쪽) ═══════════ */
+/* 바로가기 네 칸 바로 아래라서 위쪽 여백을 조금 줄여, 영상이 첫 화면에 더 가깝게 보이도록 합니다 */
+.home-worship{padding-top:64px}
+.worship-split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:center}
+.w-side{min-width:0}
 .w-list{list-style:none;border-top:1px solid var(--pine-line)}
 .w-list li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 2px;border-bottom:1px solid var(--pine-line)}
 .w-list b{font-family:'Gowun Batang',serif;font-size:var(--t-5);font-weight:700;line-height:var(--lh-head)}
-.w-list span{color:var(--pine);font-weight:700;font-size:var(--t-3);text-align:right}
+.w-list span{color:var(--pine);font-weight:700;font-size:var(--t-3);text-align:right;white-space:nowrap}
 .w-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 
 /* ═══════════ 홈: 교회 이야기 (사진 + 소개) ═══════════ */
@@ -456,19 +459,49 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .story-txt>p{color:var(--gray);margin-bottom:20px;max-width:var(--measure)}
 .story-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 
-/* ═══════════ 홈: 오시는 길 띠 ═══════════ */
+/* ═══════════ 홈: 오시는 길 (주소 + 작은 지도) ═══════════ */
 .home-visit{padding:0 0 80px}
 .visit-band{
-  position:relative;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;
-  background:var(--warm);border:1px solid var(--warm-line);border-radius:var(--r-lg);padding:32px 36px;overflow:hidden;
+  position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);gap:32px;align-items:center;
+  background:var(--warm);border:1px solid var(--warm-line);border-radius:var(--r-lg);padding:28px 28px 28px 38px;overflow:hidden;
 }
 .visit-band::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold);opacity:.8}
-.vb-main{min-width:0;flex:1 1 380px}
+.vb-main{min-width:0}
 .vb-main h2{font-size:var(--t-6);margin-bottom:10px}
 .vb-addr b{display:block;font-size:var(--t-4);font-weight:700}
 .vb-addr span{display:block;color:var(--gray);font-size:var(--t-2);margin-top:2px}
-.vb-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.vb-actions .btn{padding:12px 20px;font-size:var(--t-2)}
+.vb-actions{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;margin-top:22px}
+.vb-actions .btn{padding:11px 20px;font-size:var(--t-2)}
+.vb-actions .btn-pine{border:1.5px solid transparent}
+.vb-actions .more-link{margin-left:6px;font-size:var(--t-2)}
+/* 작은 지도: 거리 그림(assets/visit-map.svg) 위에 교회·역·도보 표시만 글자로 올려 둡니다.
+   누르면 네이버 지도가 새 창으로 열립니다. 지도 자료 © OpenStreetMap */
+.vb-mapbox{position:relative;min-width:0}
+.vb-map{position:relative;aspect-ratio:16/9;border-radius:var(--r-md);overflow:hidden;background:#F2EDE3;border:1px solid var(--warm-line);box-shadow:0 1px 2px rgba(60,48,30,.05)}
+.vbm-link{position:absolute;top:0;left:0;right:0;bottom:0;display:block;color:inherit;text-decoration:none}
+.vbm-link:focus-visible{outline:3px solid var(--pine);outline-offset:-3px;border-radius:var(--r-md)}
+.vbm-img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+@media (hover:hover){ .vbm-link:hover .vbm-img{transform:scale(1.025)} }
+.vbm-mark{position:absolute;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none;line-height:1}
+.vbm-mark b{background:#fff;font-size:11.5px;font-weight:800;padding:5px 9px;border-radius:var(--r-full);box-shadow:0 1px 4px rgba(40,32,20,.18);letter-spacing:.01em}
+.vbm-church{transform:translate(-13px,-50%)}
+.vbm-church i{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--pine);border:2.5px solid #fff;box-shadow:0 2px 6px rgba(16,40,28,.35);position:relative}
+.vbm-church i::before,.vbm-church i::after{content:'';position:absolute;background:#fff;border-radius:1px;left:50%;top:50%}
+.vbm-church i::before{width:2.4px;height:12px;transform:translate(-50%,-50%)}
+.vbm-church i::after{width:8.4px;height:2.4px;transform:translate(-50%,-160%)}
+.vbm-church b{color:var(--pine)}
+.vbm-exit{flex-direction:row-reverse;transform:translate(calc(-100% + 10px),-50%)}
+.vbm-exit i{flex:0 0 20px;width:20px;height:20px;border-radius:6px;background:#00A4E3;color:#fff;font-style:normal;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,60,100,.3)}
+.vbm-exit b{color:var(--ink)}
+.vbm-walk{transform:translate(10px,-50%)}
+.vbm-walk b{display:flex;align-items:center;gap:4px;background:var(--pine);color:#fff;font-weight:700;padding:5px 9px 5px 7px}
+.vbm-walk svg{flex:0 0 13px;width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.vbm-short{display:none}
+.vbm-campus{transform:translate(-50%,-50%);font-size:11px;font-weight:700;color:#4B6B59;letter-spacing:.04em;text-shadow:0 0 3px #EAF1E7,0 0 3px #EAF1E7}
+.vbm-osm{position:absolute;left:6px;bottom:5px;z-index:2;font-size:9.5px;line-height:1.4;color:#6F6A60;background:rgba(255,253,248,.82);padding:1px 6px;border-radius:4px;text-decoration:none}
+.vbm-osm:hover{color:var(--ink);text-decoration:underline}
+/* 아주 오래된 브라우저(가로세로 비율 기능이 없는 경우)에서도 지도와 영상 칸의 높이가 생기도록 */
+@supports not (aspect-ratio:16/9){ .vb-map::before,.video::before{content:'';display:block;padding-top:56.25%} }
 
 /* ═══════════ 하위 페이지 머리 그림 + 위치 표시 + 탭 ═══════════ */
 .page-hero{position:relative;min-height:360px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-deep)}
@@ -697,8 +730,14 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
 .jubo-arch a span{color:var(--gray);font-size:var(--t-1)}
 
 /* ═══════════ 유튜브 ═══════════ */
-.video{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line);background:#0f0f0f}
+.video{
+  position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line);
+  background:#0f0f0f radial-gradient(120% 95% at 50% 38%,#1f2b26 0%,#121815 58%,#0d100f 100%);
+}
 .video iframe{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;border:0}
+/* 플레이어가 다 준비되면 부드럽게 나타납니다 (준비되기 전에는 아래 바로가기 단추가 보입니다) */
+.video.yt-fade iframe{opacity:0;pointer-events:none;transition:opacity .5s var(--ease)}
+.video.yt-fade.yt-ready iframe{opacity:1;pointer-events:auto}
 .yt-fallback{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;text-decoration:none;
   font-size:var(--t-3);font-weight:600;padding:12px 20px;border-radius:var(--r-full);background:rgba(255,255,255,.12);
@@ -817,7 +856,8 @@ footer{background:var(--pine-soft);border-top:1px solid var(--line);padding:48px
 .f-tag{font-size:var(--t-2);color:var(--gray);margin-top:12px;max-width:24em;line-height:var(--lh-tight)}
 .f-info{list-style:none;flex:0 0 auto}
 .f-info li{display:flex;gap:16px;padding:5px 0;align-items:baseline}
-.f-info b{flex:0 0 68px;font-size:var(--t-1);font-weight:700;color:var(--pine);letter-spacing:.06em}
+.f-info b{flex:0 0 68px;font-size:var(--t-1);font-weight:700;color:var(--pine);letter-spacing:.06em;text-transform:uppercase}
+@media (min-width:901px){ html[lang="en"] .f-info b{flex-basis:122px} }
 .f-info span,.f-info a{color:var(--ink);font-size:var(--t-2);text-decoration:none;white-space:nowrap}
 @media (max-width:360px){ .f-info span,.f-info a{white-space:normal} }
 .f-info a:hover{color:var(--pine);text-decoration:underline}
@@ -928,14 +968,14 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .q-txt b{font-size:var(--t-2)}
   .q-txt span{font-size:var(--t-1)}
   .q-go{display:none}
-  .week-grid,.worship-split,.story-grid,.about-grid,.vision-wrap,.ministry-grid,.visit,.news-grid,.faq{grid-template-columns:1fr}
+  .story-grid,.about-grid,.vision-wrap,.ministry-grid,.visit,.news-grid,.faq{grid-template-columns:1fr}
   .story-grid{gap:28px}
   .vision-wrap{gap:28px}
+  /* 태블릿: 예배(영상+시간표)와 소식(소식+주보)은 두 칸을 그대로 둡니다 (휴대폰은 700px 이하에서 한 줄) */
+  .week-grid{gap:16px}
+  .home-worship{padding-top:48px}
   .home-visit{padding-bottom:56px}
-  .visit-band{padding:24px 22px;gap:18px}
-  .vb-actions{width:100%;display:grid;grid-template-columns:1fr;gap:10px}
-  .vb-actions .btn{display:block;width:100%}
-  .vb-actions .more-link{justify-self:start;margin-top:4px}
+  .visit-band{grid-template-columns:minmax(0,1fr) minmax(0,44%);gap:24px;padding:24px 22px 24px 30px}
   .page-hero{min-height:236px}
   .page-hero-inner{padding-top:92px;padding-bottom:24px}
   footer{padding:36px 0 20px}
@@ -966,6 +1006,40 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .subnav a{padding:0 14px}
   .subnav a::after{left:10px;right:10px}
 }
+/* 지도가 좁아지는 화면(휴대폰·태블릿): 지도 출처는 지도 아래로, 도보 표시는 짧게 */
+@media (max-width:900px){
+  .vbm-osm{position:static;display:table;margin:6px 2px 0 auto;padding:0;background:none;font-size:10px}
+}
+@media (max-width:430px),(min-width:701px) and (max-width:900px){
+  .vbm-long{display:none}
+  .vbm-short{display:inline}
+}
+@media (max-width:360px){
+  .vbm-mark b{font-size:10.5px;padding:4px 8px}
+  .vbm-walk{transform:translate(7px,-50%)}
+  .vbm-walk b{padding:4px 8px 4px 6px}
+  .vbm-campus{font-size:10px}
+}
+@media (min-width:701px) and (max-width:900px){
+  /* 태블릿: 영상 아래에 유튜브 바로가기, 오른쪽 좁은 칸의 시간표는 이름 아래에 시간을 둡니다 */
+  .worship-split{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-areas:"v l" "a l";column-gap:24px;row-gap:14px;align-items:center}
+  .worship-split>.video{grid-area:v}
+  .w-side{display:contents}
+  .w-list{grid-area:l}
+  .w-actions{grid-area:a;margin-top:0;align-self:start}
+  .w-list li{flex-direction:column;gap:2px;padding:12px 2px}
+  .w-list span{text-align:left}
+}
+@media (max-width:700px){
+  /* 휴대폰: 영상 → 시간표, 소식 → 주보 순서로 한 줄씩 */
+  .week-grid,.worship-split{grid-template-columns:1fr}
+  .worship-split{gap:20px}
+  .visit-band{grid-template-columns:1fr;gap:20px;padding:18px 18px 22px 22px}
+  .vb-mapbox{order:-1}
+  .vb-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+  .vb-actions .btn{display:block;width:100%;padding:12px 8px}
+  .vb-actions .more-link{grid-column:1/-1;justify-self:start;margin:4px 0 0}
+}
 @media (max-width:700px){
   .modal{padding:0;align-items:flex-end}
   .modal-box{max-width:100%;max-height:92%;border-radius:var(--r-lg) var(--r-lg) 0 0;transform:translateY(100%)}
@@ -983,7 +1057,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .v-card{padding:20px 16px}
   .dock{right:14px;bottom:14px}
   .fv-pill{font-size:var(--t-1);padding:8px 16px 8px 12px}
-  .w-list li{flex-direction:column;gap:2px}
+  .w-list li{flex-direction:column;gap:2px;padding:14px 2px}
   .w-list span{text-align:left}
   .facts b{flex-basis:72px}
 }

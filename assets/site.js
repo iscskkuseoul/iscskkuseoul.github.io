@@ -190,7 +190,14 @@ ko:{
  'home.aboutMore':'교회 소개 더 보기',
  'home.ministryMore':'주요 사역 보기',
  'home.visitMore':'오시는 길 자세히 보기',
- 'cal.monShort':'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월'
+ 'cal.monShort':'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월',
+ 'map.exit':'혜화역 4번 출구',
+ 'map.walk':'도보 약 10분',
+ 'map.walkShort':'약 10분',
+ 'map.campus':'성균관대학교',
+ 'map.open':'네이버 지도에서 크게 보기',
+ 'map.naver':'네이버 지도',
+ 'map.google':'구글 지도'
 },
 zh:{
  'foot.sub':'成均馆大学留学生教会 · Since 2020',
@@ -370,7 +377,14 @@ zh:{
  'home.aboutMore':'更多教会介绍',
  'home.ministryMore':'查看主要事工',
  'home.visitMore':'查看交通指引详情',
- 'cal.monShort':'1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月'
+ 'cal.monShort':'1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月',
+ 'map.exit':'惠化站 4 号出口',
+ 'map.walk':'步行约 10 分钟',
+ 'map.walkShort':'约 10 分钟',
+ 'map.campus':'成均馆大学',
+ 'map.open':'在 Naver 地图中查看',
+ 'map.naver':'Naver 地图',
+ 'map.google':'谷歌地图'
 },
 en:{
  'foot.sub':'SKKU International Student Church · Since 2020',
@@ -550,7 +564,14 @@ en:{
  'home.aboutMore':'More about us',
  'home.ministryMore':'Our ministries',
  'home.visitMore':'Directions & contact',
- 'cal.monShort':'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'
+ 'cal.monShort':'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec',
+ 'map.exit':'Hyehwa Stn. Exit 4',
+ 'map.walk':'10 min walk',
+ 'map.walkShort':'10 min',
+ 'map.campus':'SKKU',
+ 'map.open':'Open in Naver Map',
+ 'map.naver':'Naver Map',
+ 'map.google':'Google Maps'
 }
 };
 
@@ -1061,8 +1082,9 @@ mod('carousel', function(){
 });
 
 
-/* ═══ 9-1. 유튜브 영상: 화면 가까이 왔을 때만 플레이어를 불러옵니다 ═══
-   (처음 화면을 열 때 무거운 유튜브 파일을 받지 않아 첫 화면이 빨리 뜹니다) */
+/* ═══ 9-1. 유튜브 영상: 화면에 들어왔을 때만 플레이어를 불러옵니다 ═══
+   (처음 화면을 열 때 무거운 유튜브 파일을 받지 않아 첫 화면이 빨리 뜹니다.
+    영상 칸이 첫 화면 바로 아래에 있으므로, 첫 화면을 다 그린 뒤에 준비를 시작합니다) */
 mod('youtube', function(){
   var boxes = document.querySelectorAll('[data-yt]');
   if(!boxes.length) return;
@@ -1070,18 +1092,36 @@ mod('youtube', function(){
     if(box.getAttribute('data-yt-done')) return;
     box.setAttribute('data-yt-done', '1');
     var f = document.createElement('iframe');
-    f.src = box.getAttribute('data-yt');
     f.title = 'ISC SKKU Seoul YouTube';
     f.setAttribute('loading', 'lazy');
     f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
     f.setAttribute('allowfullscreen', '');
+    /* 플레이어가 다 준비되면 부드럽게 보여 줍니다 (8초가 지나도 소식이 없으면 그냥 보여 줍니다) */
+    box.classList.add('yt-fade');
+    var shown = false;
+    function show(){ if(shown) return; shown = true; box.classList.add('yt-ready'); }
+    f.addEventListener('load', show);
+    setTimeout(show, 8000);
+    f.src = box.getAttribute('data-yt');
     box.appendChild(f);
   }
-  if(!window.IntersectionObserver){ for(var i=0;i<boxes.length;i++) load(boxes[i]); return; }
-  var io = new IntersectionObserver(function(en){
-    for(var j=0;j<en.length;j++){ if(en[j].isIntersecting){ load(en[j].target); io.unobserve(en[j].target); } }
-  }, {rootMargin:'300px 0px'});
-  for(var k=0;k<boxes.length;k++) io.observe(boxes[k]);
+  var started = false;
+  function start(){
+    if(started) return;
+    started = true;
+    /* 휴대폰의 '데이터 절약' 모드에서는 플레이어를 자동으로 불러오지 않습니다 (영상 칸의 유튜브 바로가기는 그대로) */
+    try{ if(navigator.connection && navigator.connection.saveData) return; }catch(e){}
+    if(!window.IntersectionObserver){ for(var i=0;i<boxes.length;i++) load(boxes[i]); return; }
+    var io = new IntersectionObserver(function(en){
+      for(var j=0;j<en.length;j++){ if(en[j].isIntersecting){ load(en[j].target); io.unobserve(en[j].target); } }
+    }, {rootMargin:'0px 0px 40px 0px'});
+    for(var k=0;k<boxes.length;k++) io.observe(boxes[k]);
+  }
+  if(document.readyState === 'complete') start();
+  else{
+    window.addEventListener('load', start);
+    setTimeout(start, 5000);   /* 페이지가 아주 늦게 끝나도 5초 뒤에는 준비합니다 */
+  }
 });
 
 
@@ -1095,7 +1135,13 @@ mod('reveal', function(){
   var io = new IntersectionObserver(function(en){
     en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {rootMargin:'0px 0px -60px 0px'});
-  for(var j=0;j<els.length;j++) io.observe(els[j]);
+  /* 첫 화면에 조금이라도 보이는 것은 바로 보여 줍니다 (화면 아래 끝이 빈칸으로 남지 않도록) */
+  var vh = window.innerHeight || document.documentElement.clientHeight;
+  for(var j=0;j<els.length;j++){
+    var r = els[j].getBoundingClientRect();
+    if(r.top < vh && r.bottom > 0) els[j].classList.add('in');
+    else io.observe(els[j]);
+  }
 });
 
 

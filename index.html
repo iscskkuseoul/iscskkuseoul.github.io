@@ -80,8 +80,8 @@
 <link rel="preload" as="image" href="assets/banner1.jpg" fetchpriority="high">
 
 <!-- 사이트 공용 디자인과 동작 (고친 뒤에는 ?v= 뒤의 날짜를 바꿔 주세요) -->
-<link rel="stylesheet" href="assets/site.css?v=20261022">
-<script src="assets/site.js?v=20261022" defer></script>
+<link rel="stylesheet" href="assets/site.css?v=20261023">
+<script src="assets/site.js?v=20261023" defer></script>
 
 <!-- ═══ 검색엔진에게 교회 정보를 알려주는 부분 ═══
      ▶ 매주 반복되는 예배는 반드시 openingHoursSpecification(정기 시간)으로 적습니다.
@@ -342,8 +342,39 @@
   </div>
 </div>
 
+<!-- ═══ 예배와 모임 + 최신 예배 영상 (첫 화면 바로 아래) ═══ -->
+<section class="home-worship">
+  <div class="wrap">
+    <div class="sec-head row reveal">
+      <div>
+        <p class="eyebrow" data-i18n="worship.eyebrow">WORSHIP</p>
+        <h2 data-i18n="worship.title">예배와 모임</h2>
+      </div>
+      <a class="more-link" href="worship.html" data-i18n="home.worshipMore">예배 안내 자세히 보기</a>
+    </div>
+    <div class="worship-split reveal">
+      <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
+      <div class="video" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
+        <a class="yt-fallback" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ YouTube @iscskku2020</a>
+        <noscript><iframe src="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg" title="ISC SKKU Seoul YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></noscript>
+      </div>
+      <div class="w-side">
+        <ul class="w-list">
+        <li><b data-i18n="w1.t">주일예배</b><span data-i18n="w1.time">매주 일요일 오후 3:00</span></li>
+        <li><b data-i18n="w2.t">교두보 기도회 (BPM)</b><span data-i18n="w2.time">매주 수요일 저녁 6:00~9:00</span></li>
+        <li><b data-i18n="w3.t">셀 모임</b><span data-i18n="w3.time">주일예배 후</span></li>
+        <li><b data-i18n="w4.t">샬롬 라운지</b><span data-i18n="w4.time">평일 상시 개방</span></li>
+        </ul>
+        <div class="w-actions">
+          <a class="more-link" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" data-i18n="yt.link">▶ 유튜브 채널 바로가기 (@iscskku2020)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ 이번 주 소식 · 주보 (news.txt 와 jubo 폴더에서 자동으로 채워집니다) ═══ -->
-<section class="home-week" id="this-week">
+<section class="alt home-week" id="this-week">
   <div class="wrap">
     <div class="sec-head row reveal">
       <div>
@@ -380,37 +411,6 @@
   </div>
 </section>
 
-<!-- ═══ 예배 안내 + 온라인 예배 ═══ -->
-<section class="alt home-worship">
-  <div class="wrap">
-    <div class="sec-head row reveal">
-      <div>
-        <p class="eyebrow" data-i18n="worship.eyebrow">WORSHIP</p>
-        <h2 data-i18n="worship.title">예배와 모임</h2>
-      </div>
-      <a class="more-link" href="worship.html" data-i18n="home.worshipMore">예배 안내 자세히 보기</a>
-    </div>
-    <div class="worship-split reveal">
-      <div>
-        <ul class="w-list">
-        <li><b data-i18n="w1.t">주일예배</b><span data-i18n="w1.time">매주 일요일 오후 3:00</span></li>
-        <li><b data-i18n="w2.t">교두보 기도회 (BPM)</b><span data-i18n="w2.time">매주 수요일 저녁 6:00~9:00</span></li>
-        <li><b data-i18n="w3.t">셀 모임</b><span data-i18n="w3.time">주일예배 후</span></li>
-        <li><b data-i18n="w4.t">샬롬 라운지</b><span data-i18n="w4.time">평일 상시 개방</span></li>
-        </ul>
-        <div class="w-actions">
-          <a class="more-link" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" data-i18n="yt.link">▶ 유튜브 채널 바로가기 (@iscskku2020)</a>
-        </div>
-      </div>
-      <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
-      <div class="video" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
-        <a class="yt-fallback" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ YouTube @iscskku2020</a>
-        <noscript><iframe src="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg" title="ISC SKKU Seoul YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></noscript>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══ 교회 이야기 (사진 + 소개) ═══ -->
 <section class="home-story">
   <div class="wrap story-grid">
@@ -442,7 +442,8 @@
   </div>
 </section>
 
-<!-- ═══ 오시는 길 (요약) ═══ -->
+<!-- ═══ 오시는 길 (주소 + 작은 지도) ═══
+     ▶ 지도 그림은 assets/visit-map.svg 입니다. 지도를 누르면 네이버 지도가 새 창으로 열립니다. -->
 <section class="home-visit">
   <div class="wrap">
     <div class="visit-band reveal">
@@ -450,11 +451,24 @@
         <p class="eyebrow" data-i18n="visit.eyebrow">VISIT US</p>
         <h2 data-i18n="nav.visit">오시는 길</h2>
         <p class="vb-addr"><b data-i18n="visit.addrVal">서울 종로구 명륜길 22, 2층</b><span data-i18n="visit.transitVal">지하철 4호선 혜화역 4번 출구</span><span data-i18n="visit.transitSub">성균관대학교 방면 도보 약 10분 · 마을버스 종로08 이용 가능</span></p>
+        <div class="vb-actions">
+          <a class="btn btn-pine" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" data-i18n="map.naver">네이버 지도</a>
+          <a class="btn btn-line" href="https://www.google.com/maps?cid=5142664069076694680" target="_blank" rel="noopener" data-i18n="map.google">구글 지도</a>
+          <a class="more-link" href="visit.html" data-i18n="home.visitMore">오시는 길 자세히 보기</a>
+        </div>
       </div>
-      <div class="vb-actions">
-        <a class="btn btn-pine" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" data-i18n="visit.naver">네이버 지도로 길찾기</a>
-        <a class="btn btn-line" href="https://www.google.com/maps?cid=5142664069076694680" target="_blank" rel="noopener" data-i18n="visit.google">구글 지도로 보기</a>
-        <a class="more-link" href="visit.html" data-i18n="home.visitMore">오시는 길 자세히 보기</a>
+      <div class="vb-mapbox">
+        <div class="vb-map">
+          <a class="vbm-link" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener">
+            <img class="vbm-img" src="assets/visit-map.svg?v=20261023" alt="" width="1351" height="760" loading="lazy" decoding="async">
+            <span class="vbm-mark vbm-campus" style="left:13.73%;top:33.55%" aria-hidden="true" data-i18n="map.campus">성균관대학교</span>
+            <span class="vbm-mark vbm-walk" style="left:60.54%;top:41.26%" aria-hidden="true"><b><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4.2" r="1.9"/><path d="M10.5 21l2.2-6.2 2.6 2.6V21"/><path d="M8 11.2l2.6-3.4h3.2l2.2 3.8 2.6.8"/><path d="M10.6 7.8 9.4 14.4 7 21"/></svg><span class="vbm-long" data-i18n="map.walk">도보 약 10분</span><span class="vbm-short" data-i18n="map.walkShort">약 10분</span></b></span>
+            <span class="vbm-mark vbm-exit" style="left:67.43%;top:84.66%" aria-hidden="true"><i>4</i><b data-i18n="map.exit">혜화역 4번 출구</b></span>
+            <span class="vbm-mark vbm-church" style="left:30.79%;top:14.08%" aria-hidden="true"><i></i><b>ISC SKKU Seoul</b></span>
+            <span class="sr" data-i18n="map.open">네이버 지도에서 크게 보기</span>
+          </a>
+        </div>
+        <a class="vbm-osm" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>
       </div>
     </div>
   </div>
