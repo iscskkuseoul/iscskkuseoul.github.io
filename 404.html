@@ -3,81 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>페이지를 찾을 수 없습니다 | ISC-SKKU Seoul</title>
+<title>페이지를 찾을 수 없습니다 | ISC SKKU Seoul</title>
 <!-- robots 태그를 일부러 넣지 않습니다.
      404 페이지는 HTTP 상태코드 404 자체로 이미 색인되지 않습니다.
      noindex 를 넣어 두면, 사이트를 새로 배포하는 짧은 순간에
      검색로봇이 이 페이지를 받아 갈 경우 홈페이지까지 색인에서
-     빠질 위험이 있습니다. -->
+     빠질 위험이 있습니다.
+     ▶ 이 페이지는 어떤 깊이의 잘못된 주소에서도 보이므로, 파일 주소는 모두 / 로 시작합니다. -->
 <meta name="theme-color" content="#10573B">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="shortcut icon" href="https://iscskku.co.kr/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="https://iscskku.co.kr/assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://iscskku.co.kr/assets/favicon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap">
 <style>
 :root{
-  --ink:#23282D; --pine:#10573B; --pine-deep:#0C4630; --pine-soft:#F3F8F5;
-  --gray:#59616A; --line:#E3E7E9;
-  --t-1:.78rem; --t-2:.86rem; --t-4:1rem; --t-6:1.31rem;
+  --ink:#23282D; --pine:#10573B; --pine-deep:#0C4630; --pine-soft:#F3F8F5; --pine-line:#CFE0D6;
+  --gray:#59616A; --line:#E3E7E9; --gold:#D09840;
+  --t-1:.78rem; --t-2:.86rem; --t-3:.94rem; --t-6:1.44rem;
   --r-md:16px; --r-full:999px;
   --sh-2:0 8px 28px rgba(24,32,28,.10);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
+  font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic','PingFang SC','Microsoft YaHei',sans-serif;
   color:var(--ink);background:var(--pine-soft);line-height:1.7;
   word-break:keep-all;overflow-wrap:break-word;-webkit-text-size-adjust:100%;
   min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
 }
 @supports (min-height:100dvh){ body{min-height:100dvh} }
 .box{
-  background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
-  box-shadow:var(--sh-2);max-width:520px;width:100%;
-  padding:48px 40px 40px;text-align:center;
+  position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  box-shadow:var(--sh-2);max-width:520px;width:100%;padding:44px 40px 36px;text-align:center;overflow:hidden;
 }
-.mark{
-  width:64px;height:64px;border-radius:var(--r-full);background:var(--pine-soft);
-  display:flex;align-items:center;justify-content:center;margin:0 auto 24px;
-}
-.mark svg{width:30px;height:30px;stroke:var(--pine);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.code{
-  font-size:var(--t-1);letter-spacing:.2em;color:var(--pine);font-weight:700;margin-bottom:8px;
-}
-h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-bottom:12px}
-p{color:var(--gray);font-size:var(--t-2);margin-bottom:32px}
-p .zh,p .en{display:block;margin-top:4px}
+.box::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:var(--gold);opacity:.85}
+.logo{display:block;margin:0 auto 22px;line-height:0}
+.logo img{height:48px;width:auto}
+.code{font-size:var(--t-1);letter-spacing:.24em;color:var(--pine);font-weight:700;margin-bottom:6px}
+h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-bottom:12px;line-height:1.4}
+.msg{color:var(--gray);font-size:var(--t-2);margin-bottom:28px}
+.msg span{display:block;margin-top:2px}
 .btn{
   display:inline-block;background:var(--pine);color:#fff;text-decoration:none;
-  font-weight:700;font-size:var(--t-4);padding:14px 32px;border-radius:var(--r-full);
+  font-weight:700;font-size:var(--t-3);padding:13px 30px;border-radius:var(--r-full);
 }
 .btn:hover{background:var(--pine-deep)}
+.btn:focus-visible,.links a:focus-visible,.foot a:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
+.links{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px}
+.links a{
+  display:inline-block;font-size:var(--t-2);font-weight:600;color:var(--pine);text-decoration:none;
+  padding:7px 14px;border-radius:var(--r-full);background:var(--pine-soft);border:1px solid var(--pine-line);
+}
+.links a:hover{background:#fff}
 .foot{
-  margin-top:32px;padding-top:20px;border-top:1px solid var(--line);
+  margin-top:28px;padding-top:18px;border-top:1px solid var(--line);
   color:var(--gray);font-size:var(--t-1);line-height:1.8;
 }
+.foot b{color:var(--ink);font-weight:600}
 .foot a{color:var(--pine)}
-@media (max-width:480px){ .box{padding:40px 24px 32px} }
+@media (max-width:480px){ .box{padding:36px 22px 30px} }
 </style>
 </head>
 <body>
-  <div class="box">
-    <div class="mark">
-      <svg viewBox="0 0 24 24"><path d="M12 3.5v17M7 9h10"/></svg>
-    </div>
+  <main class="box">
+    <a class="logo" href="/" aria-label="ISC SKKU Seoul 홈">
+      <picture><source srcset="/assets/logo1.webp" type="image/webp"><img src="/assets/logo1.png" alt="" width="245" height="120"></picture>
+    </a>
     <p class="code">404</p>
     <h1>페이지를 찾을 수 없습니다</h1>
-    <p>
+    <p class="msg">
       주소가 바뀌었거나 잘못 입력되었을 수 있습니다.
-      <span class="zh">页面不存在，可能是网址输入有误。</span>
-      <span class="en">This page could not be found.</span>
+      <span lang="zh-CN">页面不存在，可能是网址输入有误。</span>
+      <span lang="en">This page could not be found.</span>
     </p>
     <a class="btn" href="/">홈으로 돌아가기 · 返回首页 · Home</a>
+    <ul class="links">
+      <li><a href="/worship.html">예배 안내</a></li>
+      <li><a href="/news.html">교회 소식 · 주보</a></li>
+      <li><a href="/visit.html">오시는 길</a></li>
+    </ul>
     <div class="foot">
-      ISC-SKKU Seoul (성균관대 유학생교회)<br>
+      <b>ISC SKKU Seoul</b> (성균관대 유학생교회)<br>
       주일예배 매주 일요일 오후 3:00 · 서울 종로구 명륜길 22, 2층<br>
       <a href="mailto:iscskku.seoul@gmail.com">iscskku.seoul@gmail.com</a>
     </div>
-  </div>
+  </main>
 </body>
 </html>
