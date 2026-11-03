@@ -592,7 +592,8 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .cv li b{display:block;font-weight:600}
 .cv li span{color:var(--gray);font-size:var(--t-2)}
 .cv li svg{position:absolute;left:0;top:2px;width:15px;height:15px;stroke:var(--pine);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
-.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+/* 선교사·전도사 카드: 컴퓨터·태블릿은 세 칸, 휴대폰은 한 줄씩 (사진 왼쪽, 이름 오른쪽) */
+.team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .team-card{background:#fff;border-radius:var(--r-md);padding:24px 20px;text-align:center}
 .team-card .photo-slot{width:82px;height:82px;border-radius:50%;margin:0 auto 12px}
 .team-card h3{line-height:var(--lh-head);font-family:'Gowun Batang',serif;font-size:var(--t-4);margin-top:2px}
@@ -1052,6 +1053,11 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .steps{grid-template-columns:1fr}
   .brand b{font-size:var(--t-2)}
   .team-lead{padding:24px 16px}
+  .team-grid{grid-template-columns:1fr;gap:10px}
+  .team-card{display:grid;grid-template-columns:60px minmax(0,1fr);grid-template-rows:auto auto;column-gap:16px;align-items:center;text-align:left;padding:14px 18px}
+  .team-card .photo-slot{grid-row:1/3;width:60px;height:60px;margin:0}
+  .team-card .team-role{justify-self:start;align-self:end;margin-bottom:4px}
+  .team-card h3{align-self:start;margin-top:0}
   .news,.jubo-body,.week-news{padding-left:20px;padding-right:20px}
   .jubo-foot{padding-left:20px;padding-right:20px}
   .v-card{padding:20px 16px}
