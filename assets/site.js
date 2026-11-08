@@ -197,7 +197,8 @@ ko:{
  'map.campus':'성균관대학교',
  'map.open':'네이버 지도에서 크게 보기',
  'map.naver':'네이버 지도',
- 'map.google':'구글 지도'
+ 'map.google':'구글 지도',
+ 'team.han':'한창우'
 },
 zh:{
  'foot.sub':'成均馆大学留学生教会 · Since 2020',
@@ -384,7 +385,8 @@ zh:{
  'map.campus':'成均馆大学',
  'map.open':'在 Naver 地图中查看',
  'map.naver':'Naver 地图',
- 'map.google':'谷歌地图'
+ 'map.google':'谷歌地图',
+ 'team.han':'韩昌佑'
 },
 en:{
  'foot.sub':'SKKU International Student Church · Since 2020',
@@ -571,7 +573,8 @@ en:{
  'map.campus':'SKKU',
  'map.open':'Open in Naver Map',
  'map.naver':'Naver Map',
- 'map.google':'Google Maps'
+ 'map.google':'Google Maps',
+ 'team.han':'Han Chang&nbsp;Woo'
 }
 };
 
