@@ -445,13 +445,15 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 /* ═══════════ 홈: 예배와 모임 + 최신 영상 (영상 왼쪽 · 시간표 오른쪽) ═══════════ */
 /* 바로가기 네 칸 바로 아래라서 위쪽 여백을 조금 줄여, 영상이 첫 화면에 더 가깝게 보이도록 합니다 */
 .home-worship{padding-top:64px}
-.worship-split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:center}
+.worship-split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:start}
 .w-side{min-width:0}
 .w-list{list-style:none;border-top:1px solid var(--pine-line)}
 .w-list li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 2px;border-bottom:1px solid var(--pine-line)}
 .w-list b{font-family:'Gowun Batang',serif;font-size:var(--t-5);font-weight:700;line-height:var(--lh-head)}
 .w-list span{color:var(--pine);font-weight:700;font-size:var(--t-3);text-align:right;white-space:nowrap}
 .w-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.w-actions .more-link{white-space:normal}
+@media (max-width:380px){ .w-actions .more-link{font-size:var(--t-2)} }
 
 /* ═══════════ 홈: 교회 이야기 (사진 + 소개) ═══════════ */
 .story-grid{display:grid;grid-template-columns:1.12fr 1fr;gap:48px;align-items:center}
@@ -607,7 +609,17 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .card:hover{box-shadow:var(--sh-2);transform:translateY(-3px)}
 .card h3{line-height:var(--lh-head);font-family:'Gowun Batang',serif;font-size:var(--t-5);margin-bottom:8px}
 .card .time{font-weight:700;margin-bottom:8px;font-size:var(--t-3);color:var(--pine)}
-.card p{color:var(--gray);font-size:var(--t-3)}
+.card p{color:var(--gray);font-size:var(--t-3);text-wrap:pretty}
+/* 예배와 모임 5개 (worship.html): 컴퓨터는 위 2개(주일 오후 3시) + 아래 3개, 태블릿은 두 칸, 휴대폰은 한 줄씩 */
+.cards.sched{grid-template-columns:repeat(6,minmax(0,1fr))}
+.cards.sched>.card{grid-column:span 2}
+.cards.sched>.card:nth-child(-n+2){grid-column:span 3}
+@media (max-width:820px){
+  .cards.sched{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards.sched>.card,.cards.sched>.card:nth-child(-n+2){grid-column:auto}
+  .cards.sched>.card:last-child:nth-child(odd){grid-column:1/-1}
+}
+@media (max-width:540px){ .cards.sched{grid-template-columns:1fr} }
 .ministry-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .m-card{
   display:flex;gap:20px;align-items:flex-start;border:1px solid var(--line);background:#fff;
@@ -1023,7 +1035,7 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
 }
 @media (min-width:701px) and (max-width:900px){
   /* 태블릿: 영상 아래에 유튜브 바로가기, 오른쪽 좁은 칸의 시간표는 이름 아래에 시간을 둡니다 */
-  .worship-split{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-areas:"v l" "a l";column-gap:24px;row-gap:14px;align-items:center}
+  .worship-split{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-areas:"v l" "a l";column-gap:24px;row-gap:14px;align-items:start}
   .worship-split>.video{grid-area:v}
   .w-side{display:contents}
   .w-list{grid-area:l}

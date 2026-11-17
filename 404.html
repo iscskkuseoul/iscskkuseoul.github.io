@@ -51,6 +51,7 @@ h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-
   font-weight:700;font-size:var(--t-3);padding:13px 30px;border-radius:var(--r-full);
 }
 .btn:hover{background:var(--pine-deep)}
+.btn span{white-space:nowrap}
 .btn:focus-visible,.links a:focus-visible,.foot a:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
 .links{list-style:none;display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px}
 .links a{
@@ -64,7 +65,10 @@ h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-
 }
 .foot b{color:var(--ink);font-weight:600}
 .foot a{color:var(--pine)}
-@media (max-width:480px){ .box{padding:36px 22px 30px} }
+@media (max-width:480px){
+  .box{padding:36px 22px 30px}
+  .btn{display:block;padding:13px 16px;border-radius:14px;text-wrap:balance}
+}
 </style>
 </head>
 <body>
@@ -79,7 +83,7 @@ h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-
       <span lang="zh-CN">页面不存在，可能是网址输入有误。</span>
       <span lang="en">This page could not be found.</span>
     </p>
-    <a class="btn" href="/">홈으로 돌아가기 · 返回首页 · Home</a>
+    <a class="btn" href="/"><span>홈으로 돌아가기</span> · <span lang="zh-CN">返回首页</span> · <span lang="en">Home</span></a>
     <ul class="links">
       <li><a href="/worship.html">예배 안내</a></li>
       <li><a href="/news.html">교회 소식 · 주보</a></li>
