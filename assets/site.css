@@ -73,7 +73,8 @@ img{max-width:100%;display:block}
 picture{display:contents}
 a{color:var(--pine)}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--pine);outline-offset:2px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+/* 내용 폭: 머리글(메뉴 줄)과 같은 폭이라 로고와 본문의 왼쪽 끝이 한 줄로 맞습니다 */
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
 .skip{
   position:absolute;left:-9999px;top:0;z-index:100;background:var(--pine);color:#fff;
   padding:12px 20px;border-radius:0 0 var(--r-sm) 0;font-weight:600;text-decoration:none;
@@ -391,10 +392,10 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
 .q-item:hover .q-go{opacity:1;transform:translateX(3px)}
 
 /* ═══════════ 공통 구역 ═══════════ */
-section{padding:80px 0}
+section{padding:72px 0}
 .alt{background:var(--pine-soft)}
 .warm{background:var(--warm)}
-.sec-head{margin-bottom:40px}
+.sec-head{margin-bottom:32px}
 .sec-head .eyebrow{margin-bottom:12px}
 .sec-head.row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .eyebrow{
@@ -423,10 +424,10 @@ html.no-js .hamburger,html.js-fail .hamburger{display:none}
 html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 
 /* ═══════════ 홈: 이번 주 소식 ═══════════ */
-.week-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;align-items:stretch}
-.week-news{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:26px 26px 22px}
-.week-news .headlines{flex:1 1 auto}
-.week-news .date{color:var(--pine);font-weight:700;font-size:var(--t-2);letter-spacing:.05em;margin-bottom:10px}
+.week-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.week-news{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;min-width:0}
+.week-news>.headlines{flex:1 1 auto;padding:4px 22px 12px}
+.week-news .date{color:var(--pine);font-weight:700;font-size:var(--t-2);letter-spacing:.05em;margin:0}
 .headlines{list-style:none;counter-reset:hl}
 .headlines li{
   counter-increment:hl;position:relative;padding:12px 0 12px 38px;border-bottom:1px solid var(--line-soft);
@@ -438,22 +439,124 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
   background:var(--pine-soft);color:var(--pine);font-size:var(--t-1);font-weight:800;
   display:flex;align-items:center;justify-content:center;
 }
-.week-more{display:flex;justify-content:flex-end;margin-top:12px}
-.week-more:empty,.week-more [hidden]{display:none}
+.week-more{display:flex;justify-content:flex-end;padding:10px 22px 14px;border-top:1px solid var(--line-soft)}
+.week-more:empty,.week-more [hidden],.week-more[hidden]{display:none}
 .week-more .more-link{font-size:var(--t-2)}
+/* ── 이번 주 소식 게시판 ──
+   넓은 칸(is-split): 왼쪽 제목 목록 + 오른쪽 내용, 아래쪽 가는 막대가 다음 소식까지 남은 시간을 보여 줍니다.
+   좁은 칸(is-acc): 제목을 누르면 아래로 내용이 펼쳐집니다. */
+.nb-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;padding:12px 16px 12px 22px;border-bottom:1px solid var(--line-soft)}
+.nb-ctrl{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.nb-ctrl[hidden]{display:none}
+.nb-count{min-width:4.2em;text-align:center;font-size:var(--t-1);font-weight:700;color:var(--gray);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.nb-btn{
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0;
+  transition:border-color var(--dur-1) var(--ease),color var(--dur-1) var(--ease),background var(--dur-1) var(--ease);
+}
+.nb-btn:hover{border-color:var(--pine);color:var(--pine)}
+.nb-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nb-play .i-play{display:none;fill:currentColor;stroke:none}
+.is-paused .nb-play .i-play{display:block}
+.is-paused .nb-play .i-pause{display:none}
+.nb-body{position:relative;flex:1 1 auto}
+.nb-tab{
+  position:relative;display:flex;align-items:center;gap:12px;width:100%;margin:0;padding:11px 18px 11px 22px;
+  border:none;border-bottom:1px solid var(--line-soft);background:none;text-align:left;cursor:pointer;
+  font-family:inherit;font-size:var(--t-3);line-height:1.5;color:var(--ink);
+  transition:background var(--dur-1) var(--ease),color var(--dur-1) var(--ease);
+}
+.nb-tab:hover{background:var(--pine-soft)}
+.nb-no{flex:0 0 auto;font-size:var(--t-1);font-weight:700;color:var(--gray);letter-spacing:.04em;font-variant-numeric:tabular-nums;transition:color var(--dur-1) var(--ease)}
+.nb-t{flex:1 1 auto;min-width:0}
+.nb-new,.nb-dday{
+  flex:0 0 auto;display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;line-height:1;
+  padding:4px 7px;border-radius:var(--r-full);white-space:nowrap;
+}
+.nb-new{background:#FBF1DF;color:#8A5A12}
+.nb-dday{background:var(--pine-soft);color:var(--pine);border:1px solid var(--pine-line);padding:3px 7px}
+.nb-tab.on .nb-t{color:var(--pine);font-weight:700}
+.nb-tab.on .nb-no{color:var(--pine)}
+.nb-prog{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--pine);transform:scaleX(0);transform-origin:left center;pointer-events:none}
+.nb-chev{display:none}
+.nb-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;font-size:var(--t-1);line-height:1.4}
+.nb-meta:empty{display:none}
+.nb-when{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:var(--r-full);background:var(--pine-soft);color:var(--pine);font-weight:600;border:1px solid var(--pine-line)}
+.nb-when b{font-weight:800;letter-spacing:.04em}
+.nb-title{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;line-height:1.38;letter-spacing:var(--ls-title);margin-bottom:12px;text-wrap:balance}
+.nb-text{color:var(--gray);font-size:var(--t-3);line-height:1.85;text-wrap:pretty}
+.nb-body[lang="ko"],.news ul[lang="ko"]{word-break:keep-all}
+@keyframes nbIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* 넓은 칸 */
+.week-news.is-split .nb-body{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+.is-split .nb-tab{grid-column:1}
+.is-split .nb-tab:last-of-type{border-bottom:none}
+.is-split .nb-tab.on{background:var(--pine-soft)}
+.is-split .nb-tab.on::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pine)}
+.is-split .nb-panel{
+  grid-column:2;min-width:0;contain:size;overflow:auto;padding:28px 32px 30px;
+  border-left:1px solid var(--line-soft);
+  /* 오른쪽 아래의 가는 금빛 십자가: 로고의 십자가를 은은하게 옮겨 온 장식입니다 */
+  background:
+    linear-gradient(rgba(208,152,64,.30),rgba(208,152,64,.30)) no-repeat right 52px bottom 30px/2px 72px,
+    linear-gradient(rgba(208,152,64,.30),rgba(208,152,64,.30)) no-repeat right 36px bottom 78px/34px 2px,
+    linear-gradient(180deg,#fff 0%,#fff 50%,var(--pine-soft) 100%);
+}
+.is-split .nb-panel:not([hidden]){animation:nbIn .5s var(--ease) both}
+/* 좁은 칸 */
+.is-acc .nb-tab{padding:13px 18px}
+.is-acc .nb-chev{display:block;flex:0 0 auto;width:9px;height:9px;margin:0 4px 3px 2px;border-right:2px solid var(--gray);border-bottom:2px solid var(--gray);transform:rotate(45deg);transition:transform var(--dur-2) var(--ease)}
+.is-acc .nb-tab[aria-expanded="true"] .nb-chev{transform:rotate(225deg);margin-bottom:-3px;border-color:var(--pine)}
+.is-acc .nb-tab[aria-expanded="true"]{border-bottom-color:transparent;background:var(--pine-soft)}
+.is-acc .nb-tab.no-body{cursor:default}
+.is-acc .nb-tab.no-body:hover{background:none}
+.is-acc .nb-tab.no-body .nb-chev{visibility:hidden}
+.is-acc .nb-tab .nb-prog{display:none}
+.is-acc .nb-panel{padding:0 18px 16px 50px;border-bottom:1px solid var(--line-soft);background:var(--pine-soft)}
+.is-acc .nb-panel:not([hidden]){animation:nbIn .35s var(--ease) both}
+.is-acc .nb-title{display:none}
+.is-acc .nb-meta{margin-bottom:6px}
+.is-acc .nb-text{font-size:var(--t-2);line-height:1.75}
+.is-acc .nb-tab:last-of-type:not([aria-expanded="true"]){border-bottom:none}
+.is-acc .nb-panel:last-child{border-bottom:none}
 
 /* ═══════════ 홈: 예배와 모임 + 최신 영상 (영상 왼쪽 · 시간표 오른쪽) ═══════════ */
 /* 바로가기 네 칸 바로 아래라서 위쪽 여백을 조금 줄여, 영상이 첫 화면에 더 가깝게 보이도록 합니다 */
-.home-worship{padding-top:64px}
-.worship-split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:start}
+.home-worship{padding-top:56px}
+.worship-split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:44px;align-items:start}
+.w-media{min-width:0}
 .w-side{min-width:0}
 .w-list{list-style:none;border-top:1px solid var(--pine-line)}
 .w-list li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:18px 2px;border-bottom:1px solid var(--pine-line)}
 .w-list b{font-family:'Gowun Batang',serif;font-size:var(--t-5);font-weight:700;line-height:var(--lh-head)}
 .w-list span{color:var(--pine);font-weight:700;font-size:var(--t-3);text-align:right;white-space:nowrap}
-.w-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.w-actions .more-link{white-space:normal}
-@media (max-width:380px){ .w-actions .more-link{font-size:var(--t-2)} }
+/* 영상 바로 아래 한 줄: 유튜브 채널로 가는 길 (화살표가 줄 끝을 가리킵니다) */
+.v-cap{
+  display:flex;align-items:center;gap:12px;margin-top:14px;padding:4px 2px 12px;
+  border-bottom:1px solid var(--pine-line);text-decoration:none;color:var(--ink);
+}
+.vc-ic{flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--pine-soft);display:flex;align-items:center;justify-content:center;transition:background var(--dur-1) var(--ease)}
+.vc-ic svg{width:18px;height:18px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linejoin:round}
+.vc-t{font-size:var(--t-3);font-weight:600;line-height:1.45;transition:color var(--dur-1) var(--ease)}
+.vc-h{margin-left:auto;color:var(--gray);font-size:var(--t-2);white-space:nowrap}
+.vc-go::after{content:'→';display:inline-block;color:var(--pine);font-weight:600;transition:transform var(--dur-2) var(--ease)}
+.v-cap:hover .vc-t{color:var(--pine)}
+.v-cap:hover .vc-ic{background:var(--pine-tint)}
+.v-cap:hover .vc-go::after{transform:translateX(3px)}
+/* 시간표 아래: 처음 오신 분 안내 (누르면 안내 창) */
+.w-first{
+  display:flex;align-items:center;gap:14px;margin-top:20px;padding:16px 18px;border-radius:var(--r-md);
+  background:var(--pine-soft);border:1px solid var(--pine-line);text-decoration:none;color:var(--ink);
+  transition:background var(--dur-1) var(--ease),border-color var(--dur-1) var(--ease);
+}
+.w-first:hover{background:#fff;border-color:var(--pine)}
+.wf-ic{flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+.wf-ic svg{width:21px;height:21px;stroke:var(--pine);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wf-txt{flex:1 1 auto;min-width:0}
+.wf-txt b{display:block;font-family:'Gowun Batang',serif;font-size:var(--t-4);font-weight:700;line-height:1.4}
+.wf-txt span{display:block;color:var(--gray);font-size:var(--t-2);line-height:1.5;margin-top:2px}
+.wf-go::after{content:'→';display:inline-block;color:var(--pine);font-size:var(--t-4);font-weight:600;transition:transform var(--dur-2) var(--ease)}
+.w-first:hover .wf-go::after{transform:translateX(3px)}
 
 /* ═══════════ 홈: 교회 이야기 (사진 + 소개) ═══════════ */
 .story-grid{display:grid;grid-template-columns:1.12fr 1fr;gap:48px;align-items:center}
@@ -462,7 +565,7 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .story-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 
 /* ═══════════ 홈: 오시는 길 (주소 + 작은 지도) ═══════════ */
-.home-visit{padding:0 0 80px}
+.home-visit{padding:0 0 72px}
 .visit-band{
   position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,46%);gap:32px;align-items:center;
   background:var(--warm);border:1px solid var(--warm-line);border-radius:var(--r-lg);padding:28px 28px 28px 38px;overflow:hidden;
@@ -692,6 +795,21 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 }
 .thumb-wait{padding:40px 0;text-align:center;color:var(--gray);font-size:var(--t-1);line-height:1.6}
 .jubo-foot{padding:8px 24px 16px}
+/* 홈의 주보 칸: 소식 게시판과 같은 머리줄(날짜 왼쪽, 단추 오른쪽)로 맞춰 두 칸이 한 짝처럼 보입니다 */
+.home-week .jubo-body{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;min-height:58px;padding:10px 16px 10px 22px}
+.home-week .jubo-body .date{margin:0}
+.home-week .jubo-body .btn{display:inline-block;margin-left:auto;padding:8px 16px;font-size:var(--t-2);white-space:nowrap}
+/* 주보 칸이 좁을 때(태블릿·작은 노트북): 단추가 날짜 아래로 내려가면 오른쪽에 매달리지 않고 한 줄을 꽉 채웁니다 */
+.home-week .jubo-body{container-type:inline-size}
+@container (max-width:312px){
+  .home-week .jubo-body .btn{flex:1 1 100%;margin-left:0;text-align:center;padding:10px 16px}
+}
+@container (max-width:366px){   /* 영어 날짜는 길어서 조금 더 일찍 내려갑니다 */
+  html[lang="en"] .home-week .jubo-body .btn{flex:1 1 100%;margin-left:0;text-align:center;padding:10px 16px}
+}
+.home-week .jubo-foot{padding:2px 22px 12px}
+.home-week .jubo-foot .last-week{margin-top:0;border-top:none;padding-top:8px}
+.home-week .jubo-foot .more-link{font-size:var(--t-2)}
 .last-week{margin-top:8px;border-top:1px solid var(--line-soft);padding-top:12px}
 .last-week summary{cursor:pointer;font-size:var(--t-2);color:var(--gray);font-weight:500;list-style:none;padding:4px 0}
 .last-week summary::-webkit-details-marker{display:none}
@@ -757,9 +875,8 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
   white-space:nowrap;
 }
 .yt-fallback:hover{background:rgba(255,255,255,.2)}
-.yt-line{margin-top:16px}
 #online .video{max-width:880px;margin:0 auto}
-#online .yt-line{max-width:880px;margin-left:auto;margin-right:auto}
+.online-media{max-width:880px;margin:0 auto}
 
 /* ═══════════ 처음 오셨나요 ═══════════ */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
@@ -964,7 +1081,8 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
 }
 @media (max-width:900px){
   :root{--hh:60px;--hh-top:60px;--tabs-h:48px}
-  section{padding:56px 0}
+  section{padding:52px 0}
+  .sec-head{margin-bottom:24px}
   .hero{min-height:560px}
   @supports (height:100svh){ .hero{min-height:min(88svh,640px)} }
   .hero-inner{padding:104px 0 80px}
@@ -985,9 +1103,9 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .story-grid{gap:28px}
   .vision-wrap{gap:28px}
   /* 태블릿: 예배(영상+시간표)와 소식(소식+주보)은 두 칸을 그대로 둡니다 (휴대폰은 700px 이하에서 한 줄) */
-  .week-grid{gap:16px}
-  .home-worship{padding-top:48px}
-  .home-visit{padding-bottom:56px}
+  .week-grid{gap:16px;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+  .home-worship{padding-top:44px}
+  .home-visit{padding-bottom:52px}
   .visit-band{grid-template-columns:minmax(0,1fr) minmax(0,44%);gap:24px;padding:24px 22px 24px 30px}
   .page-hero{min-height:236px}
   .page-hero-inner{padding-top:92px;padding-bottom:24px}
@@ -1033,20 +1151,31 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
   .vbm-walk b{padding:4px 8px 4px 6px}
   .vbm-campus{font-size:10px}
 }
-@media (min-width:701px) and (max-width:900px){
-  /* 태블릿: 영상 아래에 유튜브 바로가기, 오른쪽 좁은 칸의 시간표는 이름 아래에 시간을 둡니다 */
-  .worship-split{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);grid-template-areas:"v l" "a l";column-gap:24px;row-gap:14px;align-items:start}
-  .worship-split>.video{grid-area:v}
+@media (min-width:701px) and (max-width:1060px){
+  /* 태블릿: 영상 | 시간표 두 칸, 처음 오신 분 안내는 아래에 넓게 */
+  .worship-split{grid-template-areas:"m l" "f f";column-gap:28px;row-gap:0}
+  .w-media{grid-area:m}
   .w-side{display:contents}
   .w-list{grid-area:l}
-  .w-actions{grid-area:a;margin-top:0;align-self:start}
-  .w-list li{flex-direction:column;gap:2px;padding:12px 2px}
+  .w-first{grid-area:f}
+  .w-list li{padding:15px 2px}
+}
+@media (min-width:1061px) and (max-width:1279px){ .w-list li{padding:15px 2px} }
+@media (min-width:701px) and (max-width:900px){
+  /* 좁은 태블릿: 시간표는 이름 아래에 시간을 두고(오른쪽 두 줄 높이), 처음 오신 분 안내는 영상 아래 왼쪽에 둡니다 */
+  .worship-split{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"m l" "f l";column-gap:24px}
+  .w-first{align-self:start}
+  .w-list li{flex-direction:column;gap:2px;padding:11px 2px}
   .w-list span{text-align:left}
+  .vc-h{display:none}
 }
 @media (max-width:700px){
   /* 휴대폰: 영상 → 시간표, 소식 → 주보 순서로 한 줄씩 */
   .week-grid,.worship-split{grid-template-columns:1fr}
-  .worship-split{gap:20px}
+  .worship-split{gap:6px}
+  .w-list{border-top:none}
+  .w-first{margin-top:16px}
+  .home-week .jubo-body .btn{flex:1 1 100%;margin-left:0;padding:11px 16px;font-size:var(--t-3)}
   .visit-band{grid-template-columns:1fr;gap:20px;padding:18px 18px 22px 22px}
   .vb-mapbox{order:-1}
   .vb-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}

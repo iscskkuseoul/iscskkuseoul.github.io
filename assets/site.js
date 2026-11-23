@@ -194,6 +194,14 @@ ko:{
  'home.ministryMore':'주요 사역 보기',
  'home.visitMore':'오시는 길 자세히 보기',
  'cal.monShort':'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월',
+ 'cal.dowShort':'일,월,화,수,목,금,토',
+ 'home.ytCap':'지난 예배 영상 다시 보기',
+ 'home.firstDesc':'예배 순서와 오시는 길, 자주 묻는 질문을 한곳에 모아 두었습니다.',
+ 'nb.prev':'이전 소식',
+ 'nb.next':'다음 소식',
+ 'nb.pause':'소식 자동 넘김 멈추기',
+ 'nb.play':'소식 자동 넘김 시작',
+ 'nb.today':'오늘',
  'map.exit':'혜화역 4번 출구',
  'map.walk':'도보 약 10분',
  'map.walkShort':'약 10분',
@@ -385,6 +393,14 @@ zh:{
  'home.ministryMore':'查看主要事工',
  'home.visitMore':'查看交通指引详情',
  'cal.monShort':'1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月',
+ 'cal.dowShort':'周日,周一,周二,周三,周四,周五,周六',
+ 'home.ytCap':'观看往期崇拜视频',
+ 'home.firstDesc':'崇拜流程、交通指引和常见问题，都在这里。',
+ 'nb.prev':'上一条消息',
+ 'nb.next':'下一条消息',
+ 'nb.pause':'暂停自动切换消息',
+ 'nb.play':'开始自动切换消息',
+ 'nb.today':'今天',
  'map.exit':'惠化站 4 号出口',
  'map.walk':'步行约 10 分钟',
  'map.walkShort':'约 10 分钟',
@@ -576,6 +592,14 @@ en:{
  'home.ministryMore':'Our ministries',
  'home.visitMore':'Directions & contact',
  'cal.monShort':'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec',
+ 'cal.dowShort':'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
+ 'home.ytCap':'Watch past services',
+ 'home.firstDesc':'Service flow, directions and common questions, all in one place.',
+ 'nb.prev':'Previous item',
+ 'nb.next':'Next item',
+ 'nb.pause':'Pause automatic rotation',
+ 'nb.play':'Start automatic rotation',
+ 'nb.today':'Today',
  'map.exit':'Hyehwa Stn. Exit 4',
  'map.walk':'10 min walk',
  'map.walkShort':'10 min',
@@ -1319,6 +1343,7 @@ mod('news', function(){
         var w = parseNews(txt);
         if(!w.length) throw 0;
         w.sort(function(a, b){ return a.ymd < b.ymd ? 1 : -1; });
+        w.lang = code;                     /* 소식 글이 어느 언어로 쓰였는지 (화면 언어와 다를 수 있음) */
         return w;
       })
       .catch(function(){
@@ -1385,24 +1410,207 @@ mod('news', function(){
     }).join('');
   }
 
-  /* ── 홈: 이번 주 소식 제목만 ── */
-  var HOME_MAX = 8;
+  /* ── 홈: 이번 주 소식 게시판 ──
+     넓은 칸: 왼쪽은 제목 목록, 오른쪽은 고른 소식의 내용. 몇 초마다 다음 소식으로 넘어갑니다.
+       (마우스를 올리면 잠시 멈추고, 제목이나 단추를 누르면 그 자리에서 멈춥니다. ‖ 단추로 멈춤/다시 시작)
+     좁은 칸(태블릿·휴대폰): 제목을 누르면 바로 아래에 내용이 펼쳐집니다.
+     · 지난주에 없던 소식에는 NEW, 앞으로 있을 날짜(예: 12월 6일)가 적힌 소식에는 D-13 같은 표시가 붙습니다. */
+  var HOME_MAX = 10;
+  function cleanHead(s){ return String(s).replace(/\s*[:：]\s*$/, ''); }
+  function normHead(s){ return cleanHead(s).replace(/[\s:：.,·•()（）『』「」"“”'‘’~\-]/g, '').toLowerCase(); }
+  function findDday(it, ymd){
+    var txt = it.head + ' ' + it.rest.join(' ');
+    var re = /(\d{1,2})\s*월\s*(\d{1,2})\s*일/g, m, best = null;
+    var by = +ymd.slice(0, 4), bm = +ymd.slice(5, 7);
+    var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    while((m = re.exec(txt))){
+      var mo = +m[1], d = +m[2];
+      if(mo < 1 || mo > 12 || d < 1 || d > 31) continue;
+      var y = by + (mo < bm - 6 ? 1 : 0);                 /* 12월 주보에 적힌 1월 일정은 다음 해 */
+      var dt = new Date(y, mo - 1, d);
+      if(dt.getMonth() !== mo - 1) continue;              /* 없는 날짜(2월 30일 등)는 건너뜁니다 */
+      var diff = Math.round((dt - today) / 86400000);
+      if(diff < 0 || diff > 120) continue;
+      if(!best || diff < best.diff) best = {y: y, m: mo, d: d, diff: diff};
+    }
+    return best;
+  }
+  function ddLabel(dd){ return dd.diff === 0 ? t('nb.today') : 'D-' + dd.diff; }
+  function fmtEvent(dd){
+    var dow = t('cal.dowShort').split(',')[new Date(dd.y, dd.m - 1, dd.d).getDay()];
+    if(lang === 'en') return dow + ', ' + t('cal.monShort').split(',')[dd.m - 1] + ' ' + dd.d;
+    if(lang === 'ko') return dd.m + '월 ' + dd.d + '일 (' + dow + ')';
+    return dd.m + '月' + dd.d + '日（' + dow + '）';
+  }
+
   function renderHome(){
     if(!homeList || !NEWS.length) return;
-    var latest = NEWS[0];
+    var latest = NEWS[0], prev = NEWS[1];
     var hd = document.getElementById('hNewsDate');
     if(hd){ hd.textContent = fmtDate(latest.ymd, true); hd.removeAttribute('data-i18n'); }
-    /* 제목 끝의 쌍점(:)은 목록에서는 떼고 보여 줍니다 */
-    homeList.innerHTML = latest.items.slice(0, HOME_MAX).map(function(it){
-      return '<li>' + esc(it.head.replace(/\s*[:：]\s*$/, '')) + '</li>';
-    }).join('');
+    var items = latest.items.slice(0, HOME_MAX);
+    /* 지난주 소식과 제목을 비교해 새 소식 찾기 (거의 다 바뀐 주에는 표시하지 않음) */
+    var seen = {};
+    if(prev){ prev.items.forEach(function(it){ seen[normHead(it.head)] = 1; }); }
+    var isNew = items.map(function(it){ return !!prev && !seen[normHead(it.head)]; });
+    if(isNew.filter(Boolean).length > Math.ceil(items.length / 2)) isNew = isNew.map(function(){ return false; });
+    var html = '';
+    items.forEach(function(it, i){
+      var head = cleanHead(it.head), dd = findDday(it, latest.ymd), no = pad(i + 1);
+      var tag = (isNew[i] ? '<span class="nb-new">NEW</span>' : '') + (dd ? '<span class="nb-dday">' + ddLabel(dd) + '</span>' : '');
+      var meta = (dd ? '<span class="nb-when">' + fmtEvent(dd) + '<b>' + ddLabel(dd) + '</b></span>' : '') + (isNew[i] ? '<span class="nb-new">NEW</span>' : '');
+      html += '<button type="button" class="nb-tab' + (it.rest.length ? '' : ' no-body') + '" id="nbt' + i + '" aria-expanded="false" aria-controls="nbp' + i + '" data-i="' + i + '">' +
+                '<span class="nb-no">' + no + '</span><span class="nb-t">' + esc(head) + '</span>' + tag +
+                '<span class="nb-chev" aria-hidden="true"></span><span class="nb-prog" aria-hidden="true"></span></button>' +
+              '<div class="nb-panel" id="nbp' + i + '" role="region" aria-labelledby="nbt' + i + '" hidden>' +
+                '<p class="nb-meta">' + meta + '</p>' +
+                '<h3 class="nb-title">' + esc(head) + '</h3>' +
+                (it.rest.length ? '<p class="nb-text">' + it.rest.map(esc).join('<br>') + '</p>' : '') +
+              '</div>';
+    });
+    var body = document.createElement('div');
+    body.className = 'nb-body';
+    body.id = 'hNewsList';
+    if(NEWS.lang) body.setAttribute('lang', HTML_LANG[NEWS.lang] || NEWS.lang);
+    body.innerHTML = html;
+    homeList.parentNode.replaceChild(body, homeList);
+    homeList = body;
     var more = document.getElementById('hNewsMore');
     if(more){
       var extra = latest.items.length - HOME_MAX;
       if(extra > 0){ more.textContent = tf('home.moreItems', {n: extra}); more.removeAttribute('data-i18n'); more.hidden = false; }
       else more.hidden = true;
+      if(more.parentNode) more.parentNode.hidden = more.hidden;
     }
+    board.refresh();
   }
+
+  /* 게시판 동작 (넘김·멈춤·화면 폭에 따른 모양 바꾸기) */
+  var board = (function(){
+    var root = document.getElementById('newsBoard');
+    if(!root || !homeList) return {refresh: function(){}};
+    var ctrl = document.getElementById('nbCtrl'), countEl = document.getElementById('nbCount'),
+        playBtn = document.getElementById('nbPlay'), playLabel = document.getElementById('nbPlayLabel');
+    var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var cur = -1, mode = '', auto = !reduce, hovering = false, inView = false;
+    var raf = 0, last = 0, elapsed = 0, dur = 7000, ready = false;
+    function tabs(){ return root.querySelectorAll('.nb-tab'); }
+    function panels(){ return root.querySelectorAll('.nb-panel'); }
+    function n(){ return tabs().length; }
+    function prog(){ return cur >= 0 && tabs()[cur] ? tabs()[cur].querySelector('.nb-prog') : null; }
+    function setProg(p){ var el = prog(); if(el) el.style.transform = 'scaleX(' + p + ')'; }
+    function readTime(i){
+      var p = panels()[i]; var len = p ? (p.textContent || '').length : 40;
+      return Math.max(6000, Math.min(12000, 2600 + len * 65));   /* 글이 길수록 조금 더 오래 */
+    }
+    function show(i, opts){
+      opts = opts || {};
+      var T = tabs(), P = panels();
+      if(!T.length) return;
+      if(mode === 'split'){ i = (i + T.length) % T.length; }
+      setProg(0);
+      for(var k=0;k<T.length;k++){
+        var on = (k === i);
+        T[k].setAttribute('aria-expanded', on ? 'true' : 'false');
+        T[k].classList.toggle('on', on);
+        P[k].hidden = !on;
+      }
+      cur = i;
+      elapsed = 0; last = 0;
+      dur = (i >= 0) ? readTime(i) : 7000;
+      if(countEl) countEl.textContent = (i >= 0 ? pad(i + 1) : '--') + ' / ' + pad(T.length);
+      if(opts.focus && T[i]) T[i].focus();
+      kick();
+    }
+    function running(){ return ready && mode === 'split' && auto && !hovering && inView && !document.hidden; }
+    function tick(ts){
+      raf = 0;
+      if(!running()){ last = 0; return; }
+      if(last) elapsed += Math.min(ts - last, 100);
+      last = ts;
+      var p = Math.min(1, elapsed / dur);
+      setProg(p);
+      if(p >= 1){ show(cur + 1); return; }
+      raf = requestAnimationFrame(tick);
+    }
+    function kick(){ if(!raf && running() && window.requestAnimationFrame){ raf = requestAnimationFrame(tick); } }
+    function setAuto(on){
+      auto = on;
+      root.classList.toggle('is-paused', !on);
+      if(playLabel){ var key = on ? 'nb.pause' : 'nb.play'; playLabel.setAttribute('data-i18n', key); playLabel.textContent = t(key); }
+      if(countEl) countEl.setAttribute('aria-live', on ? 'off' : 'polite');
+      if(!on) setProg(0);
+      kick();
+    }
+    function layout(){
+      var m = (root.offsetWidth >= 720) ? 'split' : 'acc';   /* 게시판 폭이 넉넉할 때만 두 칸으로 */
+      var changed = (m !== mode);
+      mode = m;
+      root.classList.toggle('is-split', m === 'split');
+      root.classList.toggle('is-acc', m === 'acc');
+      if(ctrl) ctrl.hidden = (m !== 'split') || n() < 2;
+      var P = panels(), body = root.querySelector('.nb-body');
+      /* 넓은 칸: 제목 줄은 글 길이에 맞는 높이를 갖고(남는 높이는 고르게 나눔), 내용 칸은 모든 줄에 걸칩니다 */
+      if(body) body.style.gridTemplateRows = (m === 'split') ? ('repeat(' + P.length + ', auto)') : '';
+      for(var k=0;k<P.length;k++) P[k].style.gridRow = (m === 'split') ? ('1 / span ' + P.length) : '';
+      if(changed){
+        if(m === 'split') show(cur >= 0 ? cur : 0);
+        else{ setProg(0); }
+      }
+    }
+    function refresh(){
+      var keep = cur;
+      mode = '';
+      ready = true;
+      layout();
+      if(mode === 'split') show(keep >= 0 && keep < n() ? keep : 0);
+      else if(keep >= 0 && keep < n()) show(keep); else show(-1);
+    }
+    /* 제목 누르기 */
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('.nb-tab');
+      if(b){
+        var i = +b.getAttribute('data-i');
+        if(mode === 'split'){ setAuto(false); show(i); }
+        else{ if(b.classList.contains('no-body')) return; show(cur === i ? -1 : i); }
+        return;
+      }
+      if(e.target.closest('#nbPrev')){ setAuto(false); show(cur - 1); return; }
+      if(e.target.closest('#nbNext')){ setAuto(false); show(cur + 1); return; }
+      if(e.target.closest('#nbPlay')){ setAuto(!auto); }
+    });
+    /* 키보드: 위·아래 화살표로 제목 사이를 옮겨 다닙니다 */
+    root.addEventListener('keydown', function(e){
+      var b = e.target.closest('.nb-tab');
+      if(!b) return;
+      var i = +b.getAttribute('data-i'), T = tabs(), to = -1;
+      if(e.key === 'ArrowDown' || e.key === 'ArrowRight') to = (i + 1) % T.length;
+      else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft') to = (i - 1 + T.length) % T.length;
+      else if(e.key === 'Home') to = 0;
+      else if(e.key === 'End') to = T.length - 1;
+      if(to < 0) return;
+      e.preventDefault();
+      if(mode === 'split'){ setAuto(false); show(to, {focus: true}); }
+      else T[to].focus();
+    });
+    /* 키보드로 게시판 안에 들어오면 자동 넘김을 멈춥니다 (멈춤 단추 자체는 예외) */
+    root.addEventListener('focusin', function(e){
+      if(e.target.closest('#nbPlay')) return;
+      var kb = true;
+      try{ kb = e.target.matches(':focus-visible'); }catch(err){}
+      if(kb && auto) setAuto(false);
+    });
+    root.addEventListener('mouseenter', function(){ hovering = true; });
+    root.addEventListener('mouseleave', function(){ hovering = false; kick(); });
+    document.addEventListener('visibilitychange', kick);
+    if(window.IntersectionObserver){
+      new IntersectionObserver(function(en){ inView = en[0].intersectionRatio >= .35; kick(); }, {threshold: [0, .35, .6, 1]}).observe(root);
+    }else{ inView = true; }
+    var rt;
+    window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(layout, 120); });
+    setAuto(auto);
+    return {refresh: refresh};
+  })();
 
   /* ── 교회 소식 페이지: 이번 주 전체 + 지난 소식 ── */
   function renderFull(){
@@ -1411,6 +1619,7 @@ mod('news', function(){
     var nd = document.getElementById('newsDate');
     if(nd){ nd.textContent = fmtDate(latest.ymd, true); nd.removeAttribute('data-i18n'); }
     fullList.innerHTML = itemsHtml(latest.items);
+    if(NEWS.lang) fullList.setAttribute('lang', HTML_LANG[NEWS.lang] || NEWS.lang);
     var box = document.getElementById('newsArchiveBox'), el = document.getElementById('newsArchive');
     if(past.length && box && el){
       buildArchive(el, past, function(rows){

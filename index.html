@@ -82,8 +82,8 @@
 <link rel="preload" as="image" href="assets/banner1.jpg" fetchpriority="high">
 
 <!-- 사이트 공용 디자인과 동작 (고친 뒤에는 ?v= 뒤의 날짜를 바꿔 주세요) -->
-<link rel="stylesheet" href="assets/site.css?v=20261117">
-<script src="assets/site.js?v=20261117" defer></script>
+<link rel="stylesheet" href="assets/site.css?v=20261123">
+<script src="assets/site.js?v=20261123" defer></script>
 
 <!-- ═══ 검색엔진에게 교회 정보를 알려주는 부분 ═══
      ▶ 매주 반복되는 예배는 반드시 openingHoursSpecification(정기 시간)으로 적습니다.
@@ -355,10 +355,18 @@
       <a class="more-link" href="worship.html" data-i18n="home.worshipMore">예배 안내 자세히 보기</a>
     </div>
     <div class="worship-split reveal">
-      <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
-      <div class="video" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
-        <a class="yt-fallback" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ YouTube @iscskku2020</a>
-        <noscript><iframe src="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg" title="ISC SKKU Seoul YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></noscript>
+      <div class="w-media">
+        <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
+        <div class="video" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
+          <a class="yt-fallback" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ YouTube @iscskku2020</a>
+          <noscript><iframe src="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg" title="ISC SKKU Seoul YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></noscript>
+        </div>
+        <a class="v-cap" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">
+          <span class="vc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg></span>
+          <span class="vc-t" data-i18n="home.ytCap">지난 예배 영상 다시 보기</span>
+          <span class="vc-h">@iscskku2020</span>
+          <span class="vc-go" aria-hidden="true"></span>
+        </a>
       </div>
       <div class="w-side">
         <ul class="w-list">
@@ -368,9 +376,12 @@
         <li><b data-i18n="w3.t">셀 모임</b><span data-i18n="w3.time">주일예배 후</span></li>
         <li><b data-i18n="w4.t">샬롬 라운지</b><span data-i18n="w4.time">평일 상시 개방</span></li>
         </ul>
-        <div class="w-actions">
-          <a class="more-link" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" data-i18n="yt.link">▶ 유튜브 채널 바로가기 (@iscskku2020)</a>
-        </div>
+        <!-- 처음 오신 분 안내: 누르면 안내 창이 열립니다 (자바스크립트가 꺼져 있으면 예배 안내 페이지로 이동) -->
+        <a class="w-first" href="worship.html#first" data-first>
+          <span class="wf-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.7 1.1c0 1.7-2.3 2-2.3 3.4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
+          <span class="wf-txt"><b data-i18n="fv.title">교회가 처음이신가요?</b><span data-i18n="home.firstDesc">예배 순서와 오시는 길, 자주 묻는 질문을 한곳에 모아 두었습니다.</span></span>
+          <span class="wf-go" aria-hidden="true"></span>
+        </a>
       </div>
     </div>
   </div>
@@ -387,8 +398,16 @@
       <a class="more-link" href="news.html" data-i18n="news.more">소식 전체 보기</a>
     </div>
     <div class="week-grid reveal">
-      <div class="week-news">
-        <p class="date" id="hNewsDate" data-i18n="news.thisWeek">이번 주 소식</p>
+      <div class="week-news" id="newsBoard">
+        <div class="nb-head">
+          <p class="date" id="hNewsDate" data-i18n="news.thisWeek">이번 주 소식</p>
+          <div class="nb-ctrl" id="nbCtrl" hidden>
+            <span class="nb-count" id="nbCount" aria-live="polite"></span>
+            <button type="button" class="nb-btn" id="nbPrev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg><span class="sr" data-i18n="nb.prev">이전 소식</span></button>
+            <button type="button" class="nb-btn nb-play" id="nbPlay"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11M15 6.5v11"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6.2v11.6L18 12z"/></svg><span class="sr" id="nbPlayLabel" data-i18n="nb.pause">소식 자동 넘김 멈추기</span></button>
+            <button type="button" class="nb-btn" id="nbNext"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg><span class="sr" data-i18n="nb.next">다음 소식</span></button>
+          </div>
+        </div>
         <!-- 아래 목록은 자바스크립트가 실제 소식 제목으로 바꿔 줍니다.
              바뀌기 전에도(검색로봇이 볼 때도) 교회의 핵심 정보가 보이도록 "항상 사실인 내용"을 적어 두었습니다. -->
         <ol class="headlines" id="hNewsList">
@@ -396,19 +415,18 @@
           <li>교두보(BPM) 기도회는 매주 수요일 저녁 6시부터 9시까지 모입니다.</li>
           <li>이번 주 주보는 오른쪽에서 온라인으로 바로 보실 수 있습니다.</li>
         </ol>
-        <div class="week-more"><a class="more-link" id="hNewsMore" href="news.html" hidden></a></div>
+        <div class="week-more" hidden><a class="more-link" id="hNewsMore" href="news.html" hidden></a></div>
       </div>
       <div class="jubo-card" id="juboCard">
         <div class="jubo-body">
           <p class="date" id="juboDate" data-i18n="jubo.title">이번 주 주보</p>
-
           <a class="btn btn-pine" id="juboLink" href="news.html#bulletin" target="_blank" rel="noopener" data-i18n="jubo.btn">주보 온라인으로 보기 ›</a>
         </div>
         <a class="jubo-thumb" id="juboThumb" href="news.html#bulletin" target="_blank" rel="noopener">
           <div class="thumb-wait" id="thumbWait" data-i18n="jubo.wait">주보 미리보기를 준비하고 있습니다</div>
           <span class="zoom" hidden data-i18n="jubo.zoom">클릭하면 크게 보기 ⤢</span>
         </a>
-        <div class="jubo-foot"><p class="last-week" style="border-top:1px solid var(--line-soft)"><a class="more-link" href="news.html#bulletin" style="font-size:var(--t-2)"><span data-i18n="jubo.archive">지난 주보 모두 보기</span></a></p></div>
+        <div class="jubo-foot"><p class="last-week"><a class="more-link" href="news.html#bulletin"><span data-i18n="jubo.archive">지난 주보 모두 보기</span></a></p></div>
       </div>
     </div>
   </div>

@@ -72,8 +72,8 @@
 <link rel="preload" as="image" href="assets/banner2.jpg" fetchpriority="high">
 
 <!-- 사이트 공용 디자인과 동작 (고친 뒤에는 ?v= 뒤의 날짜를 바꿔 주세요) -->
-<link rel="stylesheet" href="assets/site.css?v=20261117">
-<script src="assets/site.js?v=20261117" defer></script>
+<link rel="stylesheet" href="assets/site.css?v=20261123">
+<script src="assets/site.js?v=20261123" defer></script>
 
 <script type="application/ld+json">
 {
@@ -286,12 +286,19 @@
       <h2 data-i18n="yt.title">온라인 예배 · YouTube</h2>
       <p class="sub" data-i18n="yt.sub">주일예배 실황과 설교 영상은 유튜브 채널에서 보실 수 있습니다. 아래 목록은 새 영상을 올리면 자동으로 갱신됩니다.</p>
     </div>
-    <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
-      <div class="video reveal" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
+    <div class="w-media online-media reveal">
+      <!-- ▶ 유튜브 영상 칸: 화면에 가까워지면 자동으로 최신 영상 플레이어가 나타납니다 -->
+      <div class="video" data-yt="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg">
         <a class="yt-fallback" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">▶ YouTube @iscskku2020</a>
         <noscript><iframe src="https://www.youtube.com/embed/videoseries?list=UUPAt51Ow-tQ5jloTl4kBlOg" title="ISC SKKU Seoul YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></noscript>
       </div>
-    <p class="yt-line"><a href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" data-i18n="yt.link">▶ 유튜브 채널 바로가기 (@iscskku2020)</a></p>
+      <a class="v-cap" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">
+        <span class="vc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg></span>
+        <span class="vc-t" data-i18n="home.ytCap">지난 예배 영상 다시 보기</span>
+        <span class="vc-h">@iscskku2020</span>
+        <span class="vc-go" aria-hidden="true"></span>
+      </a>
+    </div>
   </div>
 </section>
 
