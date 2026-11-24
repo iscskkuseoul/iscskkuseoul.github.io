@@ -63,8 +63,10 @@ ko:{
  'hero.lead':'ISC SKKU Seoul은 성균관대학교에 재학 중인 외국인 유학생, 특히 중국인 유학생에게 예수 그리스도의 복음을 전하고, 참된 그리스도인으로 살아가도록 돕는 유학생 선교 공동체입니다.',
  'hero.verse':'“너희가 내 안에 거하고 내 말이 너희 안에 거하면 무엇이든지 원하는 대로 구하라 그리하면 이루리라”',
  'hero.verseRef':'요한복음 15:7 · 2026년 교회 비전 “그리스도와의 연합: 예수님 안에, 말씀 안에 거하는 삶”',
- 'hero.cta1':'예배 안내 보기',
- 'hero.cta2':'오시는 길',
+ 'hero.cta1':'처음 오셨나요?',
+ 'hero.cta2':'교회 소개',
+ 'hero.pause':'배경 사진 넘김 멈추기',
+ 'hero.play':'배경 사진 넘김 다시 시작',
  'strip.service':'주일예배',
  'strip.serviceVal':'매주 일요일 오후&nbsp;3:00',
  'strip.place':'장소',
@@ -188,6 +190,9 @@ ko:{
  'qk.juboOf':'{d} 주보 보기',
  'qk.video':'예배 영상',
  'qk.visitVal':'명륜길 22, 2층',
+ 'qk.serviceVal':'일요일 오후&nbsp;3:00',
+ 'qk.today':'오늘 오후&nbsp;3:00',
+ 'qk.now':'지금 예배 중',
  'home.moreItems':'소식 {n}건 더 보기',
  'home.worshipMore':'예배 안내 자세히 보기',
  'home.aboutMore':'교회 소개 더 보기',
@@ -262,8 +267,10 @@ zh:{
  'hero.lead':'ISC SKKU Seoul 是一间向成均馆大学的外国留学生，特别是中国留学生传扬耶稣基督福音、帮助他们成为真正基督徒的留学生宣教群体。',
  'hero.verse':'“你们若常在我里面，我的话也常在你们里面，凡你们所愿意的，祈求就给你们成就。”',
  'hero.verseRef':'约翰福音 15:7 · 2026年教会异象「与基督联合：住在耶稣里、住在话语里的生活」',
- 'hero.cta1':'查看崇拜信息',
- 'hero.cta2':'交通指引',
+ 'hero.cta1':'第一次来吗？',
+ 'hero.cta2':'认识我们',
+ 'hero.pause':'暂停背景图片轮播',
+ 'hero.play':'继续背景图片轮播',
  'strip.service':'主日崇拜',
  'strip.serviceVal':'每周日下午&nbsp;3:00',
  'strip.place':'地点',
@@ -387,6 +394,9 @@ zh:{
  'qk.juboOf':'{d} 周报',
  'qk.video':'崇拜影片',
  'qk.visitVal':'明伦街 22号 2层',
+ 'qk.serviceVal':'周日下午&nbsp;3:00',
+ 'qk.today':'今天下午&nbsp;3:00',
+ 'qk.now':'崇拜正在进行',
  'home.moreItems':'还有 {n} 条消息',
  'home.worshipMore':'查看崇拜详情',
  'home.aboutMore':'更多教会介绍',
@@ -461,8 +471,10 @@ en:{
  'hero.lead':'ISC SKKU Seoul is a mission community that shares the gospel of Jesus Christ with international students at Sungkyunkwan University, especially Chinese students, and helps them live as true Christians.',
  'hero.verse':'“If you remain in me and my words remain in you, ask whatever you wish, and it will be done for you.”',
  'hero.verseRef':'John 15:7 · Vision 2026 “Union with Christ: Abiding in Jesus, Abiding in His Word”',
- 'hero.cta1':'Worship Times',
- 'hero.cta2':'How to Find Us',
+ 'hero.cta1':'New here?',
+ 'hero.cta2':'About us',
+ 'hero.pause':'Pause background slideshow',
+ 'hero.play':'Play background slideshow',
  'strip.service':'SUNDAY WORSHIP',
  'strip.serviceVal':'Every Sunday 3:00&nbsp;PM',
  'strip.place':'LOCATION',
@@ -586,6 +598,9 @@ en:{
  'qk.juboOf':'{d} · PDF',
  'qk.video':'Service Videos',
  'qk.visitVal':'22 Myeongnyun-gil, 2F',
+ 'qk.serviceVal':'Sundays 3:00&nbsp;PM',
+ 'qk.today':'Today 3:00&nbsp;PM',
+ 'qk.now':'Happening now',
  'home.moreItems':'{n} more announcements',
  'home.worshipMore':'Worship details',
  'home.aboutMore':'More about us',
@@ -878,8 +893,8 @@ mod('dock', function(){
       dock.classList.toggle('at-foot', en[0].isIntersecting);
     }, {rootMargin:'0px 0px -40px 0px'});
     io.observe(foot);
-    /* 휴대폰에서 첫 화면의 바로가기 네 칸을 가리지 않도록, 그 칸이 보이는 동안 알약을 잠시 숨깁니다 */
-    var quick = document.querySelector('.quick');
+    /* 첫 화면(처음 오셨나요 단추 + 바로가기 네 칸)이 보이는 동안에는 알약을 잠시 숨깁니다 (같은 단추가 겹치지 않도록) */
+    var quick = document.querySelector('.hero-inner');
     if(quick){
       var io2 = new IntersectionObserver(function(en){
         dock.classList.toggle('at-quick', en[0].isIntersecting);
@@ -1038,8 +1053,11 @@ mod('hero', function(){
   var box = document.getElementById('heroBg');
   var slides = box ? box.querySelectorAll('.slide') : [];
   var dotsBox = document.getElementById('heroDots');
+  var ctrl = document.getElementById('heroCtrl'), playBtn = document.getElementById('heroPlay');
   if(slides.length < 2 || !dotsBox) return;
-  var idx = 0, timer = null, FADE = 1800;
+  var idx = 0, timer = null, FADE = 1800, INT = 7000;
+  /* 움직임 줄이기를 켠 기기에서는 처음부터 멈춰 둡니다 (단추로 다시 시작할 수 있습니다) */
+  var paused = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   /* 두 번째·세 번째 사진은 첫 화면이 뜬 뒤에 내려받습니다 */
   function preload(){
     for(var i=0;i<slides.length;i++){
@@ -1068,17 +1086,54 @@ mod('hero', function(){
     var prev = idx;
     idx = (i + slides.length) % slides.length;
     if(idx === prev) return;
-    slides[prev].classList.remove('active'); dots[prev].classList.remove('on');
-    slides[idx].classList.add('active');     dots[idx].classList.add('on');
+    slides[prev].classList.remove('active'); dots[prev].classList.remove('on'); dots[prev].removeAttribute('aria-current');
+    slides[idx].classList.add('active');     dots[idx].classList.add('on');     dots[idx].setAttribute('aria-current', 'true');
     zoom(slides[idx]);
     setTimeout(function(){ if(!slides[prev].classList.contains('active')) slides[prev].classList.remove('kb'); }, FADE + 120);
   }
-  function restart(){ clearInterval(timer); timer = setInterval(function(){ preload(); go(idx + 1); }, 7000); }
+  /* 진행 막대를 처음부터 다시 채웁니다 */
+  function replay(){ var d = dots[idx]; if(!d) return; d.classList.remove('on'); void d.offsetWidth; d.classList.add('on'); }
+  function restart(){
+    clearInterval(timer);
+    if(paused || document.hidden) return;
+    timer = setInterval(function(){ preload(); go(idx + 1); }, INT);
+  }
+  function setPaused(p){
+    paused = p;
+    if(ctrl) ctrl.classList.toggle('is-paused', p);
+    var lab = document.getElementById('heroPlayLabel');
+    if(lab){ var k = p ? 'hero.play' : 'hero.pause'; lab.setAttribute('data-i18n', k); lab.innerHTML = t(k); }
+    if(!p) replay();
+    restart();
+  }
+  dots[0].setAttribute('aria-current', 'true');
+  if(ctrl){ ctrl.style.setProperty('--hero-int', INT + 'ms'); ctrl.hidden = false; }
+  if(playBtn) playBtn.addEventListener('click', function(){ setPaused(!paused); });
   /* 첫 사진의 천천히 확대되는 효과는 HTML 에 미리 넣어 두었습니다 (class="kb"). 화면이 뜬 뒤 다시 시작하지 않습니다. */
   if(!slides[0].classList.contains('kb')) zoom(slides[0]);
-  document.addEventListener('visibilitychange', function(){ if(document.hidden) clearInterval(timer); else restart(); });
-  swipe(box, function(){ go(idx + 1); restart(); }, function(){ go(idx - 1); restart(); });
-  restart();
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) clearInterval(timer); else { if(!paused) replay(); restart(); } });
+  swipe(box.parentNode || box, function(){ preload(); go(idx + 1); restart(); }, function(){ preload(); go(idx - 1); restart(); });
+  setPaused(paused);
+});
+
+/* ═══ 8-1. 첫 화면 '주일예배' 카드: 주일에는 '오늘 오후 3:00', 예배 시간에는 '지금 예배 중' ═══
+   (한국 시간 기준. 평소에는 '일요일 오후 3:00' 그대로입니다) */
+mod('svcNow', function(){
+  var el = document.getElementById('qSvcVal');
+  if(!el) return;
+  var item = document.getElementById('qSvc');
+  function paint(){
+    var d = new Date(Date.now() + 9 * 3600000);          /* 한국 시간 */
+    var m = d.getUTCHours() * 60 + d.getUTCMinutes(), key = 'qk.serviceVal';
+    if(d.getUTCDay() === 0 && m < 15 * 60) key = 'qk.today';
+    else if(d.getUTCDay() === 0 && m < 16 * 60 + 30) key = 'qk.now';
+    el.setAttribute('data-i18n', key);
+    if(el.innerHTML !== t(key)) el.innerHTML = t(key);
+    if(item) item.classList.toggle('is-live', key === 'qk.now');
+  }
+  paint();
+  ON_LANG.push(paint);
+  setInterval(paint, 60000);
 });
 
 

@@ -82,8 +82,8 @@
 <link rel="preload" as="image" href="assets/banner1.jpg" fetchpriority="high">
 
 <!-- 사이트 공용 디자인과 동작 (고친 뒤에는 ?v= 뒤의 날짜를 바꿔 주세요) -->
-<link rel="stylesheet" href="assets/site.css?v=20261123">
-<script src="assets/site.js?v=20261123" defer></script>
+<link rel="stylesheet" href="assets/site.css?v=20261124">
+<script src="assets/site.js?v=20261124" defer></script>
 
 <!-- ═══ 검색엔진에게 교회 정보를 알려주는 부분 ═══
      ▶ 매주 반복되는 예배는 반드시 openingHoursSpecification(정기 시간)으로 적습니다.
@@ -304,43 +304,52 @@
   <div class="hero-veil"></div>
   <div class="hero-inner">
     <div class="wrap">
-      <p class="eyebrow" data-i18n="hero.eyebrow">환영합니다 · 성균관대 유학생교회</p>
-      <h1 data-i18n="hero.title">캠퍼스에서 열방으로,<br>유학생과 함께 걷는 교회</h1>
-      <div class="verse">
-        <span class="v-tag">2026 VISION</span><br>
-        <span data-i18n="hero.verse">“너희가 내 안에 거하고 내 말이 너희 안에 거하면 무엇이든지 원하는 대로 구하라 그리하면 이루리라”</span>
-        <small data-i18n="hero.verseRef">요한복음 15:7 · 2026년 교회 비전 “그리스도와의 연합: 예수님 안에, 말씀 안에 거하는 삶”</small>
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero.eyebrow">환영합니다 · 성균관대 유학생교회</p>
+        <h1 data-i18n="hero.title">캠퍼스에서 열방으로,<br>유학생과 함께 걷는 교회</h1>
+        <div class="verse">
+          <span class="v-tag">2026 VISION</span><br>
+          <span data-i18n="hero.verse">“너희가 내 안에 거하고 내 말이 너희 안에 거하면 무엇이든지 원하는 대로 구하라 그리하면 이루리라”</span>
+          <small data-i18n="hero.verseRef">요한복음 15:7 · 2026년 교회 비전 “그리스도와의 연합: 예수님 안에, 말씀 안에 거하는 삶”</small>
+        </div>
       </div>
-      <div class="cta">
-        <a class="btn btn-solid" href="worship.html" data-i18n="hero.cta1">예배 안내 보기</a>
-        <a class="btn btn-ghost" href="visit.html" data-i18n="hero.cta2">오시는 길</a>
+      <div class="hero-row">
+        <!-- 처음 오신 분 안내: 누르면 안내 창이 열립니다 (자바스크립트가 꺼져 있으면 예배 안내 페이지로 이동) -->
+        <div class="cta">
+          <a class="btn btn-solid" href="worship.html#first" data-first data-i18n="hero.cta1">처음 오셨나요?</a>
+          <a class="btn btn-ghost" href="about.html" data-i18n="hero.cta2">교회 소개</a>
+        </div>
+        <!-- 배경 사진 넘김 표시 + 멈춤 단추 (자바스크립트가 채웁니다) -->
+        <div class="hero-ctrl" id="heroCtrl" hidden>
+          <button type="button" class="hc-play" id="heroPlay">
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5v11M15 6.5v11"/></svg>
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6.2v11.6L18 12z"/></svg>
+            <span class="sr" id="heroPlayLabel" data-i18n="hero.pause">배경 사진 넘김 멈추기</span>
+          </button>
+          <div class="hero-dots" id="heroDots"></div>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="hero-dots" id="heroDots"></div>
-</div>
 
-<!-- ═══ 바로가기 네 칸 (첫 화면 아래에 겹쳐 있음) ═══ -->
-<div class="quick">
-  <div class="wrap">
-    <ul class="quick-list">
-      <li><a class="q-item" href="worship.html">
-        <span class="q-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
-        <span class="q-txt"><b data-i18n="qk.service">주일예배</b><span data-i18n="strip.serviceVal">매주 일요일 오후&nbsp;3:00</span></span>
-        <span class="q-go" aria-hidden="true">›</span></a></li>
-      <li><a class="q-item" id="qJubo" href="news.html#bulletin">
-        <span class="q-ic"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/></svg></span>
-        <span class="q-txt"><b data-i18n="qk.bulletin">이번 주 주보</b><span id="qJuboVal" data-i18n="qk.bulletinVal">PDF로 바로 보기</span></span>
-        <span class="q-go" aria-hidden="true">›</span></a></li>
-      <li><a class="q-item" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">
-        <span class="q-ic"><svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg></span>
-        <span class="q-txt"><b data-i18n="qk.video">예배 영상</b><span>@iscskku2020</span></span>
-        <span class="q-go" aria-hidden="true">›</span></a></li>
-      <li><a class="q-item" href="visit.html">
-        <span class="q-ic"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
-        <span class="q-txt"><b data-i18n="nav.visit">오시는 길</b><span data-i18n="qk.visitVal">명륜길 22, 2층</span></span>
-        <span class="q-go" aria-hidden="true">›</span></a></li>
-    </ul>
+      <!-- ═══ 바로가기 네 칸: 첫 화면 사진 위에 놓인 유리 카드 ═══ -->
+      <ul class="quick-list">
+        <li><a class="q-item" id="qSvc" href="worship.html">
+          <span class="q-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+          <span class="q-txt"><b data-i18n="qk.service">주일예배</b><span id="qSvcVal" data-i18n="qk.serviceVal">일요일 오후&nbsp;3:00</span></span>
+          <span class="q-go" aria-hidden="true"></span></a></li>
+        <li><a class="q-item" id="qJubo" href="news.html#bulletin">
+          <span class="q-ic"><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4M9.5 12h6M9.5 15.5h6"/></svg></span>
+          <span class="q-txt"><b data-i18n="qk.bulletin">이번 주 주보</b><span id="qJuboVal" data-i18n="qk.bulletinVal">PDF로 바로 보기</span></span>
+          <span class="q-go" aria-hidden="true"></span></a></li>
+        <li><a class="q-item" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener">
+          <span class="q-ic"><svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg></span>
+          <span class="q-txt"><b data-i18n="qk.video">예배 영상</b><span>@iscskku2020</span></span>
+          <span class="q-go" aria-hidden="true"></span></a></li>
+        <li><a class="q-item" href="visit.html">
+          <span class="q-ic"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+          <span class="q-txt"><b data-i18n="nav.visit">오시는 길</b><span data-i18n="qk.visitVal">명륜길 22, 2층</span></span>
+          <span class="q-go" aria-hidden="true"></span></a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -507,23 +516,9 @@
         <div>
           <div class="f-name">ISC SKKU Seoul</div>
           <div class="f-sub" data-i18n="foot.sub">성균관대 유학생교회 · Since 2020</div>
-          <p class="f-tag" data-i18n="foot.tag">캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.</p>
-          <!-- ▶ 연관 채널 표시: 네이버 검색이 이 사이트와 유튜브·네이버 지도를 같은 교회로 알아보게 합니다 -->
-          <div class="f-sns" itemscope itemtype="https://schema.org/Organization">
-            <meta itemprop="name" content="ISC SKKU Seoul">
-            <link itemprop="url" href="https://iscskku.co.kr/">
-            <a itemprop="sameAs" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" aria-label="YouTube">
-              <svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg>
-            </a>
-            <a href="mailto:iscskku.seoul@gmail.com" aria-label="Email">
-              <svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="13" rx="2.4"/><path d="M4.6 7 12 13 19.4 7"/></svg>
-            </a>
-            <a itemprop="sameAs" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" aria-label="Map">
-              <svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
-            </a>
-          </div>
         </div>
       </div>
+      <p class="f-tag" data-i18n="foot.tag">캠퍼스에서 만난 유학생 한 사람이 예수님을 만나고, 본국으로 돌아가 복음을 전하기까지 함께 걷습니다.</p>
       <ul class="f-info">
         <li><b data-i18n="strip.service">주일예배</b><span data-i18n="strip.serviceVal">매주 일요일 오후&nbsp;3:00</span></li>
         <li><b data-i18n="w2.short">기도회</b><span data-i18n="foot.prayer">수요일 저녁 6:00</span></li>
@@ -534,6 +529,20 @@
     <div class="f-bot">
       <div data-i18n="foot.rights">© 2026 ISC SKKU Seoul · 성균관대 유학생교회</div>
       <ul class="f-nav"><li><a href="about.html" data-i18n="nav.about">교회 소개</a></li><li><a href="worship.html" data-i18n="nav.worship">예배 안내</a></li><li><a href="ministry.html" data-i18n="nav.ministry">사역</a></li><li><a href="news.html" data-i18n="nav.news">교회 소식</a></li><li><a href="visit.html" data-i18n="nav.visit">오시는 길</a></li></ul>
+      <!-- ▶ 연관 채널 표시: 네이버 검색이 이 사이트와 유튜브·네이버 지도를 같은 교회로 알아보게 합니다 -->
+      <div class="f-sns" itemscope itemtype="https://schema.org/Organization">
+        <meta itemprop="name" content="ISC SKKU Seoul">
+        <link itemprop="url" href="https://iscskku.co.kr/">
+        <a itemprop="sameAs" href="https://www.youtube.com/@iscskku2020" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><rect x="2.6" y="5.5" width="18.8" height="13" rx="4"/><path d="M10.4 9.6v4.8l4.2-2.4z"/></svg>
+        </a>
+        <a href="mailto:iscskku.seoul@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="13" rx="2.4"/><path d="M4.6 7 12 13 19.4 7"/></svg>
+        </a>
+        <a itemprop="sameAs" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" aria-label="Map">
+          <svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </footer>
