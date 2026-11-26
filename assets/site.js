@@ -652,8 +652,16 @@ function movePill(){
   if(!seg || !pill) return;
   var b = seg.querySelector('button[data-lang="' + lang + '"]');
   if(!b) return;
+  var x = 'translateX(' + (b.offsetLeft - 3) + 'px)';
+  /* 언어를 실제로 바꿨을 때만 (글꼴이 늦게 와서 자리만 조금 옮길 때는 움직이지 않음) */
+  if(pill._lang && pill._lang !== lang && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)){
+    /* 물방울처럼 늘어났다가 제자리로 (리퀴드 글래스 분할 버튼) */
+    pill.classList.remove('is-moving'); void pill.offsetWidth; pill.classList.add('is-moving');
+    clearTimeout(pill._mt); pill._mt = setTimeout(function(){ pill.classList.remove('is-moving'); }, 460);
+  }
+  pill._lang = lang;
   pill.style.width = b.offsetWidth + 'px';
-  pill.style.transform = 'translateX(' + (b.offsetLeft - 3) + 'px)';
+  pill.style.transform = x;
 }
 window.addEventListener('resize', function(){ movePill(); });
 window.addEventListener('load', function(){ movePill(); });
@@ -1136,6 +1144,107 @@ mod('svcNow', function(){
   setInterval(paint, 60000);
 });
 
+
+/* ═══ 8-2. 리퀴드 글래스: 가장자리 굴절 + 마우스를 따라 움직이는 빛 ═══
+   ▶ 굴절(렌즈처럼 가장자리가 살짝 휘어 보이는 효과)은 크롬·엣지·웨일·삼성 인터넷 같은
+     크로미움 브라우저의 넓은 화면에서만 켭니다. 사파리·파이어폭스·휴대폰에서는 굴절 없이
+     맑은 유리와 빛 테두리만 보입니다. 기기에서 '투명도 줄이기'를 켜면 쓰지 않습니다. */
+mod('liquid', function(){
+  var root = document.documentElement;
+  var mq = function(q){ return !!(window.matchMedia && window.matchMedia(q).matches); };
+  var ua = navigator.userAgentData;
+  var chromium = !!(ua && ua.brands && ua.brands.some(function(b){ return /Chromium|Google Chrome|Microsoft Edge/.test(b.brand); }));
+  var targets = '.q-item, .site-header .nav';
+  var NS = 'http://www.w3.org/2000/svg', defs = null, made = {};
+
+  /* 둥근 사각형의 가장자리에서 안쪽을 비춰 오도록 하는 굴절 지도(빨강=가로, 초록=세로) */
+  function makeMap(w, h, r, band){
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var g = c.getContext('2d'), im = g.createImageData(w, h), d = im.data;
+    var hw = w / 2, hh = h / 2;
+    for(var y = 0; y < h; y++){
+      for(var x = 0; x < w; x++){
+        var px = x + .5 - hw, py = y + .5 - hh;
+        var qx = Math.abs(px) - (hw - r), qy = Math.abs(py) - (hh - r), dist, nx = 0, ny = 0;
+        if(qx > 0 && qy > 0){ var L = Math.sqrt(qx * qx + qy * qy) || 1; dist = r - L; nx = qx / L * (px < 0 ? -1 : 1); ny = qy / L * (py < 0 ? -1 : 1); }
+        else if(qx > qy){ dist = r - qx; nx = px < 0 ? -1 : 1; }
+        else { dist = r - qy; ny = py < 0 ? -1 : 1; }
+        var t = Math.max(0, Math.min(1, dist / band)), m = (1 - t) * (1 - t);
+        var i = (y * w + x) * 4;
+        d[i] = 128 - nx * m * 127; d[i + 1] = 128 - ny * m * 127; d[i + 2] = 128; d[i + 3] = 255;
+      }
+    }
+    g.putImageData(im, 0, 0);
+    return c.toDataURL('image/png');
+  }
+  function filterFor(w, h, r){
+    var band = Math.max(8, Math.min(16, Math.round(h * .2))), scale = Math.round(band * 1.1);
+    var key = 'lgf-' + w + '-' + h + '-' + r;
+    if(made[key]) return key;
+    if(!defs){
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('width', '0'); svg.setAttribute('height', '0'); svg.setAttribute('aria-hidden', 'true');
+      svg.style.position = 'absolute'; svg.style.width = '0'; svg.style.height = '0'; svg.style.overflow = 'hidden';
+      defs = document.createElementNS(NS, 'defs'); svg.appendChild(defs); document.body.appendChild(svg);
+    }
+    var f = document.createElementNS(NS, 'filter');
+    f.setAttribute('id', key); f.setAttribute('x', '0'); f.setAttribute('y', '0');
+    f.setAttribute('width', w); f.setAttribute('height', h);
+    f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse');
+    f.setAttribute('color-interpolation-filters', 'sRGB');
+    var img = document.createElementNS(NS, 'feImage');
+    img.setAttribute('href', makeMap(w, h, r, band)); img.setAttribute('x', '0'); img.setAttribute('y', '0');
+    img.setAttribute('width', w); img.setAttribute('height', h); img.setAttribute('preserveAspectRatio', 'none'); img.setAttribute('result', 'map');
+    var dm = document.createElementNS(NS, 'feDisplacementMap');
+    dm.setAttribute('in', 'SourceGraphic'); dm.setAttribute('in2', 'map'); dm.setAttribute('scale', scale);
+    dm.setAttribute('xChannelSelector', 'R'); dm.setAttribute('yChannelSelector', 'G');
+    f.appendChild(img); f.appendChild(dm); defs.appendChild(f);
+    made[key] = 1;
+    return key;
+  }
+  function paint(el){
+    var w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+    if(w < 8 || h < 8){ el.style.removeProperty('--lgr'); return; }
+    var r = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+    r = Math.round(Math.min(r, h / 2, w / 2));
+    el.style.setProperty('--lgr', 'url(#' + filterFor(w, h, r) + ')');
+  }
+  var els = [], ro = null, timer = null;
+  function on(){ return chromium && mq('(hover:hover) and (pointer:fine)') && !mq('(prefers-reduced-transparency: reduce)') && window.innerWidth >= 1024; }
+  function refresh(){
+    var want = on();
+    root.classList.toggle('lg-refract', want);
+    els = Array.prototype.slice.call(document.querySelectorAll(targets));
+    for(var i = 0; i < els.length; i++){ if(want) paint(els[i]); else els[i].style.removeProperty('--lgr'); }
+  }
+  refresh();
+  window.addEventListener('resize', function(){ clearTimeout(timer); timer = setTimeout(refresh, 180); });
+  if(window.ResizeObserver){
+    ro = new ResizeObserver(function(){ clearTimeout(timer); timer = setTimeout(refresh, 180); });
+    for(var i = 0; i < els.length; i++) ro.observe(els[i]);
+  }
+  ON_LANG.push(function(){ clearTimeout(timer); timer = setTimeout(refresh, 120); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ refresh(); });
+
+  /* 마우스를 따라 움직이는 빛: 유리 카드와 머리글 알약의 광택 중심을 마우스 위치로 옮깁니다 */
+  if(mq('(hover:hover) and (pointer:fine)') && !mq('(prefers-reduced-motion: reduce)')){
+    var lights = Array.prototype.slice.call(document.querySelectorAll('.q-item, .site-header .nav'));
+    var raf = 0, mx = 0, my = 0;
+    document.addEventListener('pointermove', function(e){
+      mx = e.clientX; my = e.clientY;
+      if(raf) return;
+      raf = requestAnimationFrame(function(){
+        raf = 0;
+        for(var i = 0; i < lights.length; i++){
+          var r = lights[i].getBoundingClientRect();
+          if(r.bottom < -200 || r.top > window.innerHeight + 200) continue;
+          lights[i].style.setProperty('--lx', Math.round(mx - r.left) + 'px');
+          lights[i].style.setProperty('--ly', Math.round(my - r.top) + 'px');
+        }
+      });
+    }, {passive: true});
+  }
+});
 
 /* ═══ 9. 사진 캐러셀 ═══ */
 mod('carousel', function(){
