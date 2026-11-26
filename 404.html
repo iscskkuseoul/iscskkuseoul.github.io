@@ -15,17 +15,14 @@
 <link rel="icon" type="image/png" sizes="192x192" href="https://iscskku.co.kr/assets/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="https://iscskku.co.kr/assets/favicon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap">
 <style>
 :root{
   --ink:#23282D; --pine:#10573B; --pine-deep:#0C4630; --pine-soft:#F3F8F5; --pine-line:#CFE0D6;
   --gray:#59616A; --line:#E3E7E9; --gold:#D09840;
   --t-1:.78rem; --t-2:.86rem; --t-3:.94rem; --t-6:1.44rem;
-  --r-md:16px; --r-full:999px;
-  --sh-2:0 8px 28px rgba(24,32,28,.10);
+  --r-md:28px; --r-full:999px;
+  --sh-2:0 1px 2px rgba(16,40,30,.04),0 18px 44px -24px rgba(16,40,30,.28);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -36,19 +33,19 @@ body{
 }
 @supports (min-height:100dvh){ body{min-height:100dvh} }
 .box{
-  position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  position:relative;background:#fff;border:1px solid rgba(16,40,30,.09);border-radius:var(--r-md);
   box-shadow:var(--sh-2);max-width:520px;width:100%;padding:44px 40px 36px;text-align:center;overflow:hidden;
 }
-.box::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:var(--gold);opacity:.85}
 .logo{display:block;margin:0 auto 22px;line-height:0}
 .logo img{height:48px;width:auto}
 .code{font-size:var(--t-1);letter-spacing:.24em;color:var(--pine);font-weight:700;margin-bottom:6px}
-h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-bottom:12px;line-height:1.4}
+h1{font-size:var(--t-6);font-weight:700;margin-bottom:12px;line-height:1.35;letter-spacing:-.02em}
 .msg{color:var(--gray);font-size:var(--t-2);margin-bottom:28px}
 .msg span{display:block;margin-top:2px}
 .btn{
   display:inline-block;background:var(--pine);color:#fff;text-decoration:none;
   font-weight:700;font-size:var(--t-3);padding:13px 30px;border-radius:var(--r-full);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.2),0 8px 20px -12px rgba(12,70,48,.75);
 }
 .btn:hover{background:var(--pine-deep)}
 .btn span{white-space:nowrap}
@@ -66,8 +63,11 @@ h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-
 .foot b{color:var(--ink);font-weight:600}
 .foot a{color:var(--pine)}
 @media (max-width:480px){
-  .box{padding:36px 22px 30px}
-  .btn{display:block;padding:13px 16px;border-radius:14px;text-wrap:balance}
+  .box{padding:36px 22px 30px;border-radius:24px}
+  /* 좁은 화면: 한국어 한 줄, 중국어·영어 한 줄로 가지런히 */
+  .btn{display:block;padding:12px 16px;line-height:1.45}
+  .btn .b1{display:block}
+  .btn .sep{display:none}
 }
 </style>
 </head>
@@ -83,7 +83,7 @@ h1{font-family:'Gowun Batang',serif;font-size:var(--t-6);font-weight:700;margin-
       <span lang="zh-CN">页面不存在，可能是网址输入有误。</span>
       <span lang="en">This page could not be found.</span>
     </p>
-    <a class="btn" href="/"><span>홈으로 돌아가기</span> · <span lang="zh-CN">返回首页</span> · <span lang="en">Home</span></a>
+    <a class="btn" href="/"><span class="b1">홈으로 돌아가기</span><span class="sep"> · </span><span lang="zh-CN">返回首页</span> · <span lang="en">Home</span></a>
     <ul class="links">
       <li><a href="/worship.html">예배 안내</a></li>
       <li><a href="/news.html">교회 소식 · 주보</a></li>

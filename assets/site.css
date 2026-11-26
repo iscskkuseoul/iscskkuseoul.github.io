@@ -56,15 +56,15 @@
   --sh-drawer:-16px 0 48px rgba(14,22,18,.20);
 
   /* ── 머리글: 화면 위에 떠 있는 유리 알약(캡슐) ──
-     --cap-top 은 화면 맨 위와의 간격, --cap-h 는 알약 높이, --hh 는 둘을 더한 값입니다.
-     페이지 맨 위에서는 알약이 사진 판 안쪽(--inset 만큼 더 아래)에 떠 있다가, 내리면 위로 살짝 올라붙습니다. */
+     --cap-top 은 화면 맨 위와의 간격, --cap-h 는 알약 높이, --hh 는 둘을 더한 값입니다. */
   --cap-top:12px;
   --cap-h:60px;
   --hh:72px;
-  /* ── 둥근 판: 첫 화면 사진·색 바탕 구역·바닥글을 화면 가장자리에서 조금 띄운 둥근 판으로 ── */
+  --hh-top:calc(var(--cap-top) + var(--cap-h));
+  /* ── 둥근 판: 색 바탕 구역·바닥글을 화면 가장자리에서 조금 띄운 둥근 판으로
+        (맨 위 큰 사진은 반듯한 네모로 화면 끝까지 채웁니다) ── */
   --inset:10px;
   --panel-r:28px;
-  --hh-top:calc(var(--cap-top) + var(--inset) + var(--cap-h));
   --tabs-h:52px;
 
   /* ── 리퀴드 글래스(Liquid Glass) ──
@@ -124,9 +124,7 @@ main:focus{outline:none}
    첫 화면 사진 위에서는 맑은 유리(흰 글자), 아래로 내리면 밝게 물든 유리(진한 글자)로 바뀝니다. */
 .site-header{
   position:fixed;top:0;left:0;right:0;z-index:60;padding-top:var(--cap-top);pointer-events:none;
-  transition:padding-top var(--dur-3) var(--ease);
 }
-.site-header:not(.is-solid):not(.is-menu){padding-top:calc(var(--cap-top) + var(--inset))}
 .site-header .nav{
   pointer-events:auto;position:relative;isolation:isolate;z-index:2;
   width:calc(100% - 40px);max-width:1240px;margin:0 auto;padding:0 10px 0 22px;
@@ -379,13 +377,11 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
    사진이 첫 화면을 가득 채웁니다. 다만 사진 비율(16:9)보다 길어지지는 않게 해서 사진이 지나치게 잘리지 않습니다.
    맨 아래에는 바로가기 네 칸이 사진 위에 떠 있는 유리 카드로 놓입니다. */
 .hero{
-  position:relative;display:flex;align-items:stretch;overflow:hidden;background:var(--paper);
+  position:relative;display:flex;align-items:stretch;overflow:hidden;background:var(--ink-deep);
   min-height:640px;min-height:min(100vh,max(56.25vw,640px));
 }
 @supports (height:100svh){ .hero{min-height:min(100svh,max(56.25vw,640px))} }
-.hero-bg{position:absolute;top:var(--inset);left:var(--inset);right:var(--inset);bottom:0;z-index:0;
-  border-radius:var(--panel-r);overflow:hidden;isolation:isolate;background:var(--ink-deep);
-  -webkit-mask-image:-webkit-radial-gradient(#fff,#000)}  /* 사파리에서 확대되는 사진이 둥근 모서리 밖으로 비치지 않도록 */
+.hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
 .hero-bg .slide{
   position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;
   background-size:cover;background-position:center;
@@ -396,7 +392,7 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
 .hero-bg .slide.kb{animation:kb 13s linear forwards}
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.075)}}
 .hero-veil{
-  position:absolute;top:var(--inset);left:var(--inset);right:var(--inset);bottom:0;z-index:1;border-radius:var(--panel-r);
+  position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;
   background:
     linear-gradient(180deg,rgba(6,13,11,.58) 0,rgba(6,13,11,0) 180px),
     linear-gradient(180deg,rgba(8,16,13,.40) 0%,rgba(8,16,13,.30) 42%,rgba(6,13,11,.84) 100%),
@@ -782,7 +778,16 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .vbm-church i::before{width:2.4px;height:12px;transform:translate(-50%,-50%)}
 .vbm-church i::after{width:8.4px;height:2.4px;transform:translate(-50%,-160%)}
 .vbm-church b{color:var(--pine)}
-.vbm-exit{flex-direction:row-reverse;transform:translate(calc(-100% + 10px),-50%)}
+.vbm-exit{transform:translate(-10px,-50%)}   /* 파란 4 오른쪽에 이름표: 왼쪽으로 이어지는 도보 길을 가리지 않도록 */
+.vbm-exit .ex-short{display:none}
+/* 지도 칸이 좁으면 역 이름표를 짧게 ('혜화역' + 파란 4). 언어마다 글자 길이가 달라 기준 폭이 다릅니다 */
+.vb-map{container:vbmap / inline-size}
+@container vbmap (max-width:339px){ .vbm-exit .ex-long{display:none} .vbm-exit .ex-short{display:inline} }
+@container vbmap (max-width:364px){ html[lang^="zh"] .vbm-exit .ex-long{display:none} html[lang^="zh"] .vbm-exit .ex-short{display:inline} }
+@container vbmap (max-width:439px){ html[lang="en"] .vbm-exit .ex-long{display:none} html[lang="en"] .vbm-exit .ex-short{display:inline} }
+@supports not (container-type:inline-size){
+  @media (max-width:480px),(min-width:701px) and (max-width:1060px){ .vbm-exit .ex-long{display:none} .vbm-exit .ex-short{display:inline} }
+}
 .vbm-exit i{flex:0 0 20px;width:20px;height:20px;border-radius:6px;background:#00A4E3;color:#fff;font-style:normal;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,60,100,.3)}
 .vbm-exit b{color:var(--ink)}
 .vbm-walk{transform:translate(10px,-50%)}
@@ -796,8 +801,8 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 @supports not (aspect-ratio:16/9){ .vb-map::before,.video::before{content:'';display:block;padding-top:56.25%} }
 
 /* ═══════════ 하위 페이지 머리 그림 + 위치 표시 + 탭 ═══════════ */
-.page-hero{position:relative;min-height:380px;display:flex;align-items:flex-end;overflow:hidden;background:var(--paper)}
-.page-hero-bg{position:absolute;top:var(--inset);left:var(--inset);right:var(--inset);bottom:0;border-radius:var(--panel-r);background-color:var(--ink-deep);background-size:cover;background-position:center}
+.page-hero{position:relative;min-height:380px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-deep)}
+.page-hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background-size:cover;background-position:center;transform:scale(1.02)}
 .page-hero .hero-veil{
   background:
     linear-gradient(180deg,rgba(6,13,11,.66) 0,rgba(6,13,11,.2) 170px),
