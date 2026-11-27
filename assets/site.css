@@ -29,7 +29,7 @@
      제목과 본문은 Pretendard(애플 기기의 기본 글꼴과 닮은 깔끔한 한글 글꼴),
      성경 말씀과 교회 이름에만 부드러운 명조(고운바탕)를 씁니다.
      중국어 글자는 기기의 중국어 글꼴(PingFang·微软雅黑 등)로 보입니다. */
-  --f-sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC','Noto Sans CJK SC','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --f-sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','HarmonyOS Sans SC','MiSans','Noto Sans SC','Noto Sans CJK SC','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   --f-display:var(--f-sans);
   --f-serif:'Gowun Batang','Noto Serif KR','AppleMyungjo',serif;
   --f-brand:'Gowun Batang','Noto Serif KR','AppleMyungjo',serif;   /* 'ISC SKKU Seoul' 글자: 어느 언어에서나 같은 모양 */
@@ -61,10 +61,6 @@
   --cap-h:60px;
   --hh:72px;
   --hh-top:calc(var(--cap-top) + var(--cap-h));
-  /* ── 둥근 판: 색 바탕 구역·바닥글을 화면 가장자리에서 조금 띄운 둥근 판으로
-        (맨 위 큰 사진은 반듯한 네모로 화면 끝까지 채웁니다) ── */
-  --inset:10px;
-  --panel-r:28px;
   --tabs-h:52px;
 
   /* ── 리퀴드 글래스(Liquid Glass) ──
@@ -73,6 +69,7 @@
      rim   : 위·왼쪽 가장자리에 맺히는 빛(스페큘러 하이라이트)
      edge  : 유리 바깥의 아주 얇은 어두운 테두리(배경과 또렷이 구분) */
   --lg-clear:rgba(255,255,255,.10);
+  --lg-dim:rgba(10,18,14,.30);     /* 사진 위 맑은 유리 안쪽의 옅은 그늘: 흰 글자를 받쳐 줍니다 (애플의 dimming layer) */
   --lg-tint:rgba(255,255,255,.72);
   --lg-rim-clear:inset 1px 1px 0 rgba(255,255,255,.55),inset -1px -1px 0 rgba(255,255,255,.12),inset 0 0 0 .5px rgba(255,255,255,.32);
   --lg-rim-tint:inset 1px 1px 0 rgba(255,255,255,.96),inset -1px -1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.7);
@@ -133,6 +130,24 @@ main:focus{outline:none}
   box-shadow:var(--lg-rim-tint),var(--lg-edge-tint),var(--lg-lift-tint);
   transition:background-color var(--dur-3) var(--ease),box-shadow var(--dur-3) var(--ease);
 }
+/* 스크롤 가장자리 효과: 본문이 떠 있는 메뉴 밑으로 지나갈 때, 화면 맨 위 가장자리를 부드럽게 흐리게 해서
+   메뉴 글자가 본문 글자와 겹쳐 보이지 않게 합니다 (애플 iOS·macOS의 scroll edge effect, 삼성 One UI 8.5의 가장자리 흐림).
+   첫 화면 사진 위에서는 쓰지 않고, 사진이 위로 다 지나간 뒤(is-edge)에만 나타납니다. */
+.site-header::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:calc(var(--cap-top) + var(--cap-h) + 26px);
+  pointer-events:none;opacity:0;transition:opacity .35s var(--ease);
+  background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.6) 52%,rgba(255,255,255,0) 100%);
+}
+body:has(.subnav) .site-header::before{height:calc(var(--hh) + var(--tabs-h) + 30px)}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))) and ((-webkit-mask-image:linear-gradient(#000,#000)) or (mask-image:linear-gradient(#000,#000))){
+  .site-header::before{
+    background:linear-gradient(180deg,rgba(255,255,255,.66) 0%,rgba(255,255,255,.34) 55%,rgba(255,255,255,0) 100%);
+    -webkit-backdrop-filter:blur(10px) saturate(150%);backdrop-filter:blur(10px) saturate(150%);
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 42%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 0%,#000 42%,transparent 100%);
+  }
+}
+.site-header.is-edge::before{opacity:1}
 /* 유리 표면의 빛: 위쪽이 살짝 밝고, 마우스를 따라 은은한 빛이 움직입니다(--lx, --ly 는 자바스크립트가 정합니다) */
 .site-header .nav::before{
   content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;z-index:-1;pointer-events:none;
@@ -144,7 +159,7 @@ main:focus{outline:none}
 .nav{display:flex;align-items:center;justify-content:space-between;height:var(--cap-h);gap:12px}
 .brand{
   display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);
-  min-width:0;flex:0 1 auto;overflow:hidden;
+  min-width:0;flex:0 1 auto;overflow:hidden;align-self:stretch;   /* 알약 높이 전체가 누르는 자리 */
 }
 .brand .bn-short{display:none}
 .brand-logo{position:relative;display:block;flex:0 0 auto;line-height:0}
@@ -256,19 +271,19 @@ main:focus{outline:none}
 /* ── 사진 위에 떠 있을 때 (맑은 유리) ──
    자바스크립트가 켜져 있을 때만 적용됩니다. 꺼져 있으면 늘 밝은 유리로 보입니다. */
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .nav{
-  background:rgba(255,255,255,.12);
+  background:rgba(10,18,14,.42);
   box-shadow:var(--lg-rim-clear),var(--lg-edge-clear),var(--lg-lift);
 }
-html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .nav::before{opacity:.55}
+html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .nav::before{opacity:.32}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .brand b{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .logo-w{opacity:1}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .logo-c{opacity:0}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .gnb-top{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .gnb-top::after{background:rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
-html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .lang-seg{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.22)}
+html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .lang-seg{background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.22)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .lang-seg button{color:rgba(255,255,255,.9)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .lang-seg button[aria-current="true"]{color:var(--pine)}
-html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .reg-btn{color:#fff;background:rgba(255,255,255,.14);box-shadow:inset 1px 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.3)}
+html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .reg-btn{color:#fff;background:rgba(255,255,255,.10);box-shadow:inset 1px 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.3)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .reg-btn:hover{background:rgba(255,255,255,.24)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .yt-btn{background:#fff;color:var(--pine);box-shadow:0 4px 14px -6px rgba(0,0,0,.5)}
 html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .yt-btn:hover{background:var(--pine-soft)}
@@ -352,9 +367,9 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
     backdrop-filter:blur(22px) saturate(190%);
   }
   html.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .nav{
-    background:var(--lg-clear);
-    -webkit-backdrop-filter:blur(8px) saturate(170%) brightness(1.06);
-    backdrop-filter:blur(8px) saturate(170%) brightness(1.06);
+    background:var(--lg-dim);
+    -webkit-backdrop-filter:blur(10px) saturate(160%) brightness(.94);
+    backdrop-filter:blur(10px) saturate(160%) brightness(.94);
   }
   .site-header.is-mega .nav{background:rgba(255,255,255,.86)}
   .mega-bg{
@@ -393,10 +408,29 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.075)}}
 .hero-veil{
   position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;
+  /* 사진 전체를 어둡게 덮지 않고, 글자가 놓이는 왼쪽 아래와 맨 위 메뉴 자리만 은은하게 가립니다.
+     그래서 사진의 오른쪽 위는 원래 색 그대로 밝게 보이고, 글자는 어느 사진에서나 또렷합니다
+     (세 장의 사진 × 여러 화면 크기에서 글자와 바탕의 명암 차이를 재어 맞춘 값입니다) */
   background:
-    linear-gradient(180deg,rgba(6,13,11,.58) 0,rgba(6,13,11,0) 180px),
-    linear-gradient(180deg,rgba(8,16,13,.40) 0%,rgba(8,16,13,.30) 42%,rgba(6,13,11,.84) 100%),
-    linear-gradient(100deg,rgba(6,13,11,.58) 0%,rgba(6,13,11,.10) 62%);
+    linear-gradient(180deg,rgba(6,13,11,.40) 0,rgba(6,13,11,0) 140px),
+    radial-gradient(64% 80% at 18% 62%,rgba(6,13,11,.70) 0%,rgba(6,13,11,.60) 42%,rgba(6,13,11,.26) 72%,rgba(6,13,11,0) 100%),
+    linear-gradient(0deg,rgba(6,13,11,.70) 0,rgba(6,13,11,.44) 14%,rgba(6,13,11,.10) 30%,rgba(6,13,11,0) 40%),
+    linear-gradient(rgba(6,13,11,.06),rgba(6,13,11,.06));
+}
+/* 태블릿·휴대폰: 글자가 화면 폭을 거의 다 쓰므로 아래에서 위로 옅어지는 가림막 */
+@media (max-width:1100px){
+  .hero-veil{
+    background:
+      linear-gradient(180deg,rgba(6,13,11,.42) 0,rgba(6,13,11,0) 130px),
+      linear-gradient(0deg,rgba(6,13,11,.82) 0%,rgba(6,13,11,.72) 38%,rgba(6,13,11,.60) 58%,rgba(6,13,11,.50) 76%,rgba(6,13,11,.38) 100%);
+  }
+}
+@media (max-width:700px){
+  .hero-veil{
+    background:
+      linear-gradient(180deg,rgba(6,13,11,.42) 0,rgba(6,13,11,0) 130px),
+      linear-gradient(0deg,rgba(6,13,11,.84) 0%,rgba(6,13,11,.76) 40%,rgba(6,13,11,.62) 58%,rgba(6,13,11,.52) 74%,rgba(6,13,11,.34) 100%);
+  }
 }
 .hero-inner{
   position:relative;z-index:2;width:100%;display:flex;flex-direction:column;justify-content:flex-end;
@@ -405,7 +439,7 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
 .hero-inner>.wrap{width:100%}
 .hero-copy{max-width:880px}
 .hero .eyebrow{
-  color:var(--on-dark);text-shadow:0 1px 8px rgba(0,0,0,.4);font-size:var(--t-2);
+  color:rgba(255,255,255,.92);text-shadow:0 1px 10px rgba(0,0,0,.45);font-size:var(--t-2);
   letter-spacing:.18em;margin-bottom:18px;font-weight:600;
 }
 .hero h1{
@@ -415,16 +449,19 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
   text-shadow:0 2px 24px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.4);
 }
 .hero .verse{
-  font-family:var(--f-serif);border-left:3px solid var(--on-dark-2);text-shadow:0 1px 10px rgba(0,0,0,.45);
-  padding:4px 0 4px 16px;color:rgba(255,255,255,.94);font-size:var(--t-4);max-width:40em;
+  font-family:var(--f-serif);text-shadow:0 1px 12px rgba(0,0,0,.5);
+  color:rgba(255,255,255,.95);font-size:1.0625rem;line-height:1.75;max-width:36em;
 }
+.hero .verse br{display:none}
 .hero .verse .v-tag{
-  display:inline-block;font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:var(--t-1);
-  font-weight:700;letter-spacing:.18em;color:var(--on-dark);margin-bottom:6px;
+  display:flex;align-items:center;gap:10px;font-family:var(--f-sans);font-size:var(--t-1);
+  font-weight:700;letter-spacing:.16em;color:rgba(255,255,255,.86);margin-bottom:10px;line-height:1.4;
 }
+.hero .verse .v-tag::before{content:'';flex:0 0 22px;height:2px;border-radius:2px;background:var(--gold)}
+.hero .verse>span:not(.v-tag){display:block;text-wrap:balance}
 .hero .verse small{
-  display:block;color:rgba(255,255,255,.72);margin-top:8px;
-  font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:var(--t-2);
+  display:block;color:rgba(255,255,255,.76);margin-top:10px;line-height:1.6;
+  font-family:var(--f-sans);font-size:var(--t-2);text-wrap:balance;
 }
 /* 단추 줄: 왼쪽은 처음 오신 분·교회 소개, 오른쪽은 배경 사진 넘김 표시 */
 .hero-row{display:flex;align-items:center;justify-content:space-between;gap:14px 20px;flex-wrap:wrap;margin-top:28px}
@@ -494,8 +531,8 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
 .q-item::before{
   content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(260px circle at var(--lx,22%) var(--ly,-30%),rgba(255,255,255,.30),rgba(255,255,255,0) 62%),
-    linear-gradient(180deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 48%,rgba(0,0,0,.06) 100%);
+    radial-gradient(260px circle at var(--lx,22%) var(--ly,-30%),rgba(255,255,255,.24),rgba(255,255,255,0) 62%),
+    linear-gradient(180deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 48%,rgba(0,0,0,.06) 100%);
 }
 /* 아래쪽 가장자리의 은은한 반사광 (유리 두께감) */
 .q-item::after{
@@ -504,7 +541,7 @@ body.scroll-lock,body.scroll-lock .site-header{padding-right:var(--sbw,0px)}
 }
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
   .q-item{
-    background:rgba(255,255,255,.08);
+    background:rgba(10,18,14,.28);
     -webkit-backdrop-filter:blur(10px) saturate(185%) brightness(.96);
     backdrop-filter:blur(10px) saturate(185%) brightness(.96);
   }
@@ -559,8 +596,8 @@ html.lg-refract .q-item{
   backdrop-filter:var(--lgr,blur(0)) blur(7px) saturate(190%) brightness(.97);
 }
 html.lg-refract.js .site-header:not(.is-solid):not(.is-mega):not(.is-menu) .nav{
-  -webkit-backdrop-filter:var(--lgr,blur(0)) blur(5px) saturate(175%) brightness(1.06);
-  backdrop-filter:var(--lgr,blur(0)) blur(5px) saturate(175%) brightness(1.06);
+  -webkit-backdrop-filter:var(--lgr,blur(0)) blur(7px) saturate(160%) brightness(.94);
+  backdrop-filter:var(--lgr,blur(0)) blur(7px) saturate(160%) brightness(.94);
 }
 html.lg-refract .site-header.is-solid:not(.is-mega):not(.is-menu) .nav{
   -webkit-backdrop-filter:var(--lgr,blur(0)) blur(18px) saturate(190%);
@@ -664,7 +701,7 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .nb-body[lang="ko"],.news ul[lang="ko"]{word-break:keep-all}
 @keyframes nbIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 /* 넓은 칸 */
-.week-news.is-split .nb-body{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+.week-news.is-split .nb-body{display:grid;grid-template-columns:minmax(0,.97fr) minmax(0,1.03fr)}
 .is-split .nb-tab{grid-column:1;isolation:isolate;border-bottom-color:transparent;padding-left:24px}
 .is-split .nb-tab:last-of-type{border-bottom:none}
 /* 고른 줄: 목록 안쪽에 둥근 알약처럼 떠 있는 선택 표시 (맥 사이드바처럼) */
@@ -678,14 +715,30 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .is-split .nb-tab.on::after{background:var(--pine-soft);box-shadow:inset 0 0 0 1px var(--pine-line)}
 .is-split .nb-prog{left:22px;right:22px;bottom:5px;border-radius:2px}
 .is-split .nb-panel{
-  grid-column:2;min-width:0;contain:size;overflow:auto;padding:28px 32px 30px;
+  grid-column:2;min-width:0;contain:size;overflow:auto;padding:28px 32px 78px;
   border-left:1px solid var(--line-soft);
-  /* 오른쪽 아래의 가는 금빛 십자가: 로고의 십자가를 은은하게 옮겨 온 장식입니다 */
+  /* 아래쪽 가는 선 위에 '몇 번째 소식 / 넘김 단추'가 놓입니다 (카드의 머리·몸·발이 갖춰진 모양) */
   background:
-    linear-gradient(rgba(208,152,64,.30),rgba(208,152,64,.30)) no-repeat right 52px bottom 30px/2px 72px,
-    linear-gradient(rgba(208,152,64,.30),rgba(208,152,64,.30)) no-repeat right 36px bottom 78px/34px 2px,
-    linear-gradient(180deg,#fff 0%,#fff 50%,var(--pine-soft) 100%);
+    linear-gradient(var(--line-soft),var(--line-soft)) no-repeat left 32px bottom 60px/calc(100% - 64px) 1px,
+    linear-gradient(180deg,#fff 0%,#fff 58%,#F8FBF9 100%);
 }
+/* 넓은 칸에서는 '01 / 09 ‹ ‖ ›' 를 내용 칸 오른쪽 아래로 옮깁니다 (머리 줄에는 날짜만) */
+.week-news{position:relative}
+.week-news.is-split .nb-ctrl{position:absolute;right:18px;bottom:13px;z-index:2}
+.week-news.is-split:has(> .week-more:not([hidden])) .nb-ctrl{bottom:60px}
+.week-news.is-split .nb-count{text-align:left;min-width:0;margin-right:6px}
+/* 소식 안의 '시간: … / 장소: …' 같은 줄은 표처럼 가지런히 (자바스크립트가 나눠 줍니다) */
+.nb-facts{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:18px;row-gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+.nb-facts dt{font-size:var(--t-1);font-weight:700;color:var(--gray);letter-spacing:.04em;line-height:1.85;white-space:nowrap}
+.nb-facts dd{font-size:var(--t-3);font-weight:600;color:var(--ink);line-height:1.6;min-width:0;font-variant-numeric:tabular-nums}
+.nb-text+.nb-facts{margin-top:14px}
+.nb-title+.nb-facts{border-top:none;padding-top:0;margin-top:4px}
+/* 환영 소식 아래의 두 갈래 길 (처음 오신 분 안내 / 새가족 등록) */
+.nb-acts{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px}
+.nb-acts .more-link{font-size:var(--t-2)}
+/* 넓은 칸의 목록: 고른 줄도 글자 굵기는 그대로 두고 색과 알약으로만 표시합니다.
+   (굵기가 바뀌면 글자 폭이 달라져 줄바꿈이 생기고, 목록 높이가 흔들리기 때문입니다. 맥 사이드바와 같은 방식) */
+.is-split .nb-tab.on .nb-t{font-weight:inherit}
 .is-split .nb-panel:not([hidden]){animation:nbIn .5s var(--ease) both}
 /* 좁은 칸 */
 .is-acc .nb-tab{padding:13px 18px}
@@ -700,7 +753,11 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .is-acc .nb-panel:not([hidden]){animation:nbIn .35s var(--ease) both}
 .is-acc .nb-title{display:none}
 .is-acc .nb-meta{margin-bottom:6px}
+.is-acc .nb-acts{margin-top:4px;gap:8px 22px}
 .is-acc .nb-text{font-size:var(--t-2);line-height:1.75}
+.is-acc .nb-facts{margin-top:10px;padding-top:10px;row-gap:4px;column-gap:14px}
+.is-acc .nb-facts dd{font-size:var(--t-2)}
+.is-acc .nb-meta:empty+.nb-title+.nb-facts{border-top:none;padding-top:0;margin-top:0}
 .is-acc .nb-tab:last-of-type:not([aria-expanded="true"]){border-bottom:none}
 .is-acc .nb-panel:last-child{border-bottom:none}
 
@@ -743,7 +800,8 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 /* ═══════════ 홈: 교회 이야기 (사진 + 소개) ═══════════ */
 .story-grid{display:grid;grid-template-columns:1.12fr 1fr;gap:48px;align-items:center}
 .story-txt h2{margin-bottom:16px}
-.story-txt>p{color:var(--gray);margin-bottom:20px;max-width:var(--measure)}
+.story-txt>p:not(.eyebrow){color:var(--gray);margin-bottom:20px;max-width:var(--measure)}
+.story-txt>.eyebrow{margin-bottom:12px}   /* 다른 구역의 머리 글자(초록)와 같게 */
 .story-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
 
 /* ═══════════ 홈: 오시는 길 (주소 + 작은 지도) ═══════════ */
@@ -804,13 +862,23 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .page-hero{position:relative;min-height:380px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-deep)}
 .page-hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;background-size:cover;background-position:center;transform:scale(1.02)}
 .page-hero .hero-veil{
+  /* 글자가 놓인 왼쪽 아래만 깊게 가리고, 나머지 사진은 밝고 선명하게 둡니다.
+     위쪽 띠는 떠 있는 메뉴 글자를 받쳐 줍니다. (글자 대비는 여러 화면 크기에서 재어 확인했습니다) */
   background:
-    linear-gradient(180deg,rgba(6,13,11,.66) 0,rgba(6,13,11,.2) 170px),
-    linear-gradient(180deg,rgba(8,16,13,.40) 0%,rgba(6,13,11,.82) 100%),
-    linear-gradient(100deg,rgba(12,70,48,.45) 0%,rgba(6,13,11,0) 70%);
+    linear-gradient(180deg,rgba(6,13,11,.44) 0,rgba(6,13,11,0) 150px),
+    radial-gradient(70% 130% at 14% 100%,rgba(6,13,11,.80) 0%,rgba(6,13,11,.66) 42%,rgba(6,13,11,.24) 74%,rgba(6,13,11,0) 100%),
+    linear-gradient(0deg,rgba(6,13,11,.42) 0,rgba(6,13,11,0) 55%),
+    linear-gradient(rgba(6,13,11,.12),rgba(6,13,11,.12));
+}
+@media (max-width:700px){
+  .page-hero .hero-veil{
+    background:
+      linear-gradient(180deg,rgba(6,13,11,.46) 0,rgba(6,13,11,0) 120px),
+      linear-gradient(0deg,rgba(6,13,11,.86) 0%,rgba(6,13,11,.70) 45%,rgba(6,13,11,.36) 75%,rgba(6,13,11,.22) 100%);
+  }
 }
 .page-hero-inner{position:relative;z-index:2;width:100%;padding-top:120px;padding-bottom:calc(var(--tabs-h) / 2 + 30px);color:#fff}
-.page-hero .eyebrow{color:var(--on-dark);letter-spacing:.18em;font-weight:600;font-size:var(--t-1);margin-bottom:10px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.page-hero .eyebrow{color:rgba(255,255,255,.9);letter-spacing:.18em;font-weight:600;font-size:var(--t-1);margin-bottom:10px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
 .page-hero h1{
   font-family:var(--f-display);font-weight:700;font-size:var(--t-h2);line-height:var(--lh-title);
   letter-spacing:var(--ls-title);text-shadow:0 2px 20px rgba(0,0,0,.5);
@@ -879,6 +947,11 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .team-wrap{background:var(--pine-soft);border-radius:var(--r-lg);padding:32px}
 .photo-slot{position:relative;background:var(--pine-tint);overflow:hidden;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
 .photo-slot .ph-icon{width:44%;height:44%;stroke:var(--pine-line);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+.photo-slot .ph-mono{
+  position:relative;z-index:1;font-family:var(--f-sans);font-weight:600;font-size:1.5rem;letter-spacing:.02em;
+  color:var(--pine);line-height:1;user-select:none;
+}
+.team-card .photo-slot:has(.ph-mono){background:linear-gradient(160deg,#EDF5F0 0%,#D7E8DE 100%);box-shadow:inset 0 0 0 1px rgba(16,87,59,.08)}
 .photo-slot img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2}
 .team-lead{display:flex;gap:32px;background:#fff;border-radius:var(--r-md);padding:32px;margin-bottom:16px}
 .team-lead .photo-slot{width:174px;height:212px;border-radius:var(--r-sm);align-self:flex-start}
@@ -989,6 +1062,10 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .news ul li:last-child{border-bottom:none}
 .news ul li::before{content:"";position:absolute;left:2px;top:20px;width:5px;height:5px;border-radius:50%;background:var(--pine);opacity:.6}
 .news ul li em{display:block;font-style:normal;color:var(--gray);font-size:var(--t-2);margin-top:4px;line-height:var(--lh-tight)}
+/* 소식 안의 '시간 / 장소' 같은 줄: 홈 게시판과 같은 방식으로 이름과 내용을 가지런히 */
+.news ul li .li-facts{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:2px;margin-top:6px;font-size:var(--t-2);line-height:var(--lh-tight)}
+.news ul li .li-facts dt{color:var(--gray);font-weight:700;font-size:var(--t-1);letter-spacing:.04em;white-space:nowrap;line-height:inherit;padding-top:1px}
+.news ul li .li-facts dd{color:var(--ink);font-weight:500;min-width:0;font-variant-numeric:tabular-nums}
 .more-btn{
   display:none;width:100%;margin-top:8px;padding:8px 0;background:none;border:none;
   border-top:1px solid var(--line-soft);cursor:pointer;color:var(--gray);
@@ -997,6 +1074,10 @@ html.no-js .f-nav,html.js-fail .f-nav{display:flex !important}
 .more-btn::after{content:" ›";color:var(--pine);font-weight:700}
 .more-btn:hover{color:var(--pine)}
 .jubo-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);display:flex;flex-direction:column;overflow:hidden}
+/* 교회 소식 페이지(넓은 화면): 긴 소식 목록을 읽어 내려가는 동안 주보 카드가 메뉴 아래에 머뭅니다 */
+@media (min-width:901px) and (min-height:820px){
+  .news-grid>#bulletin{position:sticky;top:calc(var(--hh) + var(--tabs-h) + 26px)}
+}
 .jubo-body{padding:24px 24px 20px}
 .jubo-body .date{color:var(--pine);font-weight:700;font-size:var(--t-2);letter-spacing:.05em;margin-bottom:12px}
 .jubo-desc{color:var(--gray);font-size:var(--t-2);margin-bottom:16px}
@@ -1190,11 +1271,38 @@ html[lang="en"] .news .news-arch details[open]>summary::after{content:"Close ⌄
 .map-box iframe{border:0;width:100%;flex:1;min-height:330px;display:block}
 .map-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;border-top:1px solid var(--line)}
 .map-actions .btn{padding:12px 8px;font-size:var(--t-2)}
+/* 오시는 길 페이지: 혜화역에서 걸어오는 길 (홈의 '오시는 길' 띠와 같은 모양, 지도는 오른쪽) */
+.walk-band{margin-top:24px;grid-template-columns:minmax(0,1fr) minmax(0,54%)}
+.walk-band .vb-main h3{font-size:var(--t-6);line-height:var(--lh-title);letter-spacing:var(--ls-title);margin-bottom:20px}
+.walk-steps{list-style:none;margin:0;padding:0}
+.walk-steps li{position:relative;display:flex;gap:14px;align-items:flex-start;padding-bottom:18px}
+.walk-steps li:last-child{padding-bottom:0}
+/* 단계 사이를 지도 위 도보 길과 같은 초록 점으로 잇습니다 */
+.walk-steps li:not(:last-child)::before{
+  content:'';position:absolute;left:11px;top:31px;bottom:5px;width:4px;
+  background:radial-gradient(circle,var(--pine) 1.5px,transparent 1.9px) center top/4px 7.5px repeat-y;
+}
+.walk-steps i{flex:0 0 26px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;position:relative;margin-top:-1px}
+.ws-exit i{border-radius:7px;background:#00A4E3;color:#fff;font-size:12.5px;font-weight:800;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,60,100,.3)}
+.ws-walk i{background:var(--pine);border:2px solid #fff;box-shadow:0 2px 6px rgba(16,40,28,.3)}
+.ws-walk svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ws-church i{background:var(--pine);border:2.5px solid #fff;box-shadow:0 2px 6px rgba(16,40,28,.35)}
+.ws-church i::before,.ws-church i::after{content:'';position:absolute;background:#fff;border-radius:1px;left:50%;top:50%}
+.ws-church i::before{width:2.4px;height:12px;transform:translate(-50%,-50%)}
+.ws-church i::after{width:8.4px;height:2.4px;transform:translate(-50%,-160%)}
+.walk-steps b{display:block;font-size:var(--t-3);font-weight:700;color:var(--ink);line-height:1.45}
+.walk-steps span{display:block;font-size:var(--t-2);color:var(--gray);line-height:1.5;margin-top:2px}
+.walk-steps [lang="ko"],html[lang="ko"] .walk-steps{word-break:keep-all}
+@media (min-width:701px) and (max-width:900px){ .visit-band.walk-band{grid-template-columns:minmax(0,1fr) minmax(0,52%)} }
 
 /* ═══════════ 바닥글 ═══════════
    넓은 화면: 위 줄은 [교회 이름 / 한 줄 소개] [예배·기도회·주소·이메일 두 줄],
    아래 줄은 [저작권] [메뉴] [채널 단추] 로 놓여 높이가 낮습니다. */
-footer{background:var(--pine-soft);border-top:1px solid var(--line);padding:34px 0 18px;color:var(--gray);font-size:var(--t-2)}
+/* 바닥글은 본문의 연한 초록 구역보다 한 단계 짙은 바탕: 마지막 구역이 초록이어도 페이지의 바닥이 또렷합니다 */
+footer{background:#EDF4F0;border-top:1px solid #DCE6E0;padding:34px 0 18px;color:var(--gray);font-size:var(--t-2)}
+/* 오른쪽 아래 '위로' 단추가 바닥글 마지막 줄(채널 단추)을 덮지 않도록,
+   단추와 본문 칸이 겹치는 화면 폭에서는 바닥글 아래에 단추 높이만큼 자리를 둡니다 */
+@media (max-width:1380px){ footer{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))} }
 .f-top{
   display:grid;grid-template-columns:minmax(0,1fr) auto;
   grid-template-areas:"brand info" "tag info";
@@ -1241,7 +1349,12 @@ footer{background:var(--pine-soft);border-top:1px solid var(--line);padding:34px
   transition:opacity var(--dur-2) var(--ease);
 }
 .dock{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
-body.scroll-lock .dock{opacity:0;pointer-events:none}
+/* 고정 영역의 빈 자리(숨은 알약이 있던 자리 포함)는 아래 내용을 누를 수 있게 비워 둡니다.
+   (이전에는 바닥글 끝에서 메일·지도 단추가 이 빈 자리에 가려 눌리지 않는 경우가 있었습니다) */
+.dock{pointer-events:none}
+.dock .fv-pill,.dock .fv-card,.dock .top-btn{pointer-events:auto}
+body.scroll-lock .dock{opacity:0}
+body.scroll-lock .dock .fv-pill,body.scroll-lock .dock .fv-card,body.scroll-lock .dock .top-btn{pointer-events:none}
 #fvBox{transition:opacity var(--dur-2) var(--ease),transform var(--dur-2) var(--ease),visibility 0s}
 .dock.at-foot #fvBox{opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;
   transition:opacity var(--dur-2) var(--ease),transform var(--dur-2) var(--ease),visibility 0s var(--dur-2)}
@@ -1299,21 +1412,6 @@ body.scroll-lock .dock{opacity:0;pointer-events:none}
 }
 .fv-x:hover{background:var(--line-soft);color:var(--ink)}
 
-/* ═══════════ 둥근 판: 색 바탕 구역과 바닥글 ═══════════
-   바탕색만 화면 가장자리에서 --inset 만큼 떨어진 둥근 판으로 그리고, 안의 글자 줄은 다른 구역과 똑같이 맞춥니다 */
-section.alt,section.warm{background:none;position:relative;isolation:isolate}
-section.alt::before,section.warm::before{
-  content:'';position:absolute;top:0;bottom:0;left:var(--inset);right:var(--inset);z-index:-1;
-  border-radius:var(--panel-r);background:var(--pine-soft);
-}
-section.warm::before{background:var(--warm)}
-section.alt+section.alt,section.alt+section.warm,section.warm+section.alt,section.warm+section.warm{margin-top:var(--inset)}
-footer{background:none;border-top:none;position:relative;isolation:isolate;margin:var(--inset) 0 var(--inset)}
-footer::before{
-  content:'';position:absolute;top:0;bottom:0;left:var(--inset);right:var(--inset);z-index:-1;
-  border-radius:var(--panel-r);background:var(--pine-soft);
-}
-
 /* ═══════════ 카드 표면 통일 ═══════════
    굵은 테두리 대신 아주 얇은 선과 부드러운 그림자로, 모서리 곡률도 크기에 맞게 맞춥니다 */
 .week-news,.jubo-card,.news,.card,.m-card,.v-card,.map-box,.vstep,.faq details{border-color:var(--surface-line);box-shadow:var(--sh-card)}
@@ -1366,7 +1464,7 @@ footer::before{
   .visit-band{grid-template-columns:minmax(0,1fr) minmax(0,44%);gap:24px;padding:10px 10px 10px 30px}
   .page-hero{min-height:256px}
   .page-hero-inner{padding-top:92px;padding-bottom:calc(var(--tabs-h) / 2 + 22px)}
-  footer{padding:28px 0 16px}
+  footer{padding-top:28px}   /* 아래 여백은 '위로' 단추 자리(84px)를 그대로 둡니다 */
   .f-top{grid-template-columns:minmax(0,1fr);grid-template-areas:"brand" "tag" "info";row-gap:12px}
   .f-brand img{height:31px}
   .f-tag{max-width:none}
@@ -1392,7 +1490,8 @@ footer::before{
 }
 /* 지도가 좁아지는 화면(휴대폰·태블릿): 지도 출처는 지도 아래로, 도보 표시는 짧게 */
 @media (max-width:900px){
-  .vbm-osm{position:static;display:table;margin:6px 2px 0 auto;padding:0;background:none;font-size:10px}
+  /* position:relative: 손가락용으로 넓힌 보이지 않는 테두리(::after)가 지도 전체를 덮지 않고 이 글자 둘레에만 머물게 합니다 */
+  .vbm-osm{position:relative;display:table;margin:6px 2px 0 auto;padding:0;background:none;font-size:10px}
 }
 @media (max-width:430px),(min-width:701px) and (max-width:900px){
   .vbm-long{display:none}
@@ -1463,7 +1562,6 @@ footer::before{
   .modal-x{top:12px;right:12px}
 }
 @media (max-width:540px){
-  :root{--inset:8px;--panel-r:24px}
   .cards{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr}
   .brand b{font-size:var(--t-2)}
@@ -1471,6 +1569,7 @@ footer::before{
   .team-grid{grid-template-columns:1fr;gap:10px}
   .team-card{display:grid;grid-template-columns:60px minmax(0,1fr);grid-template-rows:auto auto;column-gap:16px;align-items:center;text-align:left;padding:14px 18px}
   .team-card .photo-slot{grid-row:1/3;width:60px;height:60px;margin:0}
+  .photo-slot .ph-mono{font-size:1.15rem}
   .team-card .team-role{justify-self:start;align-self:end;margin-bottom:4px}
   .team-card h3{align-self:start;margin-top:0}
   .news,.jubo-body,.week-news{padding-left:20px;padding-right:20px}
@@ -1567,4 +1666,26 @@ footer::before{
   html.js .reveal{opacity:1 !important;transform:none !important}
   .site-header{position:absolute}
   .dock,.hero-ctrl,.c-btn,.c-dots,.subnav,.mobile-menu,.menu-back{display:none !important}
+}
+
+/* ═══════════ 손가락으로 누르기 좋은 크기 ═══════════
+   휴대폰·태블릿에서는 작은 단추도 누를 수 있는 자리를 44px 이상으로 넓힙니다.
+   눈에 보이는 크기는 그대로이고, 보이지 않는 테두리만 넓어집니다 (애플 HIG 44pt, WCAG 2.2 기준). */
+@media (pointer:coarse){
+  .lang-seg button,.hc-play,.f-sns a,.nb-btn,.copy-btn,.crumbs a,.subnav a,.carousel .c-dots button,.more-btn,.last-week summary,.v-card .val a,.f-info a,.more-link{position:relative}
+  .lang-seg button::after,.hc-play::after,.c-btn::after,.f-sns a::after,.vbm-osm::after,.nb-btn::after,.copy-btn::after{
+    content:'';position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%);
+  }
+  .lang-seg button::after{width:100%}            /* 옆 단추와 겹치지 않도록 위아래로만 */
+  .lang-seg button{min-width:40px}
+  .hamburger{width:44px;height:44px}
+  /* 위아래로만 넓히는 것들 (옆 단추와 겹치지 않도록) */
+  .crumbs a::after,.subnav a::after,.carousel .c-dots button::after,.more-btn::before,.last-week summary::before,.v-card .val a::after,.f-info a::after,.more-link::before{
+    content:'';position:absolute;left:0;right:0;top:50%;height:44px;transform:translateY(-50%);
+  }
+  .crumbs a::after{left:-12px;right:-12px}
+  .f-sns,.week-news .nb-ctrl{gap:12px}
+  .hero-ctrl .hero-dots button{height:44px;margin:-6px 0}
+  .hero-ctrl .hero-dots button:not(.on){width:24px}
+  .carousel .c-dots button{min-width:28px}
 }

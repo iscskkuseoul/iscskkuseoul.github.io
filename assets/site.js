@@ -207,11 +207,19 @@ ko:{
  'nb.pause':'소식 자동 넘김 멈추기',
  'nb.play':'소식 자동 넘김 시작',
  'nb.today':'오늘',
+ 'nb.guide':'처음 오신 분 안내',
+ 'nb.register':'새가족 등록',
  'map.exit':'혜화역 4번 출구',
  'map.exitShort':'혜화역',
  'map.walk':'도보 약 10분',
  'map.walkShort':'약 10분',
  'map.campus':'성균관대학교',
+ 'walk.title':'혜화역에서 걸어오는 길',
+ 'walk.s1':'혜화역 4번 출구',
+ 'walk.s1d':'지하철 4호선',
+ 'walk.s2':'성균관로를 따라 걷기',
+ 'walk.s2d':'성균관대학교 정문 방향으로 약 10분',
+ 'walk.s3d':'명륜길 22, 2층',
  'map.open':'네이버 지도에서 크게 보기',
  'map.naver':'네이버 지도',
  'map.google':'구글 지도',
@@ -223,34 +231,34 @@ zh:{
  'w2.short':'祷告会',
  'foot.prayer':'周三晚上 6:00',
  'foot.rights':'© 2026 ISC SKKU Seoul · 成均馆大学留学生教会',
- 'fv.title':'第一次来教会吗?',
+ 'fv.title':'第一次来教会吗？',
  'fv.desc':'我们把第一次来之前值得先了解的事，简单整理好了。',
  'fv.go':'查看指南',
  'fv.close':'关闭',
- 'nav.first':'第一次来?',
+ 'nav.first':'第一次来？',
  'first.eyebrow':'FIRST VISIT',
- 'first.title':'第一次来教会吗?',
+ 'first.title':'第一次来教会吗？',
  'first.sub':'第一次进教会、韩语还不熟练，都完全没关系。从你踏进门的那一刻起，我们会一直陪着你。',
  's1.t':'抵达',
  's1.d':'主日下午两点五十分前到达即可。请上明伦街 22 号建筑二楼。',
  's2.t':'迎接',
- 's2.d':'门口有人迎接你。只要说一句"我是第一次来"，就会有人带你入座。',
+ 's2.d':'门口有人迎接你。只要说一句“我是第一次来”，就会有人带你入座。',
  's3.t':'崇拜',
  's3.d':'下午三点开始，约一小时。赞美与讲道用韩语和中文一同进行。',
  's4.t':'团契',
  's4.d':'崇拜后有小组聚会与茶点。如果觉得不方便，先回去也完全没关系。',
  'faq.title':'常见问题',
- 'q1':'我从没去过教会，可以吗?',
+ 'q1':'我从没去过教会，可以吗？',
  'a1':'当然可以。来我们教会的留学生，大多数都是第一次进教会。什么都不懂也没关系，放轻松来就好。',
- 'q2':'需要穿什么衣服?',
+ 'q2':'需要穿什么衣服？',
  'a2':'平时的便装就可以，完全不需要正装。',
- 'q3':'韩语不太好，可以吗?',
+ 'q3':'韩语不太好，可以吗？',
  'a3':'崇拜用韩语和中文一同进行，也一直有能用中文帮助你的同工在，完全不用担心。',
- 'q4':'一定要奉献吗?',
+ 'q4':'一定要奉献吗？',
  'a4':'不需要。奉献是各人心意，我们绝不会让第一次来的朋友有任何负担。',
- 'q5':'一个人去会不会尴尬?',
+ 'q5':'一个人去会不会尴尬？',
  'a5':'大部分人都是一个人来的。到了以后自然会有人打招呼，也会帮你找位子一起坐。',
- 'q6':'一定要登记吗?',
+ 'q6':'一定要登记吗？',
  'a6':'不需要。可以先来参加几次崇拜，等心里觉得舒服了再决定。',
  'first.cta1':'新朋友登记',
  'first.cta2':'查看交通指引',
@@ -412,11 +420,19 @@ zh:{
  'nb.pause':'暂停自动切换消息',
  'nb.play':'开始自动切换消息',
  'nb.today':'今天',
+ 'nb.guide':'新朋友指南',
+ 'nb.register':'新朋友登记',
  'map.exit':'惠化站 4 号出口',
  'map.exitShort':'惠化站',
  'map.walk':'步行约 10 分钟',
  'map.walkShort':'约 10 分钟',
  'map.campus':'成均馆大学',
+ 'walk.title':'从惠化站步行前来',
+ 'walk.s1':'惠化站 4 号出口',
+ 'walk.s1d':'地铁 4 号线',
+ 'walk.s2':'沿成均馆路步行',
+ 'walk.s2d':'朝成均馆大学正门方向，约 10 分钟',
+ 'walk.s3d':'明伦街 22号 2层',
  'map.open':'在 Naver 地图中查看',
  'map.naver':'Naver 地图',
  'map.google':'谷歌地图',
@@ -617,11 +633,19 @@ en:{
  'nb.pause':'Pause automatic rotation',
  'nb.play':'Start automatic rotation',
  'nb.today':'Today',
+ 'nb.guide':'First visit guide',
+ 'nb.register':'Register',
  'map.exit':'Hyehwa Stn. Exit 4',
  'map.exitShort':'Hyehwa',
  'map.walk':'10 min walk',
  'map.walkShort':'10 min',
  'map.campus':'SKKU',
+ 'walk.title':'Walking from Hyehwa Station',
+ 'walk.s1':'Hyehwa Station, Exit 4',
+ 'walk.s1d':'Subway Line 4',
+ 'walk.s2':'Walk along Seonggyungwan-ro',
+ 'walk.s2d':'Toward the SKKU main gate, about 10 minutes',
+ 'walk.s3d':'2F, 22 Myeongnyun-gil',
  'map.open':'Open in Naver Map',
  'map.naver':'Naver Map',
  'map.google':'Google Maps',
@@ -1152,6 +1176,24 @@ mod('svcNow', function(){
    ▶ 굴절(렌즈처럼 가장자리가 살짝 휘어 보이는 효과)은 크롬·엣지·웨일·삼성 인터넷 같은
      크로미움 브라우저의 넓은 화면에서만 켭니다. 사파리·파이어폭스·휴대폰에서는 굴절 없이
      맑은 유리와 빛 테두리만 보입니다. 기기에서 '투명도 줄이기'를 켜면 쓰지 않습니다. */
+/* ═══ 8-3. 스크롤 가장자리 효과 켜기 ═══
+   첫 화면(또는 하위 페이지의 머리 사진)이 떠 있는 메뉴 위로 다 지나가면 is-edge 를 붙입니다.
+   그러면 화면 맨 위 가장자리가 부드럽게 흐려져 메뉴 글자가 본문과 겹쳐 보이지 않습니다. */
+mod('edge', function(){
+  var hd = document.getElementById('siteHeader');
+  if(!hd) return;
+  var nav = hd.querySelector('.nav'), hero = document.querySelector('.hero, .page-hero'), raf = 0;
+  function upd(){
+    raf = 0;
+    var lim = nav ? nav.getBoundingClientRect().bottom : 72;
+    hd.classList.toggle('is-edge', !hero || hero.getBoundingClientRect().bottom <= lim + 6);
+  }
+  function ask(){ if(!raf) raf = window.requestAnimationFrame ? requestAnimationFrame(upd) : (upd(), 0); }
+  window.addEventListener('scroll', ask, {passive: true});
+  window.addEventListener('resize', ask);
+  upd();
+});
+
 mod('liquid', function(){
   var root = document.documentElement;
   var mq = function(q){ return !!(window.matchMedia && window.matchMedia(q).matches); };
@@ -1569,10 +1611,48 @@ mod('news', function(){
     draw();
   }
 
+  /* 소식 내용 가운데 '시간: … / 장소: …' 처럼 '이름: 내용' 꼴인 부분은 따로 모아 표로 보여 줍니다.
+     (news.txt 를 쓰는 방법은 그대로입니다. 평소처럼 '시간: 12:00 / 장소: …' 라고 적으면 됩니다) */
+  var FACT_RE = /^([A-Za-z\uAC00-\uD7A3\u4E00-\u9FFF][A-Za-z\uAC00-\uD7A3\u4E00-\u9FFF ]{0,6})\s*[:：]\s*(\S.*)$/;
+  function isSentence(x){ return x.length > 10 && /(다|요|니다|세요)\s*[.!?。！？]?\s*$|[.!?。！？]\s*$/.test(x); }
+  /* 매주 1번 소식 '새로 나오신 분을 … 환영합니다' 에는 처음 오신 분이 바로 갈 수 있는 길을 붙여 줍니다 */
+  var WELCOME_RE = /새로\s*(나오신|오신)\s*분|새가족|처음\s*오신|新朋友|新来的|first[\s-]time|newcomer|new\s+(friends|members|visitors)/i;
+  function welcomeHtml(){
+    var reg = document.querySelector('.reg-btn');
+    var url = reg && reg.getAttribute('href') || 'https://docs.google.com/forms/d/e/1FAIpQLSemEMyyCe5RWVgskzFCWCxmG2h9F5PjEDzOOx1raUHlOfolew/viewform?usp=publish-editor';
+    return '<p class="nb-acts" lang="' + (HTML_LANG[lang] || lang) + '">' +
+             '<a class="more-link" href="worship.html#first">' + esc(t('nb.guide')) + '</a>' +
+             '<a class="more-link" href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(t('nb.register')) + '</a>' +
+           '</p>';
+  }
+  function splitFacts(rest){
+    var text = [], facts = [];
+    rest.forEach(function(line){
+      var segs = String(line).split(/\s+\/\s+/), plain = [], lastFact = null;
+      segs.forEach(function(seg){
+        seg = seg.trim();
+        if(!seg) return;
+        var m = seg.match(FACT_RE);
+        if(m){ lastFact = [m[1].trim(), m[2].trim()]; facts.push(lastFact); }
+        else if(lastFact && !isSentence(seg)){ lastFact[1] += ' / ' + seg; }   /* '일정: 7월 20일 / 8월 3일' 처럼 이어지는 값 */
+        else { plain.push(seg); lastFact = null; }
+      });
+      if(plain.length) text.push(plain.join(' / '));
+    });
+    return {text: text, facts: facts};
+  }
+  function factsDl(facts){
+    return facts.map(function(f){ return '<dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd>'; }).join('');
+  }
+
   function itemsHtml(items){
     return items.map(function(it){
       var s = '<li>' + esc(it.head);
-      if(it.rest.length) s += '<em>' + it.rest.map(esc).join('<br>') + '</em>';
+      if(it.rest.length){
+        var f = splitFacts(it.rest);
+        if(f.text.length) s += '<em>' + f.text.map(esc).join('<br>') + '</em>';
+        if(f.facts.length) s += '<dl class="li-facts">' + factsDl(f.facts) + '</dl>';
+      }
       return s + '</li>';
     }).join('');
   }
@@ -1603,6 +1683,12 @@ mod('news', function(){
     return best;
   }
   function ddLabel(dd){ return dd.diff === 0 ? t('nb.today') : 'D-' + dd.diff; }
+  function bodyHtml(rest){
+    var f = splitFacts(rest), h = '';
+    if(f.text.length) h += '<p class="nb-text">' + f.text.map(esc).join('<br>') + '</p>';
+    if(f.facts.length) h += '<dl class="nb-facts">' + factsDl(f.facts) + '</dl>';
+    return h;
+  }
   function fmtEvent(dd){
     var dow = t('cal.dowShort').split(',')[new Date(dd.y, dd.m - 1, dd.d).getDay()];
     if(lang === 'en') return dow + ', ' + t('cal.monShort').split(',')[dd.m - 1] + ' ' + dd.d;
@@ -1626,13 +1712,14 @@ mod('news', function(){
       var head = cleanHead(it.head), dd = findDday(it, latest.ymd), no = pad(i + 1);
       var tag = (isNew[i] ? '<span class="nb-new">NEW</span>' : '') + (dd ? '<span class="nb-dday">' + ddLabel(dd) + '</span>' : '');
       var meta = (dd ? '<span class="nb-when">' + fmtEvent(dd) + '<b>' + ddLabel(dd) + '</b></span>' : '') + (isNew[i] ? '<span class="nb-new">NEW</span>' : '');
-      html += '<button type="button" class="nb-tab' + (it.rest.length ? '' : ' no-body') + '" id="nbt' + i + '" aria-expanded="false" aria-controls="nbp' + i + '" data-i="' + i + '">' +
+      var welcome = WELCOME_RE.test(head) ? welcomeHtml() : '';
+      html += '<button type="button" class="nb-tab' + (it.rest.length || welcome ? '' : ' no-body') + '" id="nbt' + i + '" aria-expanded="false" aria-controls="nbp' + i + '" data-i="' + i + '">' +
                 '<span class="nb-no">' + no + '</span><span class="nb-t">' + esc(head) + '</span>' + tag +
                 '<span class="nb-chev" aria-hidden="true"></span><span class="nb-prog" aria-hidden="true"></span></button>' +
               '<div class="nb-panel" id="nbp' + i + '" role="region" aria-labelledby="nbt' + i + '" hidden>' +
                 '<p class="nb-meta">' + meta + '</p>' +
                 '<h3 class="nb-title">' + esc(head) + '</h3>' +
-                (it.rest.length ? '<p class="nb-text">' + it.rest.map(esc).join('<br>') + '</p>' : '') +
+                (it.rest.length ? bodyHtml(it.rest) : '') + welcome +
               '</div>';
     });
     var body = document.createElement('div');

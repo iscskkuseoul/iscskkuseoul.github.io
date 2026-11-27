@@ -72,8 +72,8 @@
 <link rel="preload" as="image" href="assets/banner3.jpg" fetchpriority="high">
 
 <!-- 사이트 공용 디자인과 동작 (고친 뒤에는 ?v= 뒤의 날짜를 바꿔 주세요) -->
-<link rel="stylesheet" href="assets/site.css?v=20261126b">
-<script src="assets/site.js?v=20261126b" defer></script>
+<link rel="stylesheet" href="assets/site.css?v=20261127">
+<script src="assets/site.js?v=20261127" defer></script>
 
 <script type="application/ld+json">
 {
@@ -307,6 +307,32 @@
           <a class="btn btn-pine" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener" data-i18n="visit.naver">네이버 지도로 길찾기</a>
           <a class="btn btn-line" href="https://www.google.com/maps?cid=5142664069076694680" target="_blank" rel="noopener" data-i18n="visit.google">구글 지도로 보기</a>
         </div>
+      </div>
+    </div>
+
+    <!-- 혜화역에서 걸어오는 길: 홈의 작은 지도와 같은 그림에, 걷는 순서를 세 단계로 덧붙였습니다 -->
+    <div class="visit-band walk-band reveal">
+      <div class="vb-main">
+        <p class="eyebrow">WALKING ROUTE</p>
+        <h3 data-i18n="walk.title">혜화역에서 걸어오는 길</h3>
+        <ol class="walk-steps">
+          <li class="ws-exit"><i aria-hidden="true">4</i><div><b data-i18n="walk.s1">혜화역 4번 출구</b><span data-i18n="walk.s1d">지하철 4호선</span></div></li>
+          <li class="ws-walk"><i aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="13" cy="4.2" r="1.9"/><path d="M10.5 21l2.2-6.2 2.6 2.6V21"/><path d="M8 11.2l2.6-3.4h3.2l2.2 3.8 2.6.8"/><path d="M10.6 7.8 9.4 14.4 7 21"/></svg></i><div><b data-i18n="walk.s2">성균관로를 따라 걷기</b><span data-i18n="walk.s2d">성균관대학교 정문 방향으로 약 10분</span></div></li>
+          <li class="ws-church"><i aria-hidden="true"></i><div><b>ISC SKKU Seoul</b><span data-i18n="walk.s3d">명륜길 22, 2층</span></div></li>
+        </ol>
+      </div>
+      <div class="vb-mapbox">
+        <div class="vb-map">
+          <a class="vbm-link" href="https://map.naver.com/p/entry/place/1585778785" target="_blank" rel="noopener">
+            <img class="vbm-img" src="assets/visit-map.svg?v=20261126" alt="" width="1351" height="760" loading="lazy" decoding="async">
+            <span class="vbm-mark vbm-campus" style="left:13.73%;top:33.55%" aria-hidden="true" data-i18n="map.campus">성균관대학교</span>
+            <span class="vbm-mark vbm-walk" style="left:38.49%;top:50%" aria-hidden="true"><b><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4.2" r="1.9"/><path d="M10.5 21l2.2-6.2 2.6 2.6V21"/><path d="M8 11.2l2.6-3.4h3.2l2.2 3.8 2.6.8"/><path d="M10.6 7.8 9.4 14.4 7 21"/></svg><span class="vbm-long" data-i18n="map.walk">도보 약 10분</span><span class="vbm-short" data-i18n="map.walkShort">약 10분</span></b></span>
+            <span class="vbm-mark vbm-exit" style="left:67.43%;top:84.66%" aria-hidden="true"><i>4</i><b><span class="ex-long" data-i18n="map.exit">혜화역 4번 출구</span><span class="ex-short" data-i18n="map.exitShort">혜화역</span></b></span>
+            <span class="vbm-mark vbm-church" style="left:30.79%;top:14.08%" aria-hidden="true"><i></i><b>ISC SKKU Seoul</b></span>
+            <span class="sr" data-i18n="map.open">네이버 지도에서 크게 보기</span>
+          </a>
+        </div>
+        <a class="vbm-osm" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>
       </div>
     </div>
   </div>
